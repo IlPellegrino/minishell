@@ -10,4 +10,40 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "headers/minishell.h"
+#include "../../headers/minishell.h"
+
+void	free_matrix(char **mat)
+{
+	int	i;
+
+	i = -1;
+	while (mat[++i])
+		free(mat[i]);
+	free(mat);
+}
+
+int	find_path(t_shell *shell)
+{
+	char 	*path;
+	char	*temp;
+	int		i;
+
+	i = -1;
+	shell->mat_input = ft_split(shell->input, 32); //splitto tutto l'imput in una matrice
+	if (!shell->mat_input)
+		return (0);
+	path = getenv("PATH");
+	shell->path_env = ft_split(path, ':');
+	if (!shell->path_env)
+		return (0);
+	temp = ft_strdup(shell->path_env[0]);
+	shell->path_env[0] = ft_strtrim(temp, "PATH="); // crea la path da passare all'access
+	free(temp);
+	while (shell->path_env[++i])
+	{
+		temp = ft_strdup(shell->path_env[i]);
+		shell->path_env[i] = ft_strjoin(temp, "/");  // add "/" access function
+		free(temp);
+	}
+	return (1);
+}

@@ -1,2 +1,2 @@
-# minishell
-42 minishell project
+# Minishell
+minishell project from 42 school
