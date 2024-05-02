@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:54:36 by nromito           #+#    #+#             */
-/*   Updated: 2024/04/27 20:16:08 by nromito          ###   ########.fr       */
+/*   Updated: 2024/05/02 14:10:40 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	find_path(t_shell *shell)
 	while (shell->path_env[++i])
 	{
 		temp = ft_strdup(shell->path_env[i]);
-		shell->path_env[i] = ft_strjoin(temp, "/");  // add "/" access function
+		shell->path_env[i] = ft_strjoin(temp, "/");  // add "/" for access function
 		free(temp);
 	}
 	return (1);

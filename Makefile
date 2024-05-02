@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+         #
+#    By: nromito <nromito@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/27 16:23:10 by nromito           #+#    #+#              #
-#    Updated: 2024/05/02 09:35:51 by ciusca           ###   ########.fr        #
+#    Updated: 2024/05/02 15:33:29 by nromito          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ LIBFT = libft/libft.a
 
 HEADERS = headers/minishell.h
 
+PROTECTED_FUNC = protected_func/protected_functions.c
 BUILT_IN = built-in/echo.c
 EXECUTOR = executor/exec.c
 EXPANDER = expander/exp.c
@@ -25,7 +26,7 @@ LEXER = lexer/readline.c
 UTILS = utils/utils.c
 MAIN	= minishell.c
 
-SRCS = $(addprefix src/, $(MAIN) ${BUILT_IN} ${EXECUTOR} ${EXPANDER} ${PARSER} ${LEXER} ${UTILS})
+SRCS = $(addprefix src/, $(MAIN) ${BUILT_IN} $(PROTECTED_FUNC) ${EXECUTOR} ${EXPANDER} ${PARSER} ${LEXER} ${UTILS})
 
 OBJS = ${SRCS:.c=.o}
 
@@ -48,24 +49,23 @@ ${NAME}: ${OBJS} ${HEADERS}
 		make -C ${LIBFT_PATH}
 		$(COMPILE) $(OBJS) -o $(NAME) $(LIBFT) -lreadline
 		@echo "\n"
-		@echo "  __  __ _____ _   _ _____  _____ _    _ ______ _      _       "
-		@echo " |  \/  |_   _| \ | |_   _|/ ____| |  | |  ____| |    | |      "
-		@echo " | \  / | | | |  \| | | | | (___ | |__| | |__  | |    | |      "
-		@echo " | |\/| | | | |     | | |  \___ \|  __  |  __| | |    | |      "
-		@echo " | |  | |_| |_| |\  |_| |_ ____) | |  | | |____| |____| |____  "
-		@echo " |_|  |_|_____|_| \_|_____|_____/|_|  |_|______|______|______| "
-		@echo "                                                               "
-		@echo "                                                               "
+		@echo $(MAGENTA) "  __  __ _____ _   _ _____  _____ _    _ ______ _      _       " $(NONE)
+		@echo $(RED)    " |  \/  |_   _| \ | |_   _|/ ____| |  | |  ____| |    | |      " $(NONE)
+		@echo $(YELLOW) " | \  / | | | |  \| | | | | (___ | |__| | |__  | |    | |      " $(NONE)
+		@echo $(GREEN)  " | |\/| | | | |     | | |  \___ \|  __  |  __| | |    | |      " $(NONE)
+		@echo $(CYAN)   " | |  | |_| |_| |\  |_| |_ ____) | |  | | |____| |____| |____  " $(NONE)
+		@echo $(BLUE)   " |_|  |_|_____|_| \_|_____|_____/|_|  |_|______|______|______| " $(NONE)
+		@echo $(WHITE)  "                                                               " $(NONE)
 
 clean:
 		@rm -rf $(OBJS)
 		@make -C $(LIBFT_PATH) clean
-		@echo $(RAINBOW)"Successfully cleaned!"
+		@echo $(GREEN)"Successfully cleaned!"
 
 fclean: clean
 		@rm -rf $(NAME)
 		@make -C $(LIBFT_PATH) fclean
-		@echo $(RAINBOW)"Successfully Fcleaned!"
+		@echo $(CYAN)"Successfully Fcleaned!"
 
 re: fclean all
 
