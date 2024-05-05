@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:23:27 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/02 17:16:31 by nromito          ###   ########.fr       */
+/*   Updated: 2024/05/05 13:49:49 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 
 typedef struct s_token
 {
-	char **index;
+		char **index;
 	
 }		t_token;
 

@@ -6,7 +6,7 @@
 #    By: nromito <nromito@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/27 16:23:10 by nromito           #+#    #+#              #
-#    Updated: 2024/05/02 15:33:29 by nromito          ###   ########.fr        #
+#    Updated: 2024/05/05 16:43:29 by nromito          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ BUILT_IN = built-in/echo.c
 EXECUTOR = executor/exec.c
 EXPANDER = expander/exp.c
 PARSER = parser/parsing.c
-LEXER = lexer/readline.c
+LEXER = lexer/readline.c lexer/lexer_checker.c
 UTILS = utils/utils.c
 MAIN	= minishell.c
 
@@ -60,12 +60,12 @@ ${NAME}: ${OBJS} ${HEADERS}
 clean:
 		@rm -rf $(OBJS)
 		@make -C $(LIBFT_PATH) clean
-		@echo $(GREEN)"Successfully cleaned!"
+		@echo $(GREEN)"Successfully cleaned!" $(NONE)
 
 fclean: clean
 		@rm -rf $(NAME)
 		@make -C $(LIBFT_PATH) fclean
-		@echo $(CYAN)"Successfully Fcleaned!"
+		@echo $(CYAN)"Successfully Fcleaned!" $(NONE)
 
 re: fclean all
 
