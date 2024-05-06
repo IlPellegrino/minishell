@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:23:27 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/06 15:43:35 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/06 18:13:05 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,8 @@ typedef struct s_shell
 
 /* lexer */
 char 	*lexer(t_shell *shell);
-int		quotes_checker(t_shell *shell);
-void	checker(t_shell *shell);
+int		count_words(t_shell *shell);
+void	checker(t_shell *shell, t_token *token, int words);
 
 char	*ft_readline(char *str);
 void	forker(t_shell *shell, char *input_args);
