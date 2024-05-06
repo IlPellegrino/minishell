@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ciusca <ciusca@student.42firenze.it>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:23:27 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/06 18:13:05 by nromito          ###   ########.fr       */
+/*   Updated: 2024/05/06 23:24:16 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ typedef struct s_cmd
 
 typedef struct s_token
 {
-		char **index;
+		char 	**index;
 	
 }		t_token;
 
@@ -52,13 +52,14 @@ typedef struct s_garbage
 
 typedef struct s_shell
 {
-		struct s_shell 	*next;
 		char 			*path;
 		char			*cmd_name;
 		char			**mat_input;
 		char			*input;
 		char			**envp;
-		char			**path_env; 
+		char			**path_env;
+		char			*new_input;
+		t_token			*tokens;
 		t_garbage  		*collector;
 		t_cmd			*cmd;
 }		t_shell;
