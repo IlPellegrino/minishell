@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   readline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:52:55 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/02 17:41:08 by nromito          ###   ########.fr       */
+/*   Updated: 2024/05/06 14:17:23 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ char *lexer(t_shell *shell)
 	i = -1;
 	pipe_nbr = 0;
 	tmp_input = shell->mat_input;
+	quotes_checker(shell);
+	checker(shell);
 	while (tmp_input[++i])
 	{
 		if (tmp_input[i][0] == '|')

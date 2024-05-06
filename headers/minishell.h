@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:23:27 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/05 13:49:49 by nromito          ###   ########.fr       */
+/*   Updated: 2024/05/06 14:15:39 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,11 @@
 # include <sys/wait.h>
 # include <stdbool.h>
 # include <errno.h>
+
+
+# define MINISHELL "\033[0;36mminishell\033[0m$ "
+# define DQ 34
+# define SQ 39
 
 typedef struct s_token
 {
@@ -51,6 +56,8 @@ typedef struct s_shell
 
 /* lexer */
 char 	*lexer(t_shell *shell);
+int		quotes_checker(t_shell *shell);
+void	checker(t_shell *shell);
 
 char	*ft_readline(char *str);
 void	forker(t_shell *shell, char *input_args);

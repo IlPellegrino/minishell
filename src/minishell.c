@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:26:12 by nromito           #+#    #+#             */
-/*   Updated: 2024/04/30 10:21:10 by nromito          ###   ########.fr       */
+/*   Updated: 2024/05/06 13:57:09 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,12 @@ int	main(int argc, char **argv, char **envp)
 	while(1)
 	{
 		//todo: garbage collector
-		shell.input = ft_readline("<minishell> ");
+		shell.input = ft_readline(MINISHELL);
 		find_path(&shell);
 		if (shell.input)
 		{
 			lexer(&shell);
-			//expander
+			//parser();
 			//executor
 		}
 		//se input e' null semplicemente ti riparte il while

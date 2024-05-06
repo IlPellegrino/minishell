@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_checker.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 13:46:29 by nromito           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/05/06 10:55:09 by nromito          ###   ########.fr       */
+=======
+/*   Updated: 2024/05/06 14:14:38 by ciusca           ###   ########.fr       */
+>>>>>>> c4293b6cbad811e095469407bfca52d2648d63cd
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,4 +84,7 @@ void	checker(t_shell *shell)
 			j++;
 		}
 	}
+	for(int i = 0; token.index[i]; i++)
+		printf("token.index[i] = %s\n", token.index[i]);
+	
 }
