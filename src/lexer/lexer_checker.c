@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 13:46:29 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/06 18:45:57 by nromito          ###   ########.fr       */
+/*   Updated: 2024/05/06 19:23:26 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,19 +28,27 @@ int	count_words(t_shell *shell)
 	{
 		if (shell->input[i] == SPACE)
 		{
-			while (shell->input[i] != SPACE && shell->input[i] != '\0')
+			while (shell->input[i + 1] == SPACE && shell->input[i] != '\0')
 				i++;
-			words++;
+			if (shell->input[i] != 0)
+				words++;
 		}
 		else if (shell->input[i] == DQ)
+		{
+			i++;
 			while (shell->input[i] != DQ)
 				i++;
+		}
 		else if (shell->input[i] == SQ)
+		{
+			i++;
 			while (shell->input[i] != SQ)
 				i++;
-		else if (shell->input[i + 1] == '\0')
+		}
+		if (shell->input[i + 1] == '\0')
 			words++;
 	}
+	printf("%d\n", words);
 	return (words);
 }
 
@@ -92,8 +100,8 @@ void	checker(t_shell *shell, t_token *token, int words)
 	while (j <= words)
 	{
 //		printf("words = %d\n", words);
-		printf("words2 = %d\n", i);
-		printf("input = %d\n", l);
+//		printf("I e' = %d\n", i);
+//		printf("L e' = %d\n", l);
 		if (shell->input[i] == SQ)
 		{
 			k = find_SQ(shell, i);
@@ -110,7 +118,7 @@ void	checker(t_shell *shell, t_token *token, int words)
 		}
 		else if ((shell->input[i] == SPACE ) || (shell->input[i] == '\0'))
 		{
-			printf("entrato\n");
+//			printf("entrato\n");
 			token->index[j] = ft_calloc(sizeof (char), (i - l + 1));
 			while (l < i)
 			{
@@ -123,11 +131,12 @@ void	checker(t_shell *shell, t_token *token, int words)
 				else
 					token->index[j][r++] = shell->input[l++];
 			}
+			token->index[j][r++] = '\0';
+			j++;
 			while (shell->input[i] == SPACE && shell->input[i] != '\0')
 				i++;
 			if (shell->input[i] != '\0')
 				l = i;
-			j++;
 		}
 		else
 			i++;
