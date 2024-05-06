@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:23:27 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/06 15:43:35 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/06 18:06:14 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,12 @@
 # include <stdio.h>
 # include <sys/wait.h>
 # include <stdbool.h>
+# include <sys/types.h>
+# include <signal.h>
 # include <errno.h>
 
 
-# define MINISHELL "\033[0;36mminishell\033[0m$ "
+# define MINISHELL "\e[1;96mminishell\033[0m$ "
 # define DQ 34
 # define SQ 39
 
@@ -53,6 +55,9 @@ typedef struct s_garbage
 typedef struct s_shell
 {
 		struct s_shell 	*next;
+		char			*infile;
+		char 			*outfile;
+		char			**redirect;
 		char 			*path;
 		char			*cmd_name;
 		char			**mat_input;
@@ -63,6 +68,8 @@ typedef struct s_shell
 		t_cmd			*cmd;
 }		t_shell;
 
+/* signals */
+void		get_signal(void);
 
 /* lexer */
 char 	*lexer(t_shell *shell);
@@ -85,7 +92,6 @@ void	ft_error(char *msg, int id);
 void	close_fds(void);
 
 /*utils*/
-
 void	print_matrix(char **mat);
 
 /* garbage collector */

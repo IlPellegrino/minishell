@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:26:12 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/06 13:57:09 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/06 18:47:14 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ char	*ft_readline(char *str)
 	return (input);
 }
 
-
 int	main(int argc, char **argv, char **envp)
 {
 	t_shell	shell;
@@ -36,15 +35,17 @@ int	main(int argc, char **argv, char **envp)
 	argc++;
 	while(1)
 	{
-		//todo: garbage collector
+		get_signal();
 		shell.input = ft_readline(MINISHELL);
+		if (!shell.input)
+			exit(errno);
+		//todo: garbage collector
 		find_path(&shell);
-		if (shell.input)
+		/*if (shell.input)
 		{
-			lexer(&shell);
+			//lexer(&shell);
 			//parser();
 			//executor
-		}
-		//se input e' null semplicemente ti riparte il while
+		}*/
 	}
 }
