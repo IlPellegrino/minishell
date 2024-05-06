@@ -6,13 +6,10 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 13:46:29 by nromito           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/05/06 10:55:09 by nromito          ###   ########.fr       */
-=======
-/*   Updated: 2024/05/06 14:14:38 by ciusca           ###   ########.fr       */
->>>>>>> c4293b6cbad811e095469407bfca52d2648d63cd
+/*   Updated: 2024/05/06 15:41:24 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../../headers/minishell.h"
 
@@ -45,25 +42,28 @@ void	checker(t_shell *shell)
 	int		j;
 	int		k;
 	
+	k = 0;
 	i = -1;
 	j = 0;
 	while (shell->input[++i])
 	{
 		while (shell->input[i] == 32)
 			i++;
-		if (shell->input[i] == 34 || (shell->input[i] == 39
-			&& shell->input[i + 1] == 34) || shell->input[i + 1] == 39)
+		if ((shell->input[i] == DQ || shell->input[i] == SQ)
+			&& (shell->input[i + 1] == DQ || shell->input[i + 1] == SQ))
 		{
+			printf("double\n");
 			token.index[j][k] = '\0';
 			j++;
-			i += 2;
+			i++;
 		}
-		else if (shell->input[i] == 34 || (shell->input[i] == 39 && shell->input[i + 1] != 34) || shell->input[i + 1] != 39)
+		else if ((shell->input[i] == DQ || shell->input[i] == SQ) && ((shell->input[i + 1] != DQ) || shell->input[i + 1] != SQ))
 		{
 			i++;
 			k = 0;
+			printf("i %d\n", i);
 			while ((shell->input[i] != '\0'
-				&& (shell->input[i] != 34)) || shell->input[i] != 39)
+				&& (shell->input[i] != DQ)) || shell->input[i] != SQ)
 			{
 				token.index[j][k] = shell->input[i];
 				k++;
@@ -74,14 +74,13 @@ void	checker(t_shell *shell)
 		}
 		else if (shell->input[i] != 32)
 		{
-			while (shell->input[i] != 32)
+			printf("qui\n");
+			while (shell->input[i] != 32 && shell->input[i])
 			{
-				if (shell->input[i] == 34 || shell->input == 39)
+				if (shell->input[i] == DQ || shell->input[i] == SQ)
 					i++;
 				token.index[j][k++] = shell->input[i++];
 			}
-			token.index[j][k] = '\0';
-			j++;
 		}
 	}
 	for(int i = 0; token.index[i]; i++)

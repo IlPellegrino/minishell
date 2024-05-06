@@ -1,28 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   free_matrix.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/27 19:59:43 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/06 15:18:46 by ciusca           ###   ########.fr       */
+/*   Created: 2024/05/06 15:21:27 by ciusca            #+#    #+#             */
+/*   Updated: 2024/05/06 15:22:10 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../headers/minishell.h"
+#include "libft.h"
 
-void	garbage_collector(t_shell *shell)
+void	free_matrix(char **mat)
 {
-	t_garbage	*garbage;
-	
-	garbage = shell->collector;
-	while (garbage)
-	{
-		if (garbage->flag == 0)
-			free(garbage->arg);
-		else if (garbage->flag == 1)
-			free_matrix(garbage->arg);
-		garbage = garbage->next;
-	}
+	int	i;
+
+	i = -1;
+	while (mat[++i])
+		free(mat[i]);
+	free(mat);
+	mat = NULL;
 }

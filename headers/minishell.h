@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:23:27 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/06 14:15:39 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/06 15:23:10 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,14 @@
 # define DQ 34
 # define SQ 39
 
+typedef struct s_cmd
+{
+	char 			*path;
+	char 			**command_table;
+	char 			**cmd;
+	struct s_shell 	*shell;
+}			t_cmd;
+
 typedef struct s_token
 {
 		char **index;
@@ -37,8 +45,9 @@ typedef struct s_token
 
 typedef struct s_garbage
 {
-	void			*arg;
-	struct s_garbage *next;
+	void				*arg;
+	int					flag;
+	struct s_garbage 	*next;
 }		t_garbage;
 
 typedef struct s_shell
@@ -50,7 +59,8 @@ typedef struct s_shell
 		char			*input;
 		char			**envp;
 		char			**path_env; 
-		t_garbage  		collector[10];
+		t_garbage  		*collector;
+		t_cmd			*cmd;
 }		t_shell;
 
 
@@ -73,5 +83,10 @@ void	pipe_p(int pipe_fds[2]);
 void	execve_p(char *cmd_path, char **argv, char **envp);
 void	ft_error(char *msg, int id);
 void	close_fds(void);
+
+/*utils*/
+
+/* garbage collector */
+void	garbage_collector(t_shell *shell);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:52:55 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/06 14:17:23 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/06 14:28:06 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ char *lexer(t_shell *shell)
 	i = -1;
 	pipe_nbr = 0;
 	tmp_input = shell->mat_input;
-	quotes_checker(shell);
+	if (!quotes_checker(shell))
+		return (0);
 	checker(shell);
 	while (tmp_input[++i])
 	{
