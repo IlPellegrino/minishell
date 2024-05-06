@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:23:27 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/06 15:23:10 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/06 15:43:35 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ void	ft_error(char *msg, int id);
 void	close_fds(void);
 
 /*utils*/
+
+void	print_matrix(char **mat);
 
 /* garbage collector */
 void	garbage_collector(t_shell *shell);

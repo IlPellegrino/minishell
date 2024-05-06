@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 19:59:43 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/06 15:18:46 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/06 15:43:08 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,11 @@ void	garbage_collector(t_shell *shell)
 			free_matrix(garbage->arg);
 		garbage = garbage->next;
 	}
+}
+
+void	print_matrix(char **mat)
+{
+	for (int i = 0; mat[i]; i++)
+		printf("%s", mat[i]);
+	printf("\n");
 }
