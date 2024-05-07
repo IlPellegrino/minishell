@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:23:27 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/07 12:10:50 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/07 16:54:43 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,25 +30,20 @@
 # define DQ 34
 # define SQ 39
 
-typedef struct s_count
-{
-	int		i;
-	int		j;
-	char 	*new_input;
-}			t_count;
 
 typedef struct s_cmd
 {
 	char 			*path;
 	char 			**command_table;
-	char 			**cmd;
 	struct s_shell 	*shell;
 }			t_cmd;
+
 
 typedef struct s_token
 {
 		char 	**index;
-	
+		int		*mat_ind; 
+		char	*tokens;
 }		t_token;
 
 typedef struct s_garbage
@@ -67,13 +62,12 @@ typedef struct s_shell
 		char			**envp;
 		char			**path_env;
 		char			*new_input;
-		t_token			*tokens;
+		t_token			tokens;
 		t_garbage  		*collector;
 		t_cmd			*cmd;
 }		t_shell;
 
-
-/* signals */
+/* signal */
 void	get_signal(void);
 
 /* lexer */
@@ -85,8 +79,9 @@ char	*ft_readline(char *str);
 void	forker(t_shell *shell, char *input_args);
 
 /* parsing */
-int		find_path(t_shell *shell);
-
+int		tokenizer(t_shell *shell);
+int		get_path(t_shell *shell);
+int		parsing(t_shell *shell);
 /* protected functions */
 int		fork_p(void);
 int		access_p(char *file, int mode);
@@ -97,7 +92,7 @@ void	ft_error(char *msg, int id);
 void	close_fds(void);
 
 /*utils*/
-
+int		find_cmd(t_shell *shell, char *cmd);
 void	print_matrix(char **mat);
 
 /* garbage collector */

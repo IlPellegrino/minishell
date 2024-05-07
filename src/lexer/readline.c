@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:52:55 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/07 11:00:29 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/07 14:01:37 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ char *lexer(t_shell *shell)
 	char	**tmp_input;
 	t_token	token;
 
+	token = shell->tokens;
 	i = -1;
 	pipe_nbr = 0;
 	tmp_input = shell->mat_input;

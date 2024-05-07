@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 13:46:29 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/07 12:08:49 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/07 16:41:15 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,30 @@
 
 void	handle_quotes (t_shell *shell, int *i, int *j, int quotes)
 {
+	int	count;
+	
+	count = 0;
 	while(shell->input[*i] == quotes)
+	{
+		count++;
 		(*i)++;
-	while (shell->input[*i] != quotes)
+	}
+	if (count % 2 == 0)
+	{
+		shell->new_input[*j++] = 'F';
+		(*j)++;
+		shell->new_input[*j++] = ' ';
+		(*i)++;
+		return ;
+	}
+	while (shell->input[*i] != quotes && shell->input[*i])
 	{
 		if (shell->input[*i] == 32)
 			shell->new_input[*j] = '_';
 		else
-		{
 			shell->new_input[*j] = shell->input[*i];
-			(*i)++;
-			(*j)++;
-		}
+		(*i)++;
+		(*j)++;
 	}	
 	while (shell->input[*i] == quotes)
 		(*i)++;
@@ -55,7 +67,9 @@ int	count_input(t_shell *shell)
 			shell->new_input[j++] = shell->input[i++];
 	}
 	words = count_words(shell->new_input);
+	printf("input = %s\n", shell->new_input);
 	free(shell->new_input);
+	printf("words = %d\n", words);
 	return (words);
 }
 

@@ -6,7 +6,7 @@
 #    By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/27 16:23:10 by nromito           #+#    #+#              #
-#    Updated: 2024/05/07 12:11:32 by ciusca           ###   ########.fr        #
+#    Updated: 2024/05/07 14:19:39 by ciusca           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ PROTECTED_FUNC = protected_func/protected_functions.c
 BUILT_IN = built-in/echo.c
 EXECUTOR = executor/exec.c
 EXPANDER = expander/exp.c
-PARSER = parser/parsing.c
+PARSER = parser/parsing.c parser/tokenizer.c
 LEXER = lexer/readline.c lexer/lexer_checker.c
 UTILS = utils/utils.c
 SIGNAL = signals/signals.c

@@ -1,13 +1,13 @@
-total 80
+total 84
 -rw-r--r--  1 ciusca 2023_florence     6 May  7 12:40 file1
 drwxr-xr-x  2 ciusca 2023_florence  4096 May  7 10:43 headers
 -rw-r--r--  1 ciusca 2023_florence    12 May  7 14:05 hello
 -rw-r--r--  1 ciusca 2023_florence    82 May  7 15:54 heredoc
--rw-r--r--  1 ciusca 2023_florence     0 May  7 15:57 infile
+-rw-r--r--  1 ciusca 2023_florence    15 May  7 14:37 infile
 drwxr-xr-x  2 ciusca 2023_florence  4096 May  7 11:36 libft
 -rw-r--r--  1 ciusca 2023_florence  2728 May  7 14:19 Makefile
 -rwxr-xr-x  1 ciusca 2023_florence 37576 May  7 15:12 minishell
--rw-r--r--  1 ciusca 2023_florence     0 May  7 15:58 outfile
--rw-r--r--  1 ciusca 2023_florence   745 May  7 15:54 prova
+-rw-r--r--  1 ciusca 2023_florence   697 May  7 14:10 outfile
+-rw-r--r--  1 ciusca 2023_florence     0 May  7 15:54 prova
 -rw-r--r--  1 ciusca 2023_florence    45 May  7 12:15 README.md
 drwxr-xr-x 10 ciusca 2023_florence  4096 May  7 14:56 src

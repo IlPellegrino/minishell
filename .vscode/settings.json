@@ -2,6 +2,10 @@
 	"files.associations": {
 		"minishell.h": "c",
 		"readline.h": "c",
-		"limits.h": "c"
+		"limits.h": "c",
+		"stdbool.h": "c",
+		"stdlib.h": "c",
+		"unistd.h": "c",
+		"wait.h": "c"
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:54:36 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/02 14:10:40 by nromito          ###   ########.fr       */
+/*   Updated: 2024/05/07 14:22:24 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,21 +22,17 @@ void	free_matrix(char **mat)
 	free(mat);
 }
 
-int	find_path(t_shell *shell)
+int	get_path(t_shell *shell)
 {
 	char 	*path;
 	char	*temp;
-	int		i;
+	int		i = -1;
 
-	i = -1;
-	shell->mat_input = ft_split(shell->input, 32); //splitto tutto l'imput in una matrice
-	if (!shell->mat_input)
-		return (0);
 	path = getenv("PATH");
 	shell->path_env = ft_split(path, ':');
 	if (!shell->path_env)
 		return (0);
-	temp = ft_strdup(shell->path_env[0]);
+	temp = shell->path_env[0];
 	shell->path_env[0] = ft_strtrim(temp, "PATH="); // crea la path da passare all'access
 	free(temp);
 	while (shell->path_env[++i])
@@ -45,5 +41,16 @@ int	find_path(t_shell *shell)
 		shell->path_env[i] = ft_strjoin(temp, "/");  // add "/" for access function
 		free(temp);
 	}
+	return (1);
+}
+
+
+
+int	parsing(t_shell *shell)
+{
+	//if (!find_pipe(shell))
+	//	return (0);
+	if (!tokenizer(shell))
+		return (0);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:26:12 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/07 12:13:38 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/07 14:56:53 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +36,17 @@ int	main(int argc, char **argv, char **envp)
 	argc++;
 	while(1)
 	{
-		get_signal();
+		//get_signal();
 		//todo: garbage collector
 		shell.input = ft_readline(MINISHELL);
 		if (!shell.input)
 			return (printf("exit\n"), 0);
-		find_path(&shell);
+		get_path(&shell);
 		if (shell.input)
 		{
 			lexer(&shell);
-			//parser();
+			//shell.tokens.index = ft_split(shell.input, 32);
+			//parsing(&shell);
 			//executor
 		}
 		//se input e' null semplicemente ti riparte il while
