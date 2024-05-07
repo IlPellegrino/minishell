@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:52:55 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/06 18:12:55 by nromito          ###   ########.fr       */
+/*   Updated: 2024/05/07 13:50:51 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,9 @@ char *lexer(t_shell *shell)
 	pipe_nbr = 0;
 	tmp_input = shell->mat_input;
 	words = count_words(shell);
-	token.index = ft_calloc(sizeof (char), (words + 1));
+	token.index = ft_calloc(sizeof (char), words + 1);
+	if (!token.index)
+		return (0);
 	checker(shell, &token, words);
 	while (tmp_input[++i])
 	{

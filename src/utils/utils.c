@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 19:59:43 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/06 17:54:02 by nromito          ###   ########.fr       */
+/*   Updated: 2024/05/07 12:43:24 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,12 @@ void	garbage_collector(t_shell *shell)
 
 void	print_matrix(char **mat)
 {
-	for (int i = 0; mat[i]; i++)
-		printf("%s\n", mat[i]);
+	int	i;
+
+	i = 0;
+	while (mat[i])
+	{
+		printf("%sEND\n", mat[i]);
+		i++;
+	}
 }
