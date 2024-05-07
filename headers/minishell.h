@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:23:27 by nromito           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/05/06 18:06:14 by ciusca           ###   ########.fr       */
+=======
+/*   Updated: 2024/05/06 18:13:05 by nromito          ###   ########.fr       */
+>>>>>>> 3b5afb8031eea053bb6a921d4b38fe2978708d2e
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +77,8 @@ void		get_signal(void);
 
 /* lexer */
 char 	*lexer(t_shell *shell);
-int		quotes_checker(t_shell *shell);
-void	checker(t_shell *shell);
+int		count_words(t_shell *shell);
+void	checker(t_shell *shell, t_token *token, int words);
 
 char	*ft_readline(char *str);
 void	forker(t_shell *shell, char *input_args);

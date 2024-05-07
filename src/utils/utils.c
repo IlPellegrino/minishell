@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 19:59:43 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/06 15:43:08 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/06 17:54:02 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,5 @@ void	garbage_collector(t_shell *shell)
 void	print_matrix(char **mat)
 {
 	for (int i = 0; mat[i]; i++)
-		printf("%s", mat[i]);
-	printf("\n");
+		printf("%s\n", mat[i]);
 }

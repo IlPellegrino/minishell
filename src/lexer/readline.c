@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   readline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:52:55 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/06 14:28:06 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/06 18:12:55 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,17 @@ int	find_cmd(t_shell *shell, char *cmd)
 char *lexer(t_shell *shell)
 {
 	int		i;
+	int		words;
 	int		pipe_nbr;
 	char	**tmp_input;
+	t_token	token;
 
 	i = -1;
 	pipe_nbr = 0;
 	tmp_input = shell->mat_input;
-	if (!quotes_checker(shell))
-		return (0);
-	checker(shell);
+	words = count_words(shell);
+	token.index = ft_calloc(sizeof (char), (words + 1));
+	checker(shell, &token, words);
 	while (tmp_input[++i])
 	{
 		if (tmp_input[i][0] == '|')
