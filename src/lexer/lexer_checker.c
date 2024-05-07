@@ -3,20 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_checker.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 13:46:29 by nromito           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/05/07 16:41:15 by ciusca           ###   ########.fr       */
+=======
+/*   Updated: 2024/05/07 16:35:34 by nromito          ###   ########.fr       */
+>>>>>>> 38abf0c34da8dbdf5a9ed543e6f810bf1884571a
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../../headers/minishell.h"
 
-// checker for even/odd quotes
-
-void	handle_quotes (t_shell *shell, int *i, int *j, int quotes)
+int	check_quotes(t_shell *shell, int i, int *words)
 {
+<<<<<<< HEAD
 	int	count;
 	
 	count = 0;
@@ -44,38 +46,67 @@ void	handle_quotes (t_shell *shell, int *i, int *j, int quotes)
 	}	
 	while (shell->input[*i] == quotes)
 		(*i)++;
+=======
+	if (shell->input[i] == DQ)
+	{
+		while(shell->input[++i] != DQ)
+			;
+		if (shell->input[++i] == '\0')
+		{
+			(*words)++;
+			return (i);	
+		}
+	}
+	else if (shell->input[i] == SQ)
+	{
+		while(shell->input[++i] != SQ)
+			;
+		if (shell->input[++i] == '\0')
+		{
+			(*words)++;
+			return (i);	
+		}
+	}
+	return (i);
+>>>>>>> 38abf0c34da8dbdf5a9ed543e6f810bf1884571a
 }
 
-int	count_input(t_shell *shell)
+int	count_words(t_shell *shell)
 {
 	int		i;
-	int		j;
 	int		words;
 
-	j = 0;
-	shell->new_input = ft_calloc(sizeof(char*), ft_strlen(shell->input));
-	if (!shell->new_input)
-		return (0);
+	words = 0;
 	i = 0;
-	while (shell->input[i])
+	while (shell->input[i] == SPACE)
+			i++;
+	while (shell->input[i] != '\0')
 	{
-		if (shell->input[i] == DQ)
-			handle_quotes(shell, &i, &j, DQ);
-		else if (shell->input[i] == SQ)
-			handle_quotes(shell, &i, &j, SQ);
+		if (shell->input[i] == DQ || shell->input[i] == SQ)  
+			i = check_quotes(shell, i, &words);
+		else if (shell->input[i] == SPACE)
+		{
+			words++;
+			while(shell->input[++i] == SPACE)
+				;
+		}
 		else
-			shell->new_input[j++] = shell->input[i++];
+			if (shell->input[++i] == '\0')
+				words++;
 	}
+<<<<<<< HEAD
 	words = count_words(shell->new_input);
 	printf("input = %s\n", shell->new_input);
 	free(shell->new_input);
 	printf("words = %d\n", words);
+=======
+>>>>>>> 38abf0c34da8dbdf5a9ed543e6f810bf1884571a
 	return (words);
 }
 
-
 int	find_SQ(t_shell *shell, int	i)
 {
+	i++;
 	while (shell->input[i] != SQ && shell->input[i] != '\0')
 		i++;
 	if (shell->input[i] == '\0')
@@ -87,6 +118,7 @@ int	find_SQ(t_shell *shell, int	i)
 
 int	find_DQ(t_shell *shell, int	i)
 {
+	i++;
 	while (shell->input[i] != DQ && shell->input[i] != '\0')
 		i++;
 	if (shell->input[i] == '\0')
@@ -96,66 +128,92 @@ int	find_DQ(t_shell *shell, int	i)
 	return (0);
 }
 
-// needs to be checked and finished, just made the first part of it.
+void	create_word(t_shell *shell, t_token *token, int r, int i)
+{
+	while (++token->start < i)
+	{
+		if (shell->input[token->start] == DQ)
+		{
+			if (shell->input[++token->start] == SQ
+				&& (shell->input[token->start + 1] == SPACE
+				|| shell->input[token->start + 1] == '\0'))
+				break ;
+			while (shell->input[token->start] != DQ)
+				token->index[token->wrd][r++] = shell->input[token->start++];
+		}
+		else if (shell->input[token->start] == SQ)
+		{
+			if (shell->input[++token->start] == SQ
+				&& (shell->input[token->start + 1] == SPACE
+				|| shell->input[token->start + 1] == '\0'))
+				break ;
+			while (shell->input[token->start] != SQ)
+				token->index[token->wrd][r++] = shell->input[token->start++];
+		}
+		else
+			token->index[token->wrd][r++] = shell->input[token->start];
+	}
+}
+
+int	quotes_reader(t_shell *shell, int i, int *k)
+{
+	if (shell->input[i] == SQ)
+	{
+		(*k) = find_SQ(shell, i);
+		while (i <= (*k))
+		{
+			if (shell->input[++i] == SQ)
+				return (++i);
+		}
+	}
+	else if (shell->input[i] == DQ)
+	{
+		(*k) = find_DQ(shell, i);
+		while (i <= (*k))
+		{
+			if (shell->input[++i] == DQ)
+				return (++i);
+		}
+	}
+	return (i);
+}
+
+void	setup_index(t_shell *shell, t_token *token, int *i)
+{
+	int	r;
+
+	r = 0;
+	token->index[token->wrd] = ft_calloc(sizeof (char), (*i) - token->start + 1);
+	if (!token->index[token->wrd])
+		return ;
+	create_word(shell, token, r, (*i));
+	while (shell->input[(*i)] == SPACE && shell->input[(*i)] != '\0')
+		(*i)++;
+	if (shell->input[(*i)] != '\0')
+		token->start = (*i) - 1;
+	token->wrd++;
+}
+
 void	checker(t_shell *shell, t_token *token, int words)
 {
 	int		i;
-	int		j;
 	int		k;
-	int		r;
-	int		l;
 	
-	r = 0;
 	k = 0;
 	i = 0;
-	j = 0;
-	l = 0;
+	token->wrd = 0;
 	while (shell->input[i] == 32)
 		i++;
-	l = i;
-	while (j <= words)
+	token->start = i - 1;
+	while (token->wrd < words)
 	{
-//		printf("words = %d\n", words);
-//		printf("I e' = %d\n", i);
-//		printf("L e' = %d\n", l);
-		if (shell->input[i] == SQ)
-		{
-			k = find_SQ(shell, i);
-			while (i < k)
-				i++;
-				// token->index[j][r] = shell->input[i];
-		}
-		else if (shell->input[i] == DQ)
-		{
-			k = find_DQ(shell, i);
-			while (i < k)
-				i++;
-				// token->index[j][r++] = shell->input[i];
-		}
+		if (shell->input[i] == SQ || shell->input[i] == DQ)
+			i = quotes_reader(shell, i, &k);
 		else if ((shell->input[i] == SPACE ) || (shell->input[i] == '\0'))
-		{
-//			printf("entrato\n");
-			token->index[j] = ft_calloc(sizeof (char), (i - l + 1));
-			while (l < i)
-			{
-				if (shell->input[l] == DQ)
-					while (shell->input[l] != DQ)
-						token->index[j][r++] = shell->input[l++];
-				else if (shell->input[l] == SQ)
-					while (shell->input[l] != SQ)
-						token->index[j][r++] = shell->input[l++];
-				else
-					token->index[j][r++] = shell->input[l++];
-			}
-			token->index[j][r++] = '\0';
-			j++;
-			while (shell->input[i] == SPACE && shell->input[i] != '\0')
-				i++;
-			if (shell->input[i] != '\0')
-				l = i;
-		}
+			setup_index(shell, token, &i);
 		else
 			i++;
 	}
+	token->index[token->wrd] = NULL;
 	print_matrix(token->index);
 }

@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   readline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:52:55 by nromito           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/05/07 14:01:37 by ciusca           ###   ########.fr       */
+=======
+/*   Updated: 2024/05/07 13:50:51 by nromito          ###   ########.fr       */
+>>>>>>> 38abf0c34da8dbdf5a9ed543e6f810bf1884571a
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +42,10 @@ char *lexer(t_shell *shell)
 	i = -1;
 	pipe_nbr = 0;
 	tmp_input = shell->mat_input;
-	words = count_input(shell);
-	token.index = ft_calloc(sizeof (char), (words + 1));
+	words = count_words(shell);
+	token.index = ft_calloc(sizeof (char), words + 1);
+	if (!token.index)
+		return (0);
 	checker(shell, &token, words);
 	while (tmp_input[++i])
 	{
