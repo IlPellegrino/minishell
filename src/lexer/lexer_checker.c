@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_checker.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 13:46:29 by nromito           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/05/07 16:41:15 by ciusca           ###   ########.fr       */
-=======
-/*   Updated: 2024/05/07 16:35:34 by nromito          ###   ########.fr       */
->>>>>>> 38abf0c34da8dbdf5a9ed543e6f810bf1884571a
+/*   Updated: 2024/05/07 17:05:30 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,35 +14,6 @@
 
 int	check_quotes(t_shell *shell, int i, int *words)
 {
-<<<<<<< HEAD
-	int	count;
-	
-	count = 0;
-	while(shell->input[*i] == quotes)
-	{
-		count++;
-		(*i)++;
-	}
-	if (count % 2 == 0)
-	{
-		shell->new_input[*j++] = 'F';
-		(*j)++;
-		shell->new_input[*j++] = ' ';
-		(*i)++;
-		return ;
-	}
-	while (shell->input[*i] != quotes && shell->input[*i])
-	{
-		if (shell->input[*i] == 32)
-			shell->new_input[*j] = '_';
-		else
-			shell->new_input[*j] = shell->input[*i];
-		(*i)++;
-		(*j)++;
-	}	
-	while (shell->input[*i] == quotes)
-		(*i)++;
-=======
 	if (shell->input[i] == DQ)
 	{
 		while(shell->input[++i] != DQ)
@@ -68,10 +35,9 @@ int	check_quotes(t_shell *shell, int i, int *words)
 		}
 	}
 	return (i);
->>>>>>> 38abf0c34da8dbdf5a9ed543e6f810bf1884571a
 }
 
-int	count_words(t_shell *shell)
+int	count_wrds(t_shell *shell)
 {
 	int		i;
 	int		words;
@@ -94,13 +60,6 @@ int	count_words(t_shell *shell)
 			if (shell->input[++i] == '\0')
 				words++;
 	}
-<<<<<<< HEAD
-	words = count_words(shell->new_input);
-	printf("input = %s\n", shell->new_input);
-	free(shell->new_input);
-	printf("words = %d\n", words);
-=======
->>>>>>> 38abf0c34da8dbdf5a9ed543e6f810bf1884571a
 	return (words);
 }
 

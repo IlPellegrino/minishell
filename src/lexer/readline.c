@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   readline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:52:55 by nromito           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/05/07 14:01:37 by ciusca           ###   ########.fr       */
-=======
-/*   Updated: 2024/05/07 13:50:51 by nromito          ###   ########.fr       */
->>>>>>> 38abf0c34da8dbdf5a9ed543e6f810bf1884571a
+/*   Updated: 2024/05/07 17:06:59 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,30 +38,16 @@ char *lexer(t_shell *shell)
 	i = -1;
 	pipe_nbr = 0;
 	tmp_input = shell->mat_input;
-	words = count_words(shell);
+	words = count_wrds(shell);
 	token.index = ft_calloc(sizeof (char), words + 1);
 	if (!token.index)
 		return (0);
 	checker(shell, &token, words);
-	while (tmp_input[++i])
-	{
-		if (tmp_input[i][0] == '|')
-			pipe_nbr++;
-	}
-	i = -1;
-	while (shell->mat_input[++i])
-	{
-		if (pipe_nbr > 0)
-			//pipex();
-			printf("culo\n");
-		else
-			forker(shell, shell->mat_input[i]);
-	}
-	//tokenizer(tokens);
+
 	return (0);
 }
 
-void	forker(t_shell *shell, char *input_args)
+/*void	forker(t_shell *shell, char *input_args)
 {
 	pid_t	pid;
 	char **mat_cmd = ft_split(input_args, 32);
@@ -77,4 +59,4 @@ void	forker(t_shell *shell, char *input_args)
 	}
 	else
 		waitpid(pid, 0, 0);
-}
+}*/
