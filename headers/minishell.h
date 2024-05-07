@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:59:59 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/07 17:03:20 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/07 17:31:27 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,6 @@ typedef struct s_shell
 		t_cmd			*cmd;
 }		t_shell;
 
-/* signal */
-void		get_signal(void);
 
 /* signals */
 void	get_signal(void);
@@ -87,7 +85,7 @@ int		count_wrds(t_shell *shell);
 void	checker(t_shell *shell, t_token *token, int words);
 
 char	*ft_readline(char *str);
-void	forker(t_shell *shell, char *input_args);
+//void	forker(t_shell *shell, char *input_args);
 
 /* parsing */
 int		tokenizer(t_shell *shell);

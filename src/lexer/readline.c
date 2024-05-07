@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:52:55 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/07 17:06:59 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/07 17:35:36 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char *lexer(t_shell *shell)
 	if (!token.index)
 		return (0);
 	checker(shell, &token, words);
-
+	shell->tokens = token;
 	return (0);
 }
 

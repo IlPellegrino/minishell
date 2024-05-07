@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 13:59:01 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/07 17:05:55 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/07 17:30:18 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,12 @@ int	tokenizer(t_shell *shell)
 	
 	i = -1;
 	token = shell->tokens;
-	print_matrix(token.index);
+	//print_matrix(token.index);
+	token.tokens = ft_calloc(sizeof(char *), 10);
+	printf("token.index %s", token.index[0]);
 	while (token.index[++i])
 	{
+		printf("i = %d\n", i);
 		if (find_cmd(shell, token.index[i]))
 			token.tokens[i] = 'C';
 		else if (!(ft_strncmp(token.index[i], "<<", 2)))
