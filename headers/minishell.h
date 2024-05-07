@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ciusca <ciusca@student.42firenze.it>       +#+  +:+       +#+        */
+/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:23:27 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/06 23:24:16 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/07 12:10:50 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <fcntl.h>
+# include <signal.h>
 # include <stdio.h>
 # include <sys/wait.h>
 # include <stdbool.h>
@@ -28,6 +29,13 @@
 # define MINISHELL "\033[0;36mminishell\033[0m$ "
 # define DQ 34
 # define SQ 39
+
+typedef struct s_count
+{
+	int		i;
+	int		j;
+	char 	*new_input;
+}			t_count;
 
 typedef struct s_cmd
 {
@@ -65,9 +73,12 @@ typedef struct s_shell
 }		t_shell;
 
 
+/* signals */
+void	get_signal(void);
+
 /* lexer */
 char 	*lexer(t_shell *shell);
-int		count_words(t_shell *shell);
+int		count_input(t_shell *shell);
 void	checker(t_shell *shell, t_token *token, int words);
 
 char	*ft_readline(char *str);

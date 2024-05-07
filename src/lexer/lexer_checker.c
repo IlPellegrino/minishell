@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_checker.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ciusca <ciusca@student.42firenze.it>       +#+  +:+       +#+        */
+/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 13:46:29 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/06 23:33:42 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/07 12:08:49 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,101 +15,47 @@
 
 // checker for even/odd quotes
 
-int	count_words(t_shell *shell)
+void	handle_quotes (t_shell *shell, int *i, int *j, int quotes)
 {
-	/*int	i;
-	int	words;
-	
-	i = -1;
-	words = 0;
-	while (shell->input[i] == SPACE)
-		i++;
-	while (shell->input[++i] != '\0')
+	while(shell->input[*i] == quotes)
+		(*i)++;
+	while (shell->input[*i] != quotes)
 	{
-		if (shell->input[i] == SPACE)
+		if (shell->input[*i] == 32)
+			shell->new_input[*j] = '_';
+		else
 		{
-			while (shell->input[i + 1] == SPACE && shell->input[i] != '\0')
-				i++;
-			if (shell->input[i] != 0)
-				words++;
+			shell->new_input[*j] = shell->input[*i];
+			(*i)++;
+			(*j)++;
 		}
-		else if (shell->input[i] == DQ)
-		{
-			i++;
-			while (shell->input[i] != DQ)
-				i++;
-		}
-		else if (shell->input[i] == SQ)
-		{
-			i++;
-			while (shell->input[i] != SQ)
-				i++;
-		}
-		if (shell->input[i + 1] == '\0')
-			words++;
-	}*/
+	}	
+	while (shell->input[*i] == quotes)
+		(*i)++;
+}
+
+int	count_input(t_shell *shell)
+{
 	int		i;
 	int		j;
 	int		words;
-	char	*new_input;
 
-	words = 0;
 	j = 0;
-	new_input = ft_calloc(sizeof(char*), ft_strlen(shell->input));
-	if (!new_input)
+	shell->new_input = ft_calloc(sizeof(char*), ft_strlen(shell->input));
+	if (!shell->new_input)
 		return (0);
 	i = 0;
 	while (shell->input[i])
 	{
 		if (shell->input[i] == DQ)
-		{
-			while (shell->input[i] == DQ)
-				i++;
-			while (shell->input[i] != DQ)
-			{
-				if (shell->input[i] == 32)
-					new_input[j] = '_';
-				else
-					new_input[j] = shell->input[i];
-				i++;
-				j++;
-			}
-			while (shell->input[i] == DQ)
-				i++;
-		}
+			handle_quotes(shell, &i, &j, DQ);
 		else if (shell->input[i] == SQ)
-		{
-			while(shell->input[i] == SQ)
-				i++;
-			while (shell->input[i] != SQ)
-			{
-				if (shell->input[i] == 32)
-					new_input[j] = '_';
-				else
-					new_input[j] = shell->input[i];
-				i++;
-				j++;
-			}
-			while (shell->input[i] == SQ)
-				i++;
-		}
+			handle_quotes(shell, &i, &j, SQ);
 		else
-			new_input[j++] = shell->input[i++];
+			shell->new_input[j++] = shell->input[i++];
 	}
-	printf("new input = %s\n", new_input); 
-	i = 0;
-	while (new_input[i] == SPACE)
-		i++;
-	while (new_input[i])
-	{
-		while (new_input[i] == SPACE)
-			i++;
-		if (new_input[i])
-			words++;
-		while (new_input[i] != SPACE && new_input[i])
-			i++;
-	}
-	printf("%d\n", words);
+	words = count_words(shell->new_input);
+	free(shell->new_input);
 	return (words);
 }
 

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nromito <nromito@student.42.fr>            +#+  +:+       +#+         #
+#    By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/27 16:23:10 by nromito           #+#    #+#              #
-#    Updated: 2024/05/05 16:43:29 by nromito          ###   ########.fr        #
+#    Updated: 2024/05/07 12:11:32 by ciusca           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,9 +24,10 @@ EXPANDER = expander/exp.c
 PARSER = parser/parsing.c
 LEXER = lexer/readline.c lexer/lexer_checker.c
 UTILS = utils/utils.c
+SIGNAL = signals/signals.c
 MAIN	= minishell.c
 
-SRCS = $(addprefix src/, $(MAIN) ${BUILT_IN} $(PROTECTED_FUNC) ${EXECUTOR} ${EXPANDER} ${PARSER} ${LEXER} ${UTILS})
+SRCS = $(addprefix src/, $(MAIN) $(SIGNAL) ${BUILT_IN} $(PROTECTED_FUNC) ${EXECUTOR} ${EXPANDER} ${PARSER} ${LEXER} ${UTILS})
 
 OBJS = ${SRCS:.c=.o}
 
