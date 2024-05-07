@@ -2,11 +2,15 @@
 	"files.associations": {
 		"minishell.h": "c",
 		"readline.h": "c",
+<<<<<<< HEAD
 		"signal.h": "c",
 		"stdbool.h": "c",
 		"wait.h": "c",
 		"errno.h": "c",
 		"stdlib.h": "c",
 		"libft.h": "c"
+=======
+		"limits.h": "c"
+>>>>>>> 70e60318b7042749678a47ee80fc9771a33d7166
 	}
 }

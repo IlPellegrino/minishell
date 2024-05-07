@@ -6,7 +6,11 @@
 #    By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/27 16:23:10 by nromito           #+#    #+#              #
+<<<<<<< HEAD
 #    Updated: 2024/05/06 17:51:32 by ciusca           ###   ########.fr        #
+=======
+#    Updated: 2024/05/07 12:11:32 by ciusca           ###   ########.fr        #
+>>>>>>> 70e60318b7042749678a47ee80fc9771a33d7166
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,10 +28,17 @@ EXPANDER = expander/exp.c
 PARSER = parser/parsing.c
 LEXER = lexer/readline.c lexer/lexer_checker.c
 UTILS = utils/utils.c
+<<<<<<< HEAD
 SIGNALS = signals/signals.c
 MAIN	= minishell.c
 
 SRCS = $(addprefix src/, $(SIGNALS) $(MAIN) ${BUILT_IN} $(PROTECTED_FUNC) ${EXECUTOR} ${EXPANDER} ${PARSER} ${LEXER} ${UTILS})
+=======
+SIGNAL = signals/signals.c
+MAIN	= minishell.c
+
+SRCS = $(addprefix src/, $(MAIN) $(SIGNAL) ${BUILT_IN} $(PROTECTED_FUNC) ${EXECUTOR} ${EXPANDER} ${PARSER} ${LEXER} ${UTILS})
+>>>>>>> 70e60318b7042749678a47ee80fc9771a33d7166
 
 OBJS = ${SRCS:.c=.o}
 

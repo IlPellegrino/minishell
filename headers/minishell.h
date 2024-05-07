@@ -3,14 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+<<<<<<< HEAD
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:23:27 by nromito           #+#    #+#             */
+<<<<<<< HEAD
 <<<<<<< HEAD
 /*   Updated: 2024/05/06 18:06:14 by ciusca           ###   ########.fr       */
 =======
 /*   Updated: 2024/05/06 18:13:05 by nromito          ###   ########.fr       */
 >>>>>>> 3b5afb8031eea053bb6a921d4b38fe2978708d2e
+=======
+/*   Updated: 2024/05/07 16:06:26 by nromito          ###   ########.fr       */
+=======
+/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/27 16:23:27 by nromito           #+#    #+#             */
+/*   Updated: 2024/05/07 12:10:50 by ciusca           ###   ########.fr       */
+>>>>>>> 91eb39e188b945c6239f54bcc719af818dfd1df9
+>>>>>>> 70e60318b7042749678a47ee80fc9771a33d7166
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +34,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <fcntl.h>
+# include <signal.h>
 # include <stdio.h>
 # include <sys/wait.h>
 # include <stdbool.h>
@@ -35,6 +47,13 @@
 # define DQ 34
 # define SQ 39
 
+typedef struct s_count
+{
+	int		i;
+	int		j;
+	char 	*new_input;
+}			t_count;
+
 typedef struct s_cmd
 {
 	char 			*path;
@@ -45,8 +64,9 @@ typedef struct s_cmd
 
 typedef struct s_token
 {
-		char **index;
-	
+		char 	**index;
+		int		wrd;
+		int		start;
 }		t_token;
 
 typedef struct s_garbage
@@ -58,16 +78,21 @@ typedef struct s_garbage
 
 typedef struct s_shell
 {
+<<<<<<< HEAD
 		struct s_shell 	*next;
 		char			*infile;
 		char 			*outfile;
 		char			**redirect;
+=======
+>>>>>>> 70e60318b7042749678a47ee80fc9771a33d7166
 		char 			*path;
 		char			*cmd_name;
 		char			**mat_input;
 		char			*input;
 		char			**envp;
-		char			**path_env; 
+		char			**path_env;
+		char			*new_input;
+		t_token			*tokens;
 		t_garbage  		*collector;
 		t_cmd			*cmd;
 }		t_shell;
@@ -75,9 +100,12 @@ typedef struct s_shell
 /* signals */
 void		get_signal(void);
 
+/* signals */
+void	get_signal(void);
+
 /* lexer */
 char 	*lexer(t_shell *shell);
-int		count_words(t_shell *shell);
+int		count_input(t_shell *shell);
 void	checker(t_shell *shell, t_token *token, int words);
 
 char	*ft_readline(char *str);
