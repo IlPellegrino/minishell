@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:26:12 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/06 13:57:09 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/07 12:13:38 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,11 @@ int	main(int argc, char **argv, char **envp)
 	argc++;
 	while(1)
 	{
+		get_signal();
 		//todo: garbage collector
 		shell.input = ft_readline(MINISHELL);
+		if (!shell.input)
+			return (printf("exit\n"), 0);
 		find_path(&shell);
 		if (shell.input)
 		{
