@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_checker.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 13:46:29 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/07 17:05:30 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/07 23:21:22 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,12 @@ int	check_quotes(t_shell *shell, int i, int *words)
 	}
 	return (i);
 }
+
+// tener conto di questi prompt
+// ls|echo ciao ok
+// "ls"|echo ciao ok
+// "ls"|"echo" ciao ok
+// "ls|echo"ciao nope
 
 int	count_wrds(t_shell *shell)
 {
