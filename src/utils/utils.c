@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 19:59:43 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/08 16:59:42 by nromito          ###   ########.fr       */
+/*   Updated: 2024/05/09 16:30:05 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	print_matrix(char **mat)
 	i = 0;
 	while (mat[i])
 	{
-		printf("%sEND\n", mat[i]);
+		printf("%s\n", mat[i]);
 		i++;
 	}
 }
