@@ -1,11 +1,12 @@
-file1
+append
 headers
-hello
-heredoc
+ignore_readline.supp
 infile
 libft
 Makefile
 minishell
 outfile
+output
+prova
 README.md
 src

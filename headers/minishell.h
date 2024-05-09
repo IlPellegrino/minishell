@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:59:59 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/07 17:31:27 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/09 12:22:31 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,12 @@
 # define SQ 39
 
 
+
 typedef struct s_cmd
 {
-	char 			*path;
-	char 			**command_table;
+	char 			*pathname;
+	char 			**cmd_arg;
+	char			*redirect;
 	struct s_shell 	*shell;
 }			t_cmd;
 
@@ -53,7 +55,7 @@ typedef struct s_token
 typedef struct s_garbage
 {
 	void				*arg;
-	int					flag;
+	void				**mat;
 	struct s_garbage 	*next;
 }		t_garbage;
 
@@ -70,41 +72,44 @@ typedef struct s_shell
 		char			**envp;
 		char			**path_env;
 		char			*new_input;
-		t_token			tokens;
+		int				sig_recived;
+		int				n_pipes;
+		t_token			*tokens;
 		t_garbage  		*collector;
-		t_cmd			*cmd;
+		t_cmd			*cmd_table;
 }		t_shell;
 
+/* close shell */
+void		close_shell(t_shell *shell);
+int			collect_garbage(t_shell *shell, void *arg, void **mat);
+t_garbage	*new_node(void *arg, void **mat);
 
 /* signals */
-void	get_signal(void);
+void		get_signal();
 
 /* lexer */
-char 	*lexer(t_shell *shell);
-int		count_wrds(t_shell *shell);
-void	checker(t_shell *shell, t_token *token, int words);
+char 		*lexer(t_shell *shell);
+int			count_wrds(t_shell *shell);
+void		checker(t_shell *shell, t_token *token, int words);
 
-char	*ft_readline(char *str);
-//void	forker(t_shell *shell, char *input_args);
+char		*ft_readline(char *str);
 
 /* parsing */
-int		tokenizer(t_shell *shell);
-int		get_path(t_shell *shell);
-int		parsing(t_shell *shell);
+int			tokenizer(t_shell *shell);
+int			get_path(t_shell *shell);
+int			parsing(t_shell *shell);
+
 /* protected functions */
-int		fork_p(void);
-int		access_p(char *file, int mode);
-void	wait_p(int *status);
-void	pipe_p(int pipe_fds[2]);
-void	execve_p(char *cmd_path, char **argv, char **envp);
-void	ft_error(char *msg, int id);
-void	close_fds(void);
+int			fork_p(void);
+int			access_p(char *file, int mode);
+void		wait_p(int *status);
+void		pipe_p(int pipe_fds[2]);
+void		execve_p(char *cmd_path, char **argv, char **envp);
+void		ft_error(char *msg, int id);
+void		close_fds(void);
 
-/*utils*/
-int		find_cmd(t_shell *shell, char *cmd);
-void	print_matrix(char **mat);
-
-/* garbage collector */
-void	garbage_collector(t_shell *shell);
+/* utils */
+int			find_cmd(t_shell *shell, char *cmd);
+void		print_matrix(char **mat);
 
 #endif

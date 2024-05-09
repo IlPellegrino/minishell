@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 13:46:29 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/07 17:05:30 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/08 16:27:58 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ void	setup_index(t_shell *shell, t_token *token, int *i)
 	int	r;
 
 	r = 0;
-	token->index[token->wrd] = ft_calloc(sizeof (char), (*i) - token->start + 1);
+	token->index[token->wrd] = ft_calloc(sizeof (char),  (*i)- token->start + 1);
 	if (!token->index[token->wrd])
 		return ;
 	create_word(shell, token, r, (*i));

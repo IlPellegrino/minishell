@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 15:34:29 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/07 10:59:47 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/08 15:09:09 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <unistd.h>
 # include <limits.h>
 
+int		matrix_len(char **mat);
 int		count_words(char *str);
 int		ft_atoi(const char *str);
 void	ft_bzero(void *s, size_t n);
