@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 15:02:12 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/02 16:51:02 by nromito          ###   ########.fr       */
+/*   Updated: 2024/05/08 11:25:32 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,20 @@ void	ft_error(char *msg, int id)
 	if (id == 127)
 		free(msg);
 	exit(id);
+}
+
+void	error_lexer(char *msg, int id, t_shell *shell)
+{
+	free_matrix(shell->tokens.index);
+	if (!msg)
+		perror("Error");
+	else
+	{
+		ft_putstr_fd("Error: ", STDERR_FILENO);
+		ft_putstr_fd(msg, STDERR_FILENO);
+		ft_putstr_fd("\n", STDERR_FILENO);
+	}
+	exit (id);
 }
 
 void	close_fds(void)
