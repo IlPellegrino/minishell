@@ -6,7 +6,7 @@
 #    By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/07 17:01:15 by ciusca            #+#    #+#              #
-#    Updated: 2024/05/07 17:23:09 by ciusca           ###   ########.fr        #
+#    Updated: 2024/05/08 11:37:25 by ciusca           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,7 @@ LIBFT = libft/libft.a
 HEADERS = headers/minishell.h
 
 PROTECTED_FUNC = protected_func/protected_functions.c
+CLOSING = close_and_free/close_shell.c
 BUILT_IN = built-in/echo.c
 EXECUTOR = executor/exec.c
 EXPANDER = expander/exp.c
@@ -27,9 +28,11 @@ UTILS = utils/utils.c
 SIGNAL = signals/signals.c
 MAIN	= minishell.c
 
-SRCS = $(addprefix src/, $(MAIN) $(SIGNAL) ${BUILT_IN} $(PROTECTED_FUNC) ${EXECUTOR} ${EXPANDER} ${PARSER} ${LEXER} ${UTILS})
+SRCS = $(addprefix src/, $(MAIN) $(CLOSING) $(SIGNAL) ${BUILT_IN} $(PROTECTED_FUNC) ${EXECUTOR} ${EXPANDER} ${PARSER} ${LEXER} ${UTILS})
 
 OBJS = ${SRCS:.c=.o}
+
+SUPRRESSION = @valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=ingore_readline.supp -s ./minishell
 
 COMPILE = cc -Wall -Wextra -Werror -g 
 
@@ -57,6 +60,8 @@ ${NAME}: ${OBJS} ${HEADERS}
 		@echo $(BLUE)   " |_|  |_|_____|_| \_|_____|_____/|_|  |_|______|______|______| " $(NONE)
 		@echo $(WHITE)  "                                                               " $(NONE)
 
+sup: all
+		@valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=ignore_readline.supp -s ./minishell
 clean:
 		@rm -rf $(OBJS)
 		@make -C $(LIBFT_PATH) clean

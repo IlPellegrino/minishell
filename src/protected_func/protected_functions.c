@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   protected_functions.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 15:02:12 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/08 11:25:32 by nromito          ###   ########.fr       */
+/*   Updated: 2024/05/09 16:42:32 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	ft_error(char *msg, int id)
 
 void	error_lexer(char *msg, int id, t_shell *shell)
 {
-	free_matrix(shell->tokens.index);
+	free_matrix(shell->tokens->index);
 	if (!msg)
 		perror("Error");
 	else

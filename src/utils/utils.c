@@ -3,29 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 19:59:43 by nromito           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/05/09 16:30:05 by nromito          ###   ########.fr       */
+=======
+/*   Updated: 2024/05/09 16:42:38 by ciusca           ###   ########.fr       */
+>>>>>>> ea21c29f3a2b15f36193799f24c332be496a091e
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
-
-void	garbage_collector(t_shell *shell)
-{
-	t_garbage	*garbage;
-	
-	garbage = shell->collector;
-	while (garbage)
-	{
-		if (garbage->flag == 0)
-			free(garbage->arg);
-		else if (garbage->flag == 1)
-			free_matrix(garbage->arg);
-		garbage = garbage->next;
-	}
-}
 
 void	print_matrix(char **mat)
 {
