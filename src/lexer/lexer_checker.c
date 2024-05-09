@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 13:46:29 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/08 16:27:58 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/09 16:40:45 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	check_quotes(t_shell *shell, int i, int *words)
 	{
 		while(shell->input[++i] != DQ)
 			;
-		if (shell->input[++i] == '\0')
+		if (shell->input[++i] == '\0' || shell->input[i] == PIPE)
 		{
 			(*words)++;
 			return (i);	
@@ -28,13 +28,20 @@ int	check_quotes(t_shell *shell, int i, int *words)
 	{
 		while(shell->input[++i] != SQ)
 			;
-		if (shell->input[++i] == '\0')
+		if (shell->input[++i] == '\0' || shell->input[i] == PIPE)
 		{
 			(*words)++;
 			return (i);	
 		}
 	}
 	return (i);
+}
+
+int	pipe_checker(t_shell *shell, int i, int *words)
+{
+	if (shell->input[i + 1] != SPACE && shell->input[i - 1] != SPACE)
+		(*words)++;
+	return (++i);
 }
 
 int	count_wrds(t_shell *shell)
@@ -48,18 +55,26 @@ int	count_wrds(t_shell *shell)
 			i++;
 	while (shell->input[i] != '\0')
 	{
-		if (shell->input[i] == DQ || shell->input[i] == SQ)  
+		if (shell->input[i] == DQ || shell->input[i] == SQ)// quotes case
 			i = check_quotes(shell, i, &words);
-		else if (shell->input[i] == SPACE)
+		else if (shell->input[i] == SPACE)// space case
 		{
-			words++;
+			if (shell->input[i - 1] != PIPE)
+				words++;
 			while(shell->input[++i] == SPACE)
 				;
 		}
-		else
-			if (shell->input[++i] == '\0')
+		else if (shell->input[i] == PIPE)// pipe case
+		{
+			if (shell->input[i + 1] != PIPE)
+				words++;
+			i++;
+		}
+		else//other cases
+			if (shell->input[++i] == '\0' || shell->input[i] == PIPE)
 				words++;
 	}
+	printf("words = %d\n", words);
 	return (words);
 }
 
@@ -87,16 +102,20 @@ int	find_DQ(t_shell *shell, int	i)
 	return (0);
 }
 
+// tener conto di ls|     cat o viceversa OK
+// tener conto di ls|   || cat NO
+
 void	create_word(t_shell *shell, t_token *token, int r, int i)
 {
 	while (++token->start < i)
 	{
 		if (shell->input[token->start] == DQ)
 		{
-			if (shell->input[++token->start] == SQ
+			if (shell->input[++token->start] == DQ
 				&& (shell->input[token->start + 1] == SPACE
-				|| shell->input[token->start + 1] == '\0'))
-				break ;
+				|| shell->input[token->start + 1] == '\0'
+				|| shell->input[token->start + 1] == PIPE))
+				break;
 			while (shell->input[token->start] != DQ)
 				token->index[token->wrd][r++] = shell->input[token->start++];
 		}
@@ -104,13 +123,27 @@ void	create_word(t_shell *shell, t_token *token, int r, int i)
 		{
 			if (shell->input[++token->start] == SQ
 				&& (shell->input[token->start + 1] == SPACE
-				|| shell->input[token->start + 1] == '\0'))
-				break ;
+				|| shell->input[token->start + 1] == '\0'
+				|| shell->input[token->start + 1] == PIPE))
+				break;
 			while (shell->input[token->start] != SQ)
 				token->index[token->wrd][r++] = shell->input[token->start++];
 		}
+		// else if (shell->input[token->start] == PIPE)
+		// {
+		// 	token->index[token->wrd][r++] = shell->input[token->start];
+		// 	if (shell->input[token->start + 1] != PIPE)
+		// 		break;
+		// 	// while (shell->input[++token->start] == PIPE)
+		// 	// 	token->index[token->wrd][r++] = shell->input[token->start];
+		// }
 		else
-			token->index[token->wrd][r++] = shell->input[token->start];
+		{
+			if (shell->input[token->start] != '\0')
+				token->index[token->wrd][r++] = shell->input[token->start];
+			// if (shell->input[token->start + 1] == PIPE)
+			// 	break;
+		}
 	}
 }
 
@@ -140,17 +173,47 @@ int	quotes_reader(t_shell *shell, int i, int *k)
 void	setup_index(t_shell *shell, t_token *token, int *i)
 {
 	int	r;
+	// int	fake_start;
+	int	pipe_nbr;
 
 	r = 0;
-	token->index[token->wrd] = ft_calloc(sizeof (char),  (*i)- token->start + 1);
-	if (!token->index[token->wrd])
-		return ;
-	create_word(shell, token, r, (*i));
-	while (shell->input[(*i)] == SPACE && shell->input[(*i)] != '\0')
-		(*i)++;
+	pipe_nbr = 0;
+	if ((shell->input[(*i) - 1] != SPACE && shell->input[(*i)] == PIPE && (*i) != 0) || (shell->input[(*i)] != PIPE))	
+	{
+		token->index[token->wrd] = ft_calloc(sizeof (char), (*i) - token->start + 1);
+		if (!token->index[token->wrd])
+			return ;
+		create_word(shell, token, r, (*i));
+		token->wrd++;
+		printf("start = %d\n", token->start);
+		r = 0;
+	}
+	if (shell->input[(*i)] == PIPE)
+	{
+		//fake_start = token->start;
+		while (shell->input[(*i)] == PIPE)
+		{
+			pipe_nbr++;
+			(*i)++;
+		}
+		token->index[token->wrd] = ft_calloc(sizeof (char), pipe_nbr + 1);
+		if (!token->index[token->wrd])
+			return ;
+		while (pipe_nbr-- > 0)
+			token->index[token->wrd][r++] = '|';
+		token->wrd++;
+		printf("i = %d\n", (*i));
+	}
+	printf("2i - %d\n", (*i));
+	if (shell->input[(*i)] == SPACE)
+	{	
+		while (shell->input[(*i)] == SPACE && shell->input[(*i)] != '\0')
+			(*i)++;
+	}
 	if (shell->input[(*i)] != '\0')
 		token->start = (*i) - 1;
-	token->wrd++;
+//	if (shell->input[(*i - 1)] == SPACE)
+//		token->start += 1;
 }
 
 void	checker(t_shell *shell, t_token *token, int words)
@@ -166,13 +229,14 @@ void	checker(t_shell *shell, t_token *token, int words)
 	token->start = i - 1;
 	while (token->wrd < words)
 	{
-		if (shell->input[i] == SQ || shell->input[i] == DQ)
+		if (shell->input[i] == SQ || shell->input[i] == DQ)// scorrimento quotes
 			i = quotes_reader(shell, i, &k);
-		else if ((shell->input[i] == SPACE ) || (shell->input[i] == '\0'))
+		else if ((shell->input[i] == SPACE) || (shell->input[i] == '\0') || (shell->input[i] == PIPE))// creates every word
 			setup_index(shell, token, &i);
-		else
+		else// other cases
 			i++;
 	}
 	token->index[token->wrd] = NULL;
 	print_matrix(token->index);
+	printf("\n");
 }

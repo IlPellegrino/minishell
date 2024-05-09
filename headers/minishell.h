@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:59:59 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/09 12:22:31 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/09 16:41:17 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 # define MINISHELL "\e[1;96mminishell\033[0m$ "
 # define DQ 34
 # define SQ 39
-
+# define PIPE 124
 
 
 typedef struct s_cmd
@@ -88,9 +88,10 @@ t_garbage	*new_node(void *arg, void **mat);
 void		get_signal();
 
 /* lexer */
-char 		*lexer(t_shell *shell);
-int			count_wrds(t_shell *shell);
-void		checker(t_shell *shell, t_token *token, int words);
+char 	*lexer(t_shell *shell);
+int		count_wrds(t_shell *shell);
+void	pipe_word(t_shell *shell, t_token *token, int *r);
+void	checker(t_shell *shell, t_token *token, int words);
 
 char		*ft_readline(char *str);
 

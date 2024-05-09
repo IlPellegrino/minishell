@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 19:59:43 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/08 10:36:47 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/09 16:42:38 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	print_matrix(char **mat)
 	i = 0;
 	while (mat[i])
 	{
-		printf("%s\n", mat[i]);
+		printf("%sEND\n", mat[i]);
 		i++;
 	}
 }
