@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   close_shell.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 10:32:57 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/09 10:34:10 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/10 11:35:22 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	print_list(t_garbage *col)
 	}
 }
 
-t_garbage *new_node(void *arg, void **mat)
+t_garbage *new_node(char *arg, char **mat)
 {
 	t_garbage *node;
 	
@@ -38,7 +38,7 @@ t_garbage *new_node(void *arg, void **mat)
 	return (node);
 }
 
-int	collect_garbage(t_shell *shell, void *arg, void **mat)
+int	collect_garbage(t_shell *shell, char *arg, char **mat)
 {
 	t_garbage *collect;
 	
@@ -61,7 +61,6 @@ void	close_shell(t_shell *shell)
 	free(garbage);
 	garbage = NULL;
 	garbage = temp;
-	temp = garbage;
 	while (garbage)
 	{
 		if (garbage->arg)

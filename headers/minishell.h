@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:59:59 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/09 18:19:18 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/10 11:37:08 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ typedef struct s_token
 
 typedef struct s_garbage
 {
-	void				*arg;
-	void				**mat;
+	char				*arg;
+	char				**mat;
 	struct s_garbage 	*next;
 }		t_garbage;
 
@@ -81,8 +81,8 @@ typedef struct s_shell
 
 /* close shell */
 void		close_shell(t_shell *shell);
-int			collect_garbage(t_shell *shell, void *arg, void **mat);
-t_garbage	*new_node(void *arg, void **mat);
+int			collect_garbage(t_shell *shell, char *arg, char **mat);
+t_garbage	*new_node(char *arg, char **mat);
 
 /* signals */
 void		get_signal();

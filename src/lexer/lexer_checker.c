@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 13:46:29 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/09 17:32:42 by nromito          ###   ########.fr       */
+/*   Updated: 2024/05/10 11:24:29 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,7 +173,8 @@ void	create_pipe(t_shell *shell, t_token *token, int (*i))
 		pipe_nbr++;
 		(*i)++;
 	}
-	token->index[token->wrd] = ft_calloc(sizeof (char), pipe_nbr + 1);
+	token->index[token->wrd] = ft_calloc(sizeof (char*), pipe_nbr + 1);
+	printf("pipe allocation %d\n", pipe_nbr + 1);
 	if (!token->index[token->wrd])
 		return ;
 	while (pipe_nbr-- > 0)
@@ -191,13 +192,15 @@ void	setup_index(t_shell *shell, t_token *token, int *i)
 		|| (shell->input[(*i)] != PIPE))
 	{
 		token->index[token->wrd]
-			= ft_calloc(sizeof(char), (*i) - token->start + 1);
+			= ft_calloc(sizeof(char*), (*i) - token->start);
+		printf("calloc = %d\n", token->wrd);
 		if (!token->index[token->wrd])
 			return ;
 		create_word(shell, token, r, (*i));
 		token->wrd++;
 		r = 0;
 	}
+	printf("wrd = %d\n", token->wrd);
 	if (shell->input[(*i)] == PIPE)
 		create_pipe(shell, token, &(*i));
 	if (shell->input[(*i)] == SPACE)
@@ -227,6 +230,7 @@ void	checker(t_shell *shell, t_token *token, int words)
 			setup_index(shell, token, &i);
 		else
 			i++;
+		printf("wrd = %d\n", token->wrd);
 	}
 	token->index[token->wrd] = NULL;
 	print_matrix(token->index);

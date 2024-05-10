@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:54:36 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/09 18:19:20 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/10 11:27:39 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	get_path(t_shell *shell)
 	shell->path_env = ft_split(path, ':');
 	if (!shell->path_env)
 		return (0);
+	collect_garbage(shell, 0, (void**)shell->path_env);
 	temp = shell->path_env[0];
 	shell->path_env[0] = ft_strtrim(temp, "PATH="); // crea la path da passare all'access
 	free(temp);

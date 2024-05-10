@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 13:59:01 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/09 18:33:49 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/10 11:28:15 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ int	tokenizer(t_shell *shell)
 	token->tokens = ft_calloc(sizeof(char *), matrix_len(token->index) + 1);
 	if (!token->tokens)
 		close_shell(shell);
+	collect_garbage(shell, token->tokens, 0);
 	while (token->index[++i])
 	{
 		if (find_cmd(shell, token->index[i]))
