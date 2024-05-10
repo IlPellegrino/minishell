@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 13:59:01 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/10 11:28:15 by nromito          ###   ########.fr       */
+/*   Updated: 2024/05/10 13:43:37 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-int	find_token(t_shell *shell, int find, int pipe)
+/*int	find_token(t_shell *shell, int find, int pipe)
 {
 	t_token *token;
 	int		i;
@@ -84,9 +84,10 @@ int	prioritize_commands(t_shell *shell)
 			shell->n_pipes++;
 	i = -1;
 	new_tokens = infile_heredoc_priority(shell, new_tokens);
-	token->tokens = new_tokens;
+	token->tokens = ft_strdup(new_tokens);
+	free(new_tokens);
 	return (1);
-}
+}*/
 
 int	tokenizer(t_shell *shell)
 {
@@ -117,5 +118,5 @@ int	tokenizer(t_shell *shell)
 			token->tokens[i] = 'S';
 	}
 	printf("tokens = %s\n", token->tokens);
-	return (prioritize_commands(shell));
+	return (1);
 }
