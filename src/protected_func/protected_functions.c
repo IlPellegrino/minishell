@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 15:02:12 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/10 13:54:23 by nromito          ###   ########.fr       */
+/*   Updated: 2024/05/10 13:59:24 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,36 +48,6 @@ int	access_p(char *file, int mode)
 	if (ret == -1 && errno != ENOENT)
 		ft_error(NULL, 10);
 	return (ret);
-}
-
-void	ft_error(char *msg, int id)
-{
-	if (!msg)
-		perror("Error");
-	else
-	{
-		ft_putstr_fd("Error: ", STDERR_FILENO);
-		ft_putstr_fd(msg, STDERR_FILENO);
-		ft_putstr_fd("\n", STDERR_FILENO);
-	}
-	close_fds();
-	if (id == 127)
-		free(msg);
-	exit(id);
-}
-
-void	error_lexer(char *msg, int id, t_shell *shell)
-{
-	free_matrix(shell->tokens->index);
-	if (!msg)
-		perror("Error");
-	else
-	{
-		ft_putstr_fd("Error: ", STDERR_FILENO);
-		ft_putstr_fd(msg, STDERR_FILENO);
-		ft_putstr_fd("\n", STDERR_FILENO);
-	}
-	exit (id);
 }
 
 void	close_fds(void)

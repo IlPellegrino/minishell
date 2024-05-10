@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:26:12 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/10 11:32:30 by nromito          ###   ########.fr       */
+/*   Updated: 2024/05/10 13:46:06 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,10 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_shell		shell;
 	t_garbage 	*garbage;
+	t_token		*token;
 
+	token = malloc(sizeof(t_token));
+	shell.tokens = token;
 	garbage = malloc(sizeof(t_garbage));
 	garbage->next = NULL;
 	garbage->arg = 0;

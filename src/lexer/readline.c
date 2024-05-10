@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   readline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:52:55 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/10 11:34:21 by nromito          ###   ########.fr       */
+/*   Updated: 2024/05/10 13:45:23 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char *lexer(t_shell *shell)
 	char	**tmp_input;
 	t_token *token;
 
-	token = malloc(sizeof(t_token));
+	token = shell->tokens;
 	i = -1;
 	pipe_nbr = 0;
 	tmp_input = shell->mat_input;
@@ -46,7 +46,7 @@ char *lexer(t_shell *shell)
 		return (0);
 	collect_garbage(shell, 0, token->index);
 	checker(shell, token, words);
-	shell->tokens = token;
+	//shell->tokens = token;
 	return (0);
 }
 

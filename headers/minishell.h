@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:59:59 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/10 11:37:08 by nromito          ###   ########.fr       */
+/*   Updated: 2024/05/10 13:55:04 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,8 +106,8 @@ int			access_p(char *file, int mode);
 void		wait_p(int *status);
 void		pipe_p(int pipe_fds[2]);
 void		execve_p(char *cmd_path, char **argv, char **envp);
-void		ft_error(char *msg, int id);
 void		close_fds(void);
+int			ft_error(char *str, int error);
 
 /* utils */
 int			find_cmd(t_shell *shell, char *cmd);
