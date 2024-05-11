@@ -6,11 +6,12 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 10:32:57 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/10 13:52:36 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/10 16:58:04 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
+
 
 t_garbage *new_node(char *arg, char **mat)
 {
@@ -44,6 +45,7 @@ void	close_shell(t_shell *shell)
 	temp = garbage->next;
 	free(shell->tokens);
 	free(garbage);
+	///free_cmd_table(shell);
 	garbage = NULL;
 	garbage = temp;
 	while (garbage)

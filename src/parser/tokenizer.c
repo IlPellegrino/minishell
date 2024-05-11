@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 13:59:01 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/10 13:43:37 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/11 14:25:28 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,32 @@ int	prioritize_commands(t_shell *shell)
 	return (1);
 }*/
 
+int	set_token(t_shell *shell, t_token *token, int *i)
+{
+	if (!*token->index[*i])
+		token->tokens[*i] = '/';
+	else if (find_cmd(shell, token->index[*i]))
+		token->tokens[*i] = 'C';
+	else if (!(ft_strncmp(token->index[*i], "<<", 2)))
+	{
+		if (!token->index[*i][2])
+			token->tokens[*i] = 'h';
+		else
+			token->tokens[*i] = 'H';
+	}
+	else if (!(ft_strncmp(token->index[*i], ">>", 2)))
+		token->tokens[*i] = 'A';
+	else if (ft_strchr(token->index[*i], '>'))
+		token->tokens[*i] = 'O';
+	else if (ft_strchr(token->index[*i], '<'))
+		token->tokens[*i] = 'I';
+	else if (ft_strchr(token->index[*i], '|'))
+		token->tokens[*i] = 'P';
+	else
+		token->tokens[*i] = 'S';
+	return (1);
+}
+
 int	tokenizer(t_shell *shell)
 {
 	t_token *token;
@@ -101,22 +127,10 @@ int	tokenizer(t_shell *shell)
 		close_shell(shell);
 	collect_garbage(shell, token->tokens, 0);
 	while (token->index[++i])
-	{
-		if (find_cmd(shell, token->index[i]))
-			token->tokens[i] = 'C';
-		else if (!(ft_strncmp(token->index[i], "<<", 2)))
-			token->tokens[i] = 'H';
-		else if (!(ft_strncmp(token->index[i], ">>", 2)))
-			token->tokens[i] = 'A';
-		else if (ft_strchr(token->index[i], '>'))
-			token->tokens[i] = 'O';
-		else if (ft_strchr(token->index[i], '<'))
-			token->tokens[i] = 'I';
-		else if (ft_strchr(token->index[i], '|'))
-			token->tokens[i] = 'P';
-		else
-			token->tokens[i] = 'S';
-	}
-	printf("tokens = %s\n", token->tokens);
+		if (!set_token(shell, token, &i))
+			return (0);
+	printf("tokens = [%s]\n", token->tokens);
+	if (!token->tokens[1])
+		printf("len = %zu\n", ft_strlen(token->tokens));
 	return (1);
 }

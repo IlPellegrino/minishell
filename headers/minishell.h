@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:59:59 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/10 13:55:04 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/11 16:37:41 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,19 @@
 # include <signal.h>
 # include <errno.h>
 
-
 # define MINISHELL "\e[1;96mminishell\033[0m$ "
 # define DQ 34
 # define SQ 39
 # define PIPE 124
-
+# define COMMAND 0
+# define PARSE 1
+# define SYNTAX 2
 
 typedef struct s_cmd
 {
 	char 			*pathname;
 	char 			**cmd_arg;
-	char			*redirect;
+	char			*command;
 	struct s_shell 	*shell;
 }			t_cmd;
 
@@ -88,10 +89,10 @@ t_garbage	*new_node(char *arg, char **mat);
 void		get_signal();
 
 /* lexer */
-char 	*lexer(t_shell *shell);
-int		count_wrds(t_shell *shell);
-void	pipe_word(t_shell *shell, t_token *token, int *r);
-void	checker(t_shell *shell, t_token *token, int words);
+char 		*lexer(t_shell *shell);
+int			count_wrds(t_shell *shell);
+void		pipe_word(t_shell *shell, t_token *token, int *r);
+void		checker(t_shell *shell, t_token *token, int words);
 
 char		*ft_readline(char *str);
 
@@ -107,10 +108,13 @@ void		wait_p(int *status);
 void		pipe_p(int pipe_fds[2]);
 void		execve_p(char *cmd_path, char **argv, char **envp);
 void		close_fds(void);
-int			ft_error(char *str, int error);
+int			ft_error(int error_type, char *str);
 
 /* utils */
+int			find_space(char *index);
+int			is_redir(int c);
 int			find_cmd(t_shell *shell, char *cmd);
 void		print_matrix(char **mat);
+int			init_structs(t_shell *shell);
 
 #endif

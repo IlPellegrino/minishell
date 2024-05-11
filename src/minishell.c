@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:26:12 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/10 13:46:06 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/11 16:28:17 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,20 +27,11 @@ char	*ft_readline(char *str)
 int	main(int argc, char **argv, char **envp)
 {
 	t_shell		shell;
-	t_garbage 	*garbage;
-	t_token		*token;
 
-	token = malloc(sizeof(t_token));
-	shell.tokens = token;
-	garbage = malloc(sizeof(t_garbage));
-	garbage->next = NULL;
-	garbage->arg = 0;
-	garbage->mat = 0;
-	shell.collector = garbage;
+	(void)argc;
+	(void)argv;
+	init_structs(&shell);
 	shell.envp = envp;
-	if (argv[1])
-		argc = 2;
-	argc++;
 	while(1)
 	{
 		get_signal();
@@ -48,12 +39,13 @@ int	main(int argc, char **argv, char **envp)
 		if (!shell.input)
 			close_shell(&shell);
 		collect_garbage(&shell, shell.input, 0);
-		//printf("input = %s\n", shell.input);
 		get_path(&shell);
 		if (shell.input)
 		{
 			lexer(&shell);			
 			parsing(&shell);
+			//execute();
 		}
 	}
+
 }
