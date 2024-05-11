@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:59:59 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/10 13:55:04 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/10 16:28:09 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,9 @@ typedef struct s_cmd
 typedef struct s_token
 {
 		char 	**index;
-		int		*mat_ind; 
+		int		*mat_ind;
 		char	*tokens;
+		int		expand;
 		int		wrd;
 		int		start;
 }		t_token;

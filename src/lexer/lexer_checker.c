@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 13:46:29 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/10 11:24:29 by nromito          ###   ########.fr       */
+/*   Updated: 2024/05/11 14:20:54 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,10 @@ int	check_quotes(t_shell *shell, int i, int *words)
 {
 	if (shell->input[i] == DQ)
 	{
-		while (shell->input[++i] != DQ)
+		while (shell->input[++i] != DQ && shell->input[i])
 			;
+		if (shell->input[i] == '\0')
+			close_shell(shell);
 		if (shell->input[++i] == '\0' || shell->input[i] == PIPE)
 		{
 			(*words)++;
@@ -26,8 +28,10 @@ int	check_quotes(t_shell *shell, int i, int *words)
 	}
 	else if (shell->input[i] == SQ)
 	{
-		while (shell->input[++i] != SQ)
+		while (shell->input[++i] != SQ && shell->input[i])
 			;
+		if (shell->input[i] == '\0')
+			close_shell(shell);
 		if (shell->input[++i] == '\0' || shell->input[i] == PIPE)
 		{
 			(*words)++;
@@ -76,7 +80,6 @@ int	count_wrds(t_shell *shell)
 		else if (shell->input[++i] == '\0' || shell->input[i] == PIPE)
 			words++;
 	}
-	printf("words = %d\n", words);
 	return (words);
 }
 
@@ -86,7 +89,7 @@ int	find_sq(t_shell *shell, int i)
 	while (shell->input[i] != SQ && shell->input[i] != '\0')
 		i++;
 	if (shell->input[i] == '\0')
-		ft_error(NULL, 40);
+		close_shell(shell);
 	else if (shell->input[i] == SQ)
 		return (i);
 	return (0);
@@ -98,7 +101,7 @@ int	find_dq(t_shell *shell, int i)
 	while (shell->input[i] != DQ && shell->input[i] != '\0')
 		i++;
 	if (shell->input[i] == '\0')
-		ft_error(NULL, 40);
+		close_shell(shell);
 	else if (shell->input[i] == DQ)
 		return (i);
 	return (0);
@@ -114,24 +117,32 @@ int	check_word(t_shell *shell, t_token *token, int quote)
 	return (0);
 }
 
+void	copy_in_quotes(t_shell *shell, t_token *token, int (*r), int quote)
+{
+	if (quote == DQ)
+	{
+		if (check_word(shell, token, DQ))
+			return ;
+		while (shell->input[token->start] != DQ)
+			token->index[token->wrd][(*r)++] = shell->input[token->start++];
+	}
+	else if (quote == SQ)
+	{
+		if (check_word(shell, token, SQ))
+			return ;
+		while (shell->input[token->start] != SQ)
+			token->index[token->wrd][(*r)++] = shell->input[token->start++];
+	}
+}
+
 void	create_word(t_shell *shell, t_token *token, int r, int i)
 {
 	while (++token->start < i)
 	{
 		if (shell->input[token->start] == DQ)
-		{
-			if (check_word(shell, token, DQ))
-				break ;
-			while (shell->input[token->start] != DQ)
-				token->index[token->wrd][r++] = shell->input[token->start++];
-		}
+			copy_in_quotes(shell, token, &r, DQ);
 		else if (shell->input[token->start] == SQ)
-		{
-			if (check_word(shell, token, SQ))
-				break ;
-			while (shell->input[token->start] != SQ)
-				token->index[token->wrd][r++] = shell->input[token->start++];
-		}
+			copy_in_quotes(shell, token, &r, SQ);
 		else
 			if (shell->input[token->start] != '\0')
 				token->index[token->wrd][r++] = shell->input[token->start];
@@ -174,7 +185,6 @@ void	create_pipe(t_shell *shell, t_token *token, int (*i))
 		(*i)++;
 	}
 	token->index[token->wrd] = ft_calloc(sizeof (char*), pipe_nbr + 1);
-	printf("pipe allocation %d\n", pipe_nbr + 1);
 	if (!token->index[token->wrd])
 		return ;
 	while (pipe_nbr-- > 0)
@@ -193,14 +203,12 @@ void	setup_index(t_shell *shell, t_token *token, int *i)
 	{
 		token->index[token->wrd]
 			= ft_calloc(sizeof(char*), (*i) - token->start);
-		printf("calloc = %d\n", token->wrd);
 		if (!token->index[token->wrd])
 			return ;
 		create_word(shell, token, r, (*i));
 		token->wrd++;
 		r = 0;
 	}
-	printf("wrd = %d\n", token->wrd);
 	if (shell->input[(*i)] == PIPE)
 		create_pipe(shell, token, &(*i));
 	if (shell->input[(*i)] == SPACE)
@@ -217,6 +225,7 @@ void	checker(t_shell *shell, t_token *token, int words)
 
 	k = 0;
 	i = 0;
+	token->expand = 0;
 	token->wrd = 0;
 	while (shell->input[i] == 32)
 		i++;
@@ -230,8 +239,7 @@ void	checker(t_shell *shell, t_token *token, int words)
 			setup_index(shell, token, &i);
 		else
 			i++;
-		printf("wrd = %d\n", token->wrd);
 	}
 	token->index[token->wrd] = NULL;
-	print_matrix(token->index);
+	//print_matrix(token->index);
 }
