@@ -6,9 +6,10 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:59:59 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/11 16:37:41 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/11 16:49:57 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -47,8 +48,9 @@ typedef struct s_cmd
 typedef struct s_token
 {
 		char 	**index;
-		int		*mat_ind; 
+		int		*mat_ind;
 		char	*tokens;
+		int		expand;
 		int		wrd;
 		int		start;
 }		t_token;
