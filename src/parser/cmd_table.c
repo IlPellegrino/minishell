@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 15:44:34 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/13 17:56:18 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/13 18:01:35 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,24 @@
 char	*find_first(int tkn, t_token *token)
 {
 	int	i;
+	(void)token;
 
 	i = -1;
 	while (token->temp_token[++i])
 		if (token->temp_token[i] == tkn)
 		{
-			
 			return (token->index[i]);
 		}
+	return (0);
+}
+
+int	insert_cmd(t_shell *shell, t_cmd *cmd, int tkn, char *input_args)
+{
+	(void)shell;
+	(void)cmd;
+	(void)tkn;
+	(void)input_args;
+	return (1);
 }
 
 int	insert_table(t_shell *shell, t_cmd *cmd, int tkn, char *input_args)
@@ -30,15 +40,16 @@ int	insert_table(t_shell *shell, t_cmd *cmd, int tkn, char *input_args)
 	t_token *token;
 	int		i;
 	
+	token = shell->tokens;
 	if (tkn == 'C')
 		return (insert_cmd(shell, cmd, tkn, input_args));
 	i = -1;
 	while (input_args[++i])
 	{
 		if (input_args[i] == tkn)
-			cmd->command = find_first(tkn, token->tokens);
+			cmd->command = find_first(tkn, token);
 	}
-
+	return (1);
 }
 
 int	find_type(t_token *token, int type)
@@ -67,6 +78,7 @@ int	fill_cmd_table(t_shell *shell, int len, char **input_args)
 	int		j;
 	int		index;
 
+	(void)len;
 	token = shell->tokens;
 	i = -1;
 	while (input_args[++i])
@@ -85,6 +97,7 @@ int	fill_cmd_table(t_shell *shell, int len, char **input_args)
 				insert_cmd(shell, &shell->cmd_table[i], token->tokens[j], input_args[i]);
 		}
 	}
+	return (1);
 }
 
 int	init_cmd_table(t_shell *shell)
@@ -94,9 +107,10 @@ int	init_cmd_table(t_shell *shell)
 	int		len;
 	t_cmd	cmd;
 
-	token->temp_token = ft_strdup(token->tokens);
+	(void)cmd;
 	token = shell->tokens;
-	len = count_redir(token->tokens) + count_pipes(shell, token);
+	token->temp_token = ft_strdup(token->tokens);
+	len = count_redir(token->tokens) + count_pipes(shell, token->tokens);
 	input_args = ft_split(token->tokens, 'P');
 	collect_garbage(shell, 0, input_args);
 	fill_cmd_table(shell, len, input_args);

@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:54:36 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/13 16:58:30 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/13 17:57:16 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ int	parsing(t_shell *shell)
 		return (ft_error(COMMAND, "<< "));
 	if (!parse_input(shell))
 		return (0);
-	if (!init_cmd_table(shell))
-		return (0);
+	//if (!init_cmd_table(shell))
+	//	return (0);
 	return (1);
 }

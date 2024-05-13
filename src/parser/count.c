@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 17:09:43 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/13 17:10:07 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/13 18:02:04 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	count_pipes(t_shell *shell, char *tokens)
 	shell->n_pipes = 0;
 	i = -1;
 	while (tokens[++i])
-		if (tokens == 'P')
+		if (tokens[i] == 'P')
 			shell->n_pipes++;
 	return (shell->n_pipes + 1);
 }

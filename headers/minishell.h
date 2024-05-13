@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:59:59 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/13 17:35:50 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/13 17:58:16 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,8 +108,8 @@ int			get_path(t_shell *shell);
 int			parsing(t_shell *shell);
 char		*remove_redir(t_token *token);
 /* parsing: count */
-int	count_pipes(t_shell *shell, char *tokens);
-int	count_redir(char *tokens);
+int			count_pipes(t_shell *shell, char *tokens);
+int			count_redir(char *tokens);
 /* parsing: cmd table */
 int			init_cmd_table(t_shell *shell);
 
