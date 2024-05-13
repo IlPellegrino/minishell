@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   protected_functions.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 15:02:12 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/10 13:59:24 by nromito          ###   ########.fr       */
+/*   Updated: 2024/05/13 11:30:23 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,26 +18,26 @@ int	fork_p(void)
 
 	pid = fork();
 	if (pid == -1)
-		ft_error(NULL, 11);
+		return (0);
 	return (pid);
 }
 
 void	execve_p(char *cmd_path, char **argv, char **envp)
 {
 	if (execve(cmd_path, argv, envp) == -1)
-		ft_error(NULL, 12);
+		return ;
 }
 
 void	pipe_p(int pipe_fds[2])
 {
 	if (pipe(pipe_fds) == -1)
-		ft_error(NULL, 27);
+		return ;
 }
 
 void	wait_p(int *status)
 {
 	if (wait(status) == -1)
-		ft_error(NULL, 13);
+		return ;
 }
 
 int	access_p(char *file, int mode)
@@ -46,7 +46,7 @@ int	access_p(char *file, int mode)
 
 	ret = access(file, mode);
 	if (ret == -1 && errno != ENOENT)
-		ft_error(NULL, 10);
+		return (0);
 	return (ret);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:26:12 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/11 16:28:17 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/13 15:27:01 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,18 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_shell		shell;
 
+	init_structs(&shell);
+	shell.arrow = ft_calloc(sizeof(char*), ft_strlen(GREEN_ARROW) + 1);
+	collect_garbage(&shell, shell.arrow, 0);
+	shell.arrow = GREEN_ARROW;
 	(void)argc;
 	(void)argv;
-	init_structs(&shell);
 	shell.envp = envp;
 	while(1)
 	{
 		get_signal();
+		printf("%s", shell.arrow);
+		shell.arrow = GREEN_ARROW;
 		shell.input = ft_readline(MINISHELL);
 		if (!shell.input)
 			close_shell(&shell);
@@ -43,8 +48,8 @@ int	main(int argc, char **argv, char **envp)
 		if (shell.input)
 		{
 			lexer(&shell);			
-			parsing(&shell);
-			//execute();
+			if (!parsing(&shell))
+				shell.arrow = RED_ARROW;
 		}
 	}
 

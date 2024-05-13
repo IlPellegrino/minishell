@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:59:59 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/11 16:49:57 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/13 17:35:50 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,9 @@
 # include <signal.h>
 # include <errno.h>
 
+# define ALL_TYPES 'F'
+# define RED_ARROW "\033[1;31m-> "
+# define GREEN_ARROW "\033[1;32m-> "
 # define MINISHELL "\e[1;96mminishell\033[0m$ "
 # define DQ 34
 # define SQ 39
@@ -53,6 +56,7 @@ typedef struct s_token
 		int		expand;
 		int		wrd;
 		int		start;
+		char	*temp_token;
 }		t_token;
 
 typedef struct s_garbage
@@ -77,6 +81,7 @@ typedef struct s_shell
 		char			*new_input;
 		int				sig_recived;
 		int				n_pipes;
+		char			*arrow;
 		t_token			*tokens;
 		t_garbage  		*collector;
 		t_cmd			*cmd_table;
@@ -93,7 +98,6 @@ void		get_signal();
 /* lexer */
 char 		*lexer(t_shell *shell);
 int			count_wrds(t_shell *shell);
-void		pipe_word(t_shell *shell, t_token *token, int *r);
 void		checker(t_shell *shell, t_token *token, int words);
 
 char		*ft_readline(char *str);
@@ -102,6 +106,12 @@ char		*ft_readline(char *str);
 int			tokenizer(t_shell *shell);
 int			get_path(t_shell *shell);
 int			parsing(t_shell *shell);
+char		*remove_redir(t_token *token);
+/* parsing: count */
+int	count_pipes(t_shell *shell, char *tokens);
+int	count_redir(char *tokens);
+/* parsing: cmd table */
+int			init_cmd_table(t_shell *shell);
 
 /* protected functions */
 int			fork_p(void);

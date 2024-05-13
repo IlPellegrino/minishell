@@ -6,7 +6,7 @@
 #    By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/07 17:01:15 by ciusca            #+#    #+#              #
-#    Updated: 2024/05/08 11:37:25 by ciusca           ###   ########.fr        #
+#    Updated: 2024/05/13 17:10:38 by ciusca           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,10 +21,10 @@ PROTECTED_FUNC = protected_func/protected_functions.c
 CLOSING = close_and_free/close_shell.c
 BUILT_IN = built-in/echo.c
 EXECUTOR = executor/exec.c
-EXPANDER = expander/exp.c
-PARSER = parser/parsing.c parser/tokenizer.c
+EXPANDER = expander/exp.c 
+PARSER = parser/parsing.c parser/tokenizer.c parser/cmd_table.c parser/count.c
 LEXER = lexer/readline.c lexer/lexer_checker.c
-UTILS = utils/utils.c
+UTILS = utils/utils.c utils/utils2.c
 SIGNAL = signals/signals.c
 MAIN	= minishell.c
 

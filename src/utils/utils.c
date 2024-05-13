@@ -6,24 +6,12 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 19:59:43 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/11 16:39:39 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/13 15:51:33 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-int	is_redir(int c)
-{
-	if (c == 'H')
-		return(1);
-	else if (c == 'I')
-		return (1);
-	if (c == 'O')
-		return(1);
-	else if (c == 'A')
-		return (1);
-	return (0);
-}
 
 int	find_space(char *index)
 {
@@ -74,9 +62,9 @@ int	ft_error(int error_type, char *str)
 		ft_putstr_fd(str, 2);
 		ft_putendl_fd("]", 2);
 	}
-	else if (error_type == PARSE)
+	else if (error_type == SYNTAX)
 	{
-		ft_putstr_fd("minishell: parse error near '", 2);
+		ft_putstr_fd("minishell: syntax error near unexpected token '", 2);
 		ft_putstr_fd(str, 2);
 		ft_putendl_fd("'", 2);
 	}
