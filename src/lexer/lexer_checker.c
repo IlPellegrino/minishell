@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_checker.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
+/*   By: brulutaj <brulutaj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 13:46:29 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/11 16:50:13 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/14 11:59:58 by brulutaj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,22 @@ int	count_wrds(t_shell *shell)
 			if (shell->input[i++ + 1] != PIPE)
 				words++;
 		}
-		else if (shell->input[++i] == '\0' || shell->input[i] == PIPE)
+		else if (shell->input[i] == '>')
+		{
+			while (shell->input[i] == '>')
+				i++;
+			words++;
+		}
+		else if (shell->input[i] == '<')
+		{
+			while (shell->input[i] == '<')
+				i++;
+			words++;
+		}
+		else if (shell->input[++i] == '\0' || shell->input[i] == PIPE || shell->input[i] == '>' || shell->input[i] == '<')
 			words++;
 	}
+	printf("words = %d\n", words);
 	return (words);
 }
 
@@ -172,6 +185,48 @@ int	quotes_reader(t_shell *shell, int i, int *k)
 	return (i);
 }
 
+void	create_minor(t_shell *shell, t_token *token, int (*i))
+{
+	int	r;
+	int	redir_nbr;
+
+	r = 0;
+	redir_nbr = 0;
+	while (shell->input[(*i)] == '<')
+	{
+		redir_nbr++;
+		(*i)++;
+	}
+	printf("entra\n");
+	token->index[token->wrd] = ft_calloc(sizeof (char*), redir_nbr + 1);
+	if (!token->index[token->wrd])
+		return ;
+	while (redir_nbr-- > 0)
+		token->index[token->wrd][r++] = '<';
+	token->wrd++;
+}
+
+void	create_major(t_shell *shell, t_token *token, int (*i))
+{
+	int	r;
+	int	redir_nbr;
+
+	r = 0;
+	redir_nbr = 0;
+	while (shell->input[(*i)] == '>')
+	{
+		redir_nbr++;
+		(*i)++;
+	}
+	printf("entra\n");
+	token->index[token->wrd] = ft_calloc(sizeof (char*), redir_nbr + 1);
+	if (!token->index[token->wrd])
+		return ;
+	while (redir_nbr-- > 0)
+		token->index[token->wrd][r++] = '>';
+	token->wrd++;
+}
+
 void	create_pipe(t_shell *shell, t_token *token, int (*i))
 {
 	int	r;
@@ -197,23 +252,30 @@ void	setup_index(t_shell *shell, t_token *token, int *i)
 	int	r;
 
 	r = 0;
-	if ((shell->input[(*i) - 1] != SPACE
-			&& shell->input[(*i)] == PIPE && (*i) != 0)
-		|| (shell->input[(*i)] != PIPE))
+	if ((shell->input[(*i) - 1] != SPACE && shell->input[(*i)] == PIPE && (*i) != 0)
+			|| (shell->input[(*i) - 1] != '>' && shell->input[(*i)] == '>' && (*i) != 0)
+			|| (shell->input[(*i) - 1] != '<' && shell->input[(*i)] == '<' && (*i) != 0)
+			|| (shell->input[(*i)] != PIPE && shell->input[(*i)] != '>' && shell->input[(*i)] != '<'))
 	{
 		token->index[token->wrd]
 			= ft_calloc(sizeof(char*), (*i) - token->start);
 		if (!token->index[token->wrd])
 			return ;
+		printf("check\n");
 		create_word(shell, token, r, (*i));
 		token->wrd++;
 		r = 0;
 	}
+	if (shell->input[(*i)] == '<')
+		create_minor(shell, token, &(*i));
+	if (shell->input[(*i)] == '>')
+		create_major(shell, token, &(*i));
 	if (shell->input[(*i)] == PIPE)
 		create_pipe(shell, token, &(*i));
 	if (shell->input[(*i)] == SPACE)
 		while (shell->input[(*i)] == SPACE && shell->input[(*i)] != '\0')
 			(*i)++;
+	printf("i = %d\n", (*i));
 	if (shell->input[(*i)] != '\0')
 		token->start = (*i) - 1;
 }
@@ -235,11 +297,11 @@ void	checker(t_shell *shell, t_token *token, int words)
 		if (shell->input[i] == SQ || shell->input[i] == DQ)
 			i = quotes_reader(shell, i, &k);
 		else if ((shell->input[i] == SPACE) || (shell->input[i] == '\0')
-			|| (shell->input[i] == PIPE))
+			|| (shell->input[i] == PIPE) || (shell->input[i] == '>') || (shell->input[i] == '<'))
 			setup_index(shell, token, &i);
 		else
 			i++;
 	}
 	token->index[token->wrd] = NULL;
-	//print_matrix(token->index);
+	print_matrix(token->index);
 }
