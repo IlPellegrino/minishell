@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_checker.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brulutaj <brulutaj@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 13:46:29 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/14 11:59:58 by brulutaj         ###   ########.fr       */
+/*   Updated: 2024/05/15 17:08:01 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,26 @@ int	pipe_checker(t_shell *shell, int i, int *words)
 
 int	check_space(t_shell *shell, int words, int (*i))
 {
-	if (shell->input[(*i) - 1] != PIPE)
+	if (shell->input[(*i) - 1] != PIPE && shell->input[(*i) - 1] != '<'
+		&& shell->input[(*i) - 1] != '>')
 		words++;
 	while (shell->input[++(*i)] == SPACE)
 		;
 	return (words);
+}
+
+int	check_redirs(t_shell *shell, int words, int (*i))
+{
+	if (shell->input[(*i)] == PIPE)
+		while (shell->input[(*i)] == PIPE)
+			(*i)++;
+	else if (shell->input[(*i)] == '>')
+		while (shell->input[(*i)] == '>')
+			(*i)++;
+	else if (shell->input[(*i)] == '<')
+		while (shell->input[(*i)] == '<')
+			(*i)++;
+	return (words + 1);
 }
 
 int	count_wrds(t_shell *shell)
@@ -72,24 +87,11 @@ int	count_wrds(t_shell *shell)
 			i = check_quotes(shell, i, &words);
 		else if (shell->input[i] == SPACE)
 			words = check_space(shell, words, &i);
-		else if (shell->input[i] == PIPE)
-		{
-			if (shell->input[i++ + 1] != PIPE)
-				words++;
-		}
-		else if (shell->input[i] == '>')
-		{
-			while (shell->input[i] == '>')
-				i++;
-			words++;
-		}
-		else if (shell->input[i] == '<')
-		{
-			while (shell->input[i] == '<')
-				i++;
-			words++;
-		}
-		else if (shell->input[++i] == '\0' || shell->input[i] == PIPE || shell->input[i] == '>' || shell->input[i] == '<')
+		else if (shell->input[i] == '>' || shell->input[i] == '<'
+			|| shell->input[i] == PIPE)
+			words = check_redirs(shell, words, &i);
+		else if (shell->input[++i] == '\0' || shell->input[i] == PIPE
+			|| shell->input[i] == '>' || shell->input[i] == '<')
 			words++;
 	}
 	printf("words = %d\n", words);
@@ -148,7 +150,7 @@ void	copy_in_quotes(t_shell *shell, t_token *token, int (*r), int quote)
 	}
 }
 
-void	create_word(t_shell *shell, t_token *token, int r, int i)
+void	write_word(t_shell *shell, t_token *token, int r, int i)
 {
 	while (++token->start < i)
 	{
@@ -218,7 +220,6 @@ void	create_major(t_shell *shell, t_token *token, int (*i))
 		redir_nbr++;
 		(*i)++;
 	}
-	printf("entra\n");
 	token->index[token->wrd] = ft_calloc(sizeof (char*), redir_nbr + 1);
 	if (!token->index[token->wrd])
 		return ;
@@ -247,25 +248,43 @@ void	create_pipe(t_shell *shell, t_token *token, int (*i))
 	token->wrd++;
 }
 
-void	setup_index(t_shell *shell, t_token *token, int *i)
+void	create_word(t_shell *shell, t_token *token, int (*i))
 {
 	int	r;
 
 	r = 0;
-	if ((shell->input[(*i) - 1] != SPACE && shell->input[(*i)] == PIPE && (*i) != 0)
-			|| (shell->input[(*i) - 1] != '>' && shell->input[(*i)] == '>' && (*i) != 0)
-			|| (shell->input[(*i) - 1] != '<' && shell->input[(*i)] == '<' && (*i) != 0)
-			|| (shell->input[(*i)] != PIPE && shell->input[(*i)] != '>' && shell->input[(*i)] != '<'))
-	{
-		token->index[token->wrd]
+	token->index[token->wrd]
 			= ft_calloc(sizeof(char*), (*i) - token->start);
-		if (!token->index[token->wrd])
-			return ;
-		printf("check\n");
-		create_word(shell, token, r, (*i));
-		token->wrd++;
-		r = 0;
-	}
+	if (!token->index[token->wrd])
+		return ;
+	write_word(shell, token, r, (*i));
+	token->wrd++;
+}
+
+void	choose_if(t_shell *shell, t_token *token, int (*i))
+{
+	if (shell->input[(*i)] == PIPE && shell->input[(*i) - 1] != SPACE
+		&& shell->input[(*i) - 1]!= '>'
+		&& (*i) != 0 && shell->input[(*i) - 1]!= '<')
+		create_word(shell, token, &(*i));
+	else if (shell->input[(*i)] == '<' && shell->input[(*i) - 1] != SPACE
+		&& shell->input[(*i) - 1]!= '>'
+		&& (*i) != 0 && shell->input[(*i) - 1]!= PIPE)
+		create_word(shell, token, &(*i));
+	else if (shell->input[(*i)] == '>' && shell->input[(*i) - 1] != SPACE
+		&& shell->input[(*i) - 1]!= PIPE
+		&& (*i) != 0 && shell->input[(*i) - 1]!= '<')
+		create_word(shell, token, &(*i));
+}
+
+void	setup_index(t_shell *shell, t_token *token, int *i)
+{
+	if (shell->input[(*i)] == PIPE
+		|| shell->input[(*i)] == '>' || shell->input[(*i)] == '<')
+		choose_if(shell, token, &(*i));
+	else if (shell->input[(*i)] != PIPE
+		&& shell->input[(*i)] != '>' && shell->input[(*i)] != '<')
+		create_word(shell, token, &(*i));
 	if (shell->input[(*i)] == '<')
 		create_minor(shell, token, &(*i));
 	if (shell->input[(*i)] == '>')
@@ -275,7 +294,6 @@ void	setup_index(t_shell *shell, t_token *token, int *i)
 	if (shell->input[(*i)] == SPACE)
 		while (shell->input[(*i)] == SPACE && shell->input[(*i)] != '\0')
 			(*i)++;
-	printf("i = %d\n", (*i));
 	if (shell->input[(*i)] != '\0')
 		token->start = (*i) - 1;
 }
@@ -297,7 +315,8 @@ void	checker(t_shell *shell, t_token *token, int words)
 		if (shell->input[i] == SQ || shell->input[i] == DQ)
 			i = quotes_reader(shell, i, &k);
 		else if ((shell->input[i] == SPACE) || (shell->input[i] == '\0')
-			|| (shell->input[i] == PIPE) || (shell->input[i] == '>') || (shell->input[i] == '<'))
+			|| (shell->input[i] == PIPE) || (shell->input[i] == '>')
+			|| (shell->input[i] == '<'))
 			setup_index(shell, token, &i);
 		else
 			i++;
