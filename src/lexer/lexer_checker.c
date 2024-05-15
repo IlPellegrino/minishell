@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 13:46:29 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/15 17:08:01 by nromito          ###   ########.fr       */
+/*   Updated: 2024/05/15 17:19:10 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,8 +199,7 @@ void	create_minor(t_shell *shell, t_token *token, int (*i))
 		redir_nbr++;
 		(*i)++;
 	}
-	printf("entra\n");
-	token->index[token->wrd] = ft_calloc(sizeof (char*), redir_nbr + 1);
+	token->index[token->wrd] = ft_calloc(sizeof (char *), redir_nbr + 1);
 	if (!token->index[token->wrd])
 		return ;
 	while (redir_nbr-- > 0)
@@ -220,7 +219,7 @@ void	create_major(t_shell *shell, t_token *token, int (*i))
 		redir_nbr++;
 		(*i)++;
 	}
-	token->index[token->wrd] = ft_calloc(sizeof (char*), redir_nbr + 1);
+	token->index[token->wrd] = ft_calloc(sizeof (char *), redir_nbr + 1);
 	if (!token->index[token->wrd])
 		return ;
 	while (redir_nbr-- > 0)
@@ -240,7 +239,7 @@ void	create_pipe(t_shell *shell, t_token *token, int (*i))
 		pipe_nbr++;
 		(*i)++;
 	}
-	token->index[token->wrd] = ft_calloc(sizeof (char*), pipe_nbr + 1);
+	token->index[token->wrd] = ft_calloc(sizeof (char *), pipe_nbr + 1);
 	if (!token->index[token->wrd])
 		return ;
 	while (pipe_nbr-- > 0)
@@ -254,7 +253,7 @@ void	create_word(t_shell *shell, t_token *token, int (*i))
 
 	r = 0;
 	token->index[token->wrd]
-			= ft_calloc(sizeof(char*), (*i) - token->start);
+		= ft_calloc(sizeof(char*), (*i) - token->start);
 	if (!token->index[token->wrd])
 		return ;
 	write_word(shell, token, r, (*i));
@@ -264,16 +263,16 @@ void	create_word(t_shell *shell, t_token *token, int (*i))
 void	choose_if(t_shell *shell, t_token *token, int (*i))
 {
 	if (shell->input[(*i)] == PIPE && shell->input[(*i) - 1] != SPACE
-		&& shell->input[(*i) - 1]!= '>'
-		&& (*i) != 0 && shell->input[(*i) - 1]!= '<')
+		&& shell->input[(*i) - 1] != '>'
+		&& (*i) != 0 && shell->input[(*i) - 1] != '<')
 		create_word(shell, token, &(*i));
 	else if (shell->input[(*i)] == '<' && shell->input[(*i) - 1] != SPACE
-		&& shell->input[(*i) - 1]!= '>'
-		&& (*i) != 0 && shell->input[(*i) - 1]!= PIPE)
+		&& shell->input[(*i) - 1] != '>'
+		&& (*i) != 0 && shell->input[(*i) - 1] != PIPE)
 		create_word(shell, token, &(*i));
 	else if (shell->input[(*i)] == '>' && shell->input[(*i) - 1] != SPACE
-		&& shell->input[(*i) - 1]!= PIPE
-		&& (*i) != 0 && shell->input[(*i) - 1]!= '<')
+		&& shell->input[(*i) - 1] != PIPE
+		&& (*i) != 0 && shell->input[(*i) - 1] != '<')
 		create_word(shell, token, &(*i));
 }
 
