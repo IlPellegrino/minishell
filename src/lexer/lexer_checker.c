@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 13:46:29 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/15 17:19:10 by nromito          ###   ########.fr       */
+/*   Updated: 2024/05/17 15:12:57 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -321,5 +321,6 @@ void	checker(t_shell *shell, t_token *token, int words)
 			i++;
 	}
 	token->index[token->wrd] = NULL;
+	expander(shell, token);
 	print_matrix(token->index);
 }

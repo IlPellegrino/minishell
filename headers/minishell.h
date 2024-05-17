@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:59:59 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/13 17:58:16 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/16 16:45:49 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +99,9 @@ void		get_signal();
 char 		*lexer(t_shell *shell);
 int			count_wrds(t_shell *shell);
 void		checker(t_shell *shell, t_token *token, int words);
-
 char		*ft_readline(char *str);
+/* expander */
+void	expander(t_shell *shell, t_token *token);
 
 /* parsing */
 int			tokenizer(t_shell *shell);

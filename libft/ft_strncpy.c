@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
+/*   ft_strncpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/11 10:59:20 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/16 12:38:56 by nromito          ###   ########.fr       */
+/*   Created: 2024/05/16 12:39:14 by nromito           #+#    #+#             */
+/*   Updated: 2024/05/16 12:42:46 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlcpy(char *dst, const char *src, size_t size)
+char	*ft_strncpy(char *dst, const char *src, size_t size)
 {
 	size_t	i;
 	size_t	j;
@@ -20,7 +20,7 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 	i = 0;
 	j = ft_strlen(src);
 	if (size == 0)
-		return (j);
+		return (NULL);
 	while (src[i] != '\0' && i < size - 1)
 	{
 		dst[i] = src[i];
@@ -28,14 +28,5 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 	}
 	if (dst[i] != 0)
 		dst[i] = '\0';
-	return (j);
+	return (dst);
 }
-
-// int	main(void)
-// {
-// 	char dst[13] = "Gesu' Cristo";
-// 	char src[] = "Isdfg";
-// 	printf("Lunghezza %zu\n", ft_strlcpy(dst, src, 2));
-// 	printf("%s", dst);
-// 	return (0);
-// }
