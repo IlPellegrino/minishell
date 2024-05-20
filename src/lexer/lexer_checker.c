@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 13:46:29 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/20 12:58:54 by nromito          ###   ########.fr       */
+/*   Updated: 2024/05/20 14:52:41 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,6 @@ void	copy_in_quotes(t_shell *shell, t_token *token, int (*r), int quote)
 
 void	write_word(t_shell *shell, t_token *token, int r, int i)
 {
-	token->flag = 0;
 	while (++token->start < i)
 	{
 		if (shell->input[token->start] == DQ)
@@ -218,6 +217,9 @@ void	create_minor(t_shell *shell, t_token *token, int (*i))
 		return ;
 	while (redir_nbr-- > 0)
 		token->index[token->wrd][r++] = '<';
+	if (!token->flag)
+		token->flag = ft_calloc(sizeof (char *), token->wrd + 2);
+	token->flag = check_flag(token);
 	token->wrd++;
 }
 
@@ -238,6 +240,9 @@ void	create_major(t_shell *shell, t_token *token, int (*i))
 		return ;
 	while (redir_nbr-- > 0)
 		token->index[token->wrd][r++] = '>';
+	if (!token->flag)
+		token->flag = ft_calloc(sizeof (char *), token->wrd + 2);
+	token->flag = check_flag(token);
 	token->wrd++;
 }
 
@@ -258,6 +263,9 @@ void	create_pipe(t_shell *shell, t_token *token, int (*i))
 		return ;
 	while (pipe_nbr-- > 0)
 		token->index[token->wrd][r++] = '|';
+	if (!token->flag)
+		token->flag = ft_calloc(sizeof (char *), token->wrd + 2);
+	token->flag = check_flag(token);
 	token->wrd++;
 }
 
@@ -271,9 +279,10 @@ void	create_word(t_shell *shell, t_token *token, int (*i))
 	if (!token->index[token->wrd])
 		return ;
 	write_word(shell, token, r, (*i));
-	
+	if (!token->flag)
+		token->flag = ft_calloc(sizeof (char *), token->wrd + 2);
+	token->flag = check_flag(token);
 	expand_value(shell, token);
-	
 	token->index[token->wrd] = remove_quotes(shell, token, count_quotes(token));
 	token->wrd++;
 }
@@ -338,6 +347,5 @@ void	checker(t_shell *shell, t_token *token, int words)
 			i++;
 	}
 	token->index[token->wrd] = NULL;
-	// expander(shell, token);
 	print_matrix(token->index);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_table.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 15:44:34 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/13 18:01:35 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/20 13:02:47 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	fill_cmd_table(t_shell *shell, int len, char **input_args)
 	int		i;
 	t_token *token;
 	int		j;
-	int		index;
+	// int		index;
 
 	(void)len;
 	token = shell->tokens;
@@ -86,7 +86,7 @@ int	fill_cmd_table(t_shell *shell, int len, char **input_args)
 		j = -1;
 		while (input_args[i][++j])
 		{
-			index = find_type(token, ALL_TYPES);
+			// index = find_type(token, ALL_TYPES);
 			if (find_type(token, 'H'))
 				insert_cmd(shell, &shell->cmd_table[i], 'H', input_args[i]); 
 			else if (find_type(token, 'I') >= 0)

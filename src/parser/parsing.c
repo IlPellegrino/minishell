@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:54:36 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/13 17:57:16 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/20 13:01:45 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,11 @@ int	parse_command(t_shell *shell)
 {
 	t_token	*token;
 	int		i;
-	int		counter;
-	int		j;
+	// int		counter;
+	// int		j;
 
-	j = 0;
-	counter = 0;
+	// j = 0;
+	// counter = 0;
 	token = shell->tokens;
 	token->temp_token = remove_redir(token);
 	collect_garbage(shell, token->temp_token, 0);

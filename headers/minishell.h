@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:59:59 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/20 12:17:46 by nromito          ###   ########.fr       */
+/*   Updated: 2024/05/20 13:39:28 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 # define MINISHELL_H
 
 # include "../libft/libft.h"
+# include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <unistd.h>
 # include <stdlib.h>
 # include <fcntl.h>
 # include <signal.h>
-# include <stdio.h>
 # include <sys/wait.h>
 # include <stdbool.h>
 # include <sys/types.h>
@@ -107,6 +107,7 @@ char		*ft_readline(char *str);
 void	expander(t_shell *shell, t_token *token);
 void	expand_value(t_shell *shell, t_token *token);
 char	*remove_quotes(t_shell *shell, t_token *token, int i);
+char	*check_flag(t_token *token);
 int		count_quotes(t_token *token);
 
 /* parsing */

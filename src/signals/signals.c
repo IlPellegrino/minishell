@@ -3,18 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 12:09:40 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/09 10:29:39 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/20 13:01:05 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-void	ctrl_c(int sig)
+void	ctrl_c()
 {
-	sig = 0;
 	write(2, "\b\b  ", 4);
 	printf("\n");
 	rl_on_new_line();
@@ -22,9 +21,8 @@ void	ctrl_c(int sig)
 	rl_redisplay();
 }
 
-void	ctrl_quit(int sig)
+void	ctrl_quit()
 {
-	sig = 0;
 	exit (1);
 	
 }
