@@ -6,13 +6,13 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:52:55 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/20 13:04:48 by nromito          ###   ########.fr       */
+/*   Updated: 2024/05/20 15:08:18 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-int	find_cmd(t_shell *shell, char *cmd)
+int	find_cmd_path(t_shell *shell, char *cmd)
 {
 	int		i;
 
@@ -42,7 +42,6 @@ char *lexer(t_shell *shell)
 	if (!token->index)
 		return (0);
 	collect_garbage(shell, 0, token->index);
-	//expander(shell, token);
 	checker(shell, token, words);
 	return (0);
 }

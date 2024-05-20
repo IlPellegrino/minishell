@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 12:09:40 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/20 13:01:05 by nromito          ###   ########.fr       */
+/*   Updated: 2024/05/20 15:03:25 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	ctrl_c()
 {
 	write(2, "\b\b  ", 4);
 	printf("\n");
+	printf(RED_ARROW);
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
@@ -29,7 +30,6 @@ void	ctrl_quit()
 
 void	get_signal(void)
 {
-	
 	signal(SIGINT, ctrl_c);
 	signal(SIGQUIT, SIG_IGN);
 }

@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:59:59 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/20 13:39:28 by nromito          ###   ########.fr       */
+/*   Updated: 2024/05/20 15:02:09 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,16 @@
 
 typedef struct s_cmd
 {
-	char 			*pathname;
-	char 			**cmd_arg;
-	char			*command;
-	struct s_shell 	*shell;
+	char	*pathname;
+	char	**cmd_arg;
 }			t_cmd;
 
+typedef struct s_table
+{
+	char		*command;
+	int			pos;
+	t_cmd		*cmd;
+}			t_table;
 
 typedef struct s_token
 {
@@ -71,7 +75,6 @@ typedef struct s_garbage
 
 typedef struct s_shell
 {
-		struct s_shell 	*next;
 		char			*infile;
 		char 			*outfile;
 		char			**redirect;
@@ -87,7 +90,7 @@ typedef struct s_shell
 		char			*arrow;
 		t_token			*tokens;
 		t_garbage  		*collector;
-		t_cmd			*cmd_table;
+		t_table			*cmd_table;
 }		t_shell;
 
 /* close shell */
@@ -120,6 +123,10 @@ int			count_pipes(t_shell *shell, char *tokens);
 int			count_redir(char *tokens);
 /* parsing: cmd table */
 int			init_cmd_table(t_shell *shell);
+void		print_cmd_table(t_shell *shell, int len);
+int			find_infile(int start, t_shell *shell, t_table *table);
+int			find_outfile(int start, t_shell *shell, t_table *table);
+int			find_cmd(int start, t_shell *shell, t_table *table);
 
 /* protected functions */
 int			fork_p(void);
@@ -133,7 +140,7 @@ int			ft_error(int error_type, char *str);
 /* utils */
 int			find_space(char *index);
 int			is_redir(int c);
-int			find_cmd(t_shell *shell, char *cmd);
+int			find_cmd_path(t_shell *shell, char *cmd);
 void		print_matrix(char **mat);
 int			init_structs(t_shell *shell);
 
