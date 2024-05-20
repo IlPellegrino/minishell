@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:59:59 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/20 16:04:57 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/20 16:54:19 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@
 # define DQ 34
 # define SQ 39
 # define PIPE 124
+# define $ 36
+# define MIN 
 # define COMMAND 0
 # define PARSE 1
 # define SYNTAX 2
@@ -57,7 +59,8 @@ typedef struct s_token
 		char 	**index;
 		int		*mat_ind;
 		char	*tokens;
-		int		expand;
+		int		exp;
+		char	*flag;
 		int		wrd;
 		int		start;
 		char	*temp_token;
@@ -104,7 +107,10 @@ int			count_wrds(t_shell *shell);
 void		checker(t_shell *shell, t_token *token, int words);
 char		*ft_readline(char *str);
 /* expander */
-void		expander(t_shell *shell, t_token *token);
+void	expander(t_shell *shell, t_token *token);
+void	expand_value(t_shell *shell, t_token *token);
+char	*remove_quotes(t_shell *shell, t_token *token, int i);
+int		count_quotes(t_token *token);
 
 /* parsing */
 int			tokenizer(t_shell *shell);
