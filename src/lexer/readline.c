@@ -6,13 +6,13 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:52:55 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/11 16:51:42 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/20 14:16:15 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-int	find_cmd(t_shell *shell, char *cmd)
+int	find_cmd_path(t_shell *shell, char *cmd)
 {
 	int		i;
 

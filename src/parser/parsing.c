@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:54:36 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/13 17:57:16 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/20 16:46:05 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,35 @@ int	parse_command(t_shell *shell)
 		i++;
 	if (token->temp_token[i] != 'C' && token->temp_token[i])
 		return (ft_error(COMMAND, token->index[i]));
-	//printf("temp token = %s\n", temp_token);
+	return (1);
+}
+
+int	parse_first_command(t_shell *shell)
+{
+	t_token *token;
+	char	*temp_token;
+	int		i;
+	int		pipe;
+
+	token = shell->tokens;
+	pipe = 0;
+	temp_token = ft_strdup(token->tokens);
+	i = -1;
+	while (temp_token[++i])
+	{
+		if (is_redir(temp_token[i]))
+		{
+			temp_token[i] = 'X';
+			temp_token[i + 1] = 'X';
+		}
+		else if (temp_token[i] == 'P')
+			temp_token[i] = 'X';
+	}
+	i = 0;
+	while (temp_token[i] == 'X')
+		i++;
+	if (temp_token[i] != 'C' && temp_token[i])
+		return (ft_error(SYNTAX, token->index[i]));
 	return (1);
 }
 
@@ -88,8 +116,8 @@ int	parse_input(t_shell *shell)
 	
 	token = shell->tokens;
 	i = -1;
-	if (token->tokens[0] == 'S')
-		return (ft_error(COMMAND, token->index[0]));
+	if (!parse_first_command(shell))
+		return (0);
 	while (token->tokens[++i])
 	{		
 		if (is_redir(token->tokens[i]))
@@ -98,9 +126,9 @@ int	parse_input(t_shell *shell)
 				return (ft_error(SYNTAX, token->index[i + 1]));
 			else if (!token->tokens[i + 1])
 				return (ft_error(SYNTAX, "\\n"));
-			//if (is_redir(token->tokens[i + 1]) && !is_quoted[i])
-				//return (ft_error(SYNTAX), token->tokens[i + 1]); 
 		}
+		else if (token->tokens[i] == 'P' && token->tokens[i + 1] == 'P')
+			return (ft_error(SYNTAX, token->index[i + 1]));
 	}
 	i = -1;
 	return (parse_command(shell));
@@ -108,13 +136,11 @@ int	parse_input(t_shell *shell)
 
 int	parsing(t_shell *shell)
 {
-	char *str = getenv("USER");
-	printf("user = %s\n", str);
 	if (!tokenizer(shell))
-		return (ft_error(COMMAND, "<< "));
+		return (0);
 	if (!parse_input(shell))
 		return (0);
-	//if (!init_cmd_table(shell))
-	//	return (0);
+	if (!init_cmd_table(shell))
+		return (0);
 	return (1);
 }
