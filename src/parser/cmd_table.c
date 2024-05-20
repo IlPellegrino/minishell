@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_table.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 15:44:34 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/20 15:04:59 by nromito          ###   ########.fr       */
+/*   Updated: 2024/05/20 18:53:32 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,34 +14,34 @@
 
 int	fill_cmd_table(t_shell *shell, int start, int pipe, int index)
 {
-	t_table 	*table;
+	t_table	*table;
 
 	table = &shell->cmd_table[index];
 	table->cmd = 0;
 	table->pos = pipe;
 	if (find_infile(start, shell, table))
 		return (1);
-	else if (find_cmd(start, shell, table))
+	else if (find_cmd(start - 1, shell->tokens, table))
 		return (1);
 	else if (find_outfile(start, shell, table))
 		return (1);
 	return (0);
 }
 
-int check_x(char *tokens, int start)
+int	check_x(char *tokens, int start)
 {
-	while(tokens[start] == 'X')
+	while (tokens[start] == 'X')
 		start++;
 	if (!tokens[start] || tokens[start] == 'P')
-		return(0);
+		return (0);
 	return (1);
 }
 
 int	find_token_pos(t_shell *shell, int start, int index)
 {
-	int			i;
-	int			pipe;
-	t_token 	*token;
+	int		i;
+	int		pipe;
+	t_token	*token;
 
 	token = shell->tokens;
 	pipe = 0;
@@ -50,7 +50,7 @@ int	find_token_pos(t_shell *shell, int start, int index)
 		if (token->tokens[i] == 'P')
 			pipe++;
 	while (check_x(shell->tokens->tokens, i))
-		if(!fill_cmd_table(shell, i, pipe, index++))
+		if (!fill_cmd_table(shell, i, pipe, index++))
 			return (0);
 	return (index);
 }
@@ -70,12 +70,12 @@ int	count_tkn(char *tokens)
 
 int	init_cmd_table(t_shell *shell)
 {
-	t_token 		*token;
-	char			**input_args;
-	int				len;
-	int				i;
-	static int		index;
-	
+	t_token		*token;
+	char		**input_args;
+	int			len;
+	int			i;
+	static int	index;
+
 	len = 0;
 	token = shell->tokens;
 	input_args = ft_split(token->tokens, 'P');

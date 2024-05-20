@@ -3,17 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 12:09:40 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/20 15:03:25 by nromito          ###   ########.fr       */
+/*   Updated: 2024/05/20 18:57:11 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-void	ctrl_c()
+void	ctrl_c(int sig)
 {
+	(void)sig;
 	write(2, "\b\b  ", 4);
 	printf("\n");
 	printf(RED_ARROW);
@@ -22,10 +23,10 @@ void	ctrl_c()
 	rl_redisplay();
 }
 
-void	ctrl_quit()
+void	ctrl_quit(int sig)
 {
+	(void)sig;
 	exit (1);
-	
 }
 
 void	get_signal(void)

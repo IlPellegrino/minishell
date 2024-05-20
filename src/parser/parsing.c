@@ -3,47 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:54:36 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/20 15:04:01 by nromito          ###   ########.fr       */
+/*   Updated: 2024/05/20 19:09:00 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-int	is_redir(int c)
-{
-	if (c == 'H')
-		return(1);
-	else if (c == 'I')
-		return (1);
-	if (c == 'O')
-		return(1);
-	else if (c == 'A')
-		return (1);
-	return (0);
-}
-
-char	*remove_redir(t_token *token)
-{
-	int		i;
-	char	*temp_token;
-
-	temp_token = ft_strdup(token->tokens);
-	i = -1;
-	while (token->tokens[++i])
-		if (is_redir(token->tokens[i]) || is_redir(token->tokens[i - 1]))
-			temp_token[i] = 'X';
-	return (temp_token);
-}
-
 int	get_path(t_shell *shell)
 {
-	char 	*path;
+	char	*path;
 	char	*temp;
 	int		i;
-	
+
 	i = -1;
 	path = getenv("PATH");
 	shell->path_env = ft_split(path, ':');
@@ -53,7 +27,7 @@ int	get_path(t_shell *shell)
 	{
 		temp = ft_strdup(shell->path_env[i]);
 		free(shell->path_env[i]);
-		shell->path_env[i] = ft_strjoin(temp, "/");  // add "/" for access function
+		shell->path_env[i] = ft_strjoin(temp, "/");
 		free(temp);
 	}
 	collect_garbage(shell, 0, shell->path_env);
@@ -64,11 +38,7 @@ int	parse_command(t_shell *shell)
 {
 	t_token	*token;
 	int		i;
-	// int		counter;
-	// int		j;
 
-	// j = 0;
-	// counter = 0;
 	token = shell->tokens;
 	token->temp_token = remove_redir(token);
 	collect_garbage(shell, token->temp_token, 0);
@@ -82,7 +52,7 @@ int	parse_command(t_shell *shell)
 
 int	parse_first_command(t_shell *shell)
 {
-	t_token *token;
+	t_token	*token;
 	char	*temp_token;
 	int		i;
 
@@ -103,21 +73,21 @@ int	parse_first_command(t_shell *shell)
 	while (temp_token[i] == 'X')
 		i++;
 	if (temp_token[i] != 'C' && temp_token[i])
-		return (ft_error(SYNTAX, token->index[i]));
+		return (ft_error(COMMAND, token->index[i]));
 	return (1);
 }
 
 int	parse_input(t_shell *shell)
 {
-	t_token *token;
+	t_token	*token;
 	int		i;
-	
+
 	token = shell->tokens;
 	i = -1;
 	if (!parse_first_command(shell))
 		return (0);
 	while (token->tokens[++i])
-	{		
+	{
 		if (is_redir(token->tokens[i]))
 		{
 			if (token->tokens[i + 1] == 'P')
@@ -128,8 +98,7 @@ int	parse_input(t_shell *shell)
 		else if (token->tokens[i] == 'P' && token->tokens[i + 1] == 'P')
 			return (ft_error(SYNTAX, token->index[i + 1]));
 	}
-	i = -1;
-	return (parse_command(shell));
+	return (1);
 }
 
 int	parsing(t_shell *shell)

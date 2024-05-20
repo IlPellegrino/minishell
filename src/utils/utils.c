@@ -6,12 +6,11 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 19:59:43 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/13 15:51:33 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/20 19:10:37 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
-
 
 int	find_space(char *index)
 {
@@ -22,14 +21,14 @@ int	find_space(char *index)
 		i++;
 	printf("index[i] = %c\n", index[i]);
 	if (!index[i])
-		return(0);
+		return (0);
 	return (1);
 }
 
 int	init_structs(t_shell *shell)
 {
-	t_token 	*token;
-	t_garbage 	*garbage;
+	t_token		*token;
+	t_garbage	*garbage;
 
 	token = malloc(sizeof(t_token));
 	shell->tokens = token;

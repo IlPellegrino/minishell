@@ -6,13 +6,13 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 17:09:43 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/20 16:49:46 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/20 18:49:19 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-int	count_command_args(t_token *token, int start)
+int	n_args(t_token *token, int start)
 {
 	int	count;
 
@@ -28,7 +28,7 @@ int	count_command_args(t_token *token, int start)
 
 int	find_infile(int i, t_shell *shell, t_table *table)
 {
-	t_token *token;
+	t_token	*token;
 
 	token = shell->tokens;
 	while (token->tokens[i] && token->tokens[i] != 'P')
@@ -42,12 +42,12 @@ int	find_infile(int i, t_shell *shell, t_table *table)
 		}
 		i++;
 	}
-	return (0);	
+	return (0);
 }
 
 int	find_outfile(int start, t_shell *shell, t_table *table)
 {
-	t_token *token;
+	t_token	*token;
 	int		i;
 
 	i = start;
@@ -63,46 +63,44 @@ int	find_outfile(int start, t_shell *shell, t_table *table)
 		}
 		i++;
 	}
-	return (0);	
+	return (0);
 }
 
-int	find_cmd(int start, t_shell *shell, t_table *table)
+int	find_cmd(int i, t_token *tkn, t_table *table)
 {
-	t_token *token;
 	int		found;
 	int		j;
 
 	j = 0;
 	found = 0;
-	token = shell->tokens;
-	while (token->tokens[start] && token->tokens[start] != 'P')
+	while (tkn->tokens[++i] && tkn->tokens[i] != 'P')
 	{
-		if (token->tokens[start] == 'C')
+		if (tkn->tokens[i] == 'C')
 		{
 			found = 1;
 			table->cmd = malloc(sizeof(t_cmd));
-			table->command = token->index[start];
-			table->cmd->cmd_arg = ft_calloc(sizeof(char*), count_command_args(token, start) + 1);
-			table->cmd->cmd_arg[j++] = token->index[start];
+			table->command = tkn->index[i];
+			table->cmd->cmd_arg = ft_calloc(sizeof(char *), n_args(tkn, i) + 1);
+			table->cmd->cmd_arg[j++] = tkn->index[i];
 			table->cmd->pathname = 0;
-			token->tokens[start] = 'X';
+			tkn->tokens[i] = 'X';
 		}
-		else if (token->tokens[start] == 'S' && found == 1 && !is_redir(token->tokens[start - 1]))
+		else if (tkn->tokens[i] == 'S'
+			&& found && !is_redir(tkn->tokens[i - 1]))
 		{
-			table->cmd->cmd_arg[j++] = token->index[start];
-			token->tokens[start] = 'X';
+			table->cmd->cmd_arg[j++] = tkn->index[i];
+			tkn->tokens[i] = 'X';
 		}
-		start++;
 	}
 	return (j);
 }
 
 void	print_cmd_table(t_shell *shell, int len)
 {
-	t_table table;
+	t_table	table;
 	int		i;
 	int		j;
-	
+
 	i = -1;
 	while (++i < len)
 	{
@@ -114,4 +112,3 @@ void	print_cmd_table(t_shell *shell, int len)
 				printf("[%d] args ---> %s\n", j, table.cmd->cmd_arg[j]);
 	}
 }
-
