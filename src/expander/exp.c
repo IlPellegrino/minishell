@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exp.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:52:38 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/21 10:31:12 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/21 11:37:35 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,8 @@
 char	*check_flag(t_token *token)
 {
 	int		i;
-	//char	*flags;
 
 	i = -1;
-	//flags = ft_calloc(sizeof (char *), token->wrd + 2);
-	//flags = strncpy(flags, token->flag, token->wrd);
 	while (token->index[token->wrd][++i])
 	{
 		if (token->index[token->wrd][i] == SQ
@@ -29,7 +26,7 @@ char	*check_flag(t_token *token)
 				&& token->index[token->wrd][i] != '<'
 				&& token->index[token->wrd][i])
 				;
-			break;
+			break ;
 		}
 	}
 	if (token->index[token->wrd][i] == '>'
@@ -76,11 +73,22 @@ void	recreate_str(t_token *token, int j, char *input, char *new_var)
 		token->index[token->wrd][k++] = new_var[n++];
 	while (old_str[++j] != SPACE && old_str[j] != '>'
 		&& old_str[j] != PIPE && old_str[j] != '<'
-		&& old_str[j] != $ && old_str[j] != SQ
+		&& old_str[j] != '$' && old_str[j] != SQ
 		&& old_str[j] != DQ && old_str[j])
 		;
 	while (old_str[j])
 		token->index[token->wrd][k++] = old_str[j++];
+}
+
+char	*ft_allocate(t_token *token, char *input, char *new_var)
+{
+	int	len1;
+	int	len2;
+
+	len1 = ft_strlen(input);
+	len2 = ft_strlen(new_var);
+	token->index[token->wrd] = ft_calloc(sizeof (char *), len1 + len2);
+	return (token->index[token->wrd]);
 }
 
 void	expand_value(t_shell *shell, t_token *token)
@@ -102,8 +110,7 @@ void	expand_value(t_shell *shell, t_token *token)
 			if (!new_var)
 				return ;
 			collect_garbage(shell, token->index[token->wrd], 0);
-			token->index[token->wrd] =
-				ft_calloc(sizeof (char *), ft_strlen(input) + ft_strlen(new_var));
+			token->index[token->wrd] = ft_allocate(token, input, new_var);
 			if (!token->index[token->wrd])
 				return ;
 			recreate_str(token, j, input, new_var);
@@ -114,23 +121,23 @@ void	expand_value(t_shell *shell, t_token *token)
 
 int	count_quotes(t_token *token)
 {
-	int 	i;
+	int		i;
 	int		quote_nbr;
-	
+
 	i = 0;
 	quote_nbr = 0;
 	while (token->index[token->wrd][i++])
 	{
 		if (token->index[token->wrd][i] == SQ)
 		{
-			while(token->index[token->wrd][++i]
+			while (token->index[token->wrd][++i]
 				&& token->index[token->wrd][i] != SQ)
 				;
 			quote_nbr += 2;
 		}
 		else if (token->index[token->wrd][i] == DQ)
 		{
-			while(token->index[token->wrd][++i]
+			while (token->index[token->wrd][++i]
 				&& token->index[token->wrd][i] != DQ)
 				;
 			quote_nbr += 2;
@@ -142,19 +149,19 @@ int	count_quotes(t_token *token)
 char	*remove_quotes(t_shell *shell, t_token *token, int i)
 {
 	int		j;
-	char*	temp;
+	char	*temp;
 
 	j = 0;
 	temp = ft_calloc(sizeof(char *), i + 1);
 	i = -1;
-	while(token->index[token->wrd][++i])
+	while (token->index[token->wrd][++i])
 	{
 		if (token->index[token->wrd][i] == SQ)
-			while(token->index[token->wrd][++i]
+			while (token->index[token->wrd][++i]
 				&& token->index[token->wrd][i] != SQ)
 				temp[j++] = token->index[token->wrd][i];
 		else if (token->index[token->wrd][i] == DQ)
-			while(token->index[token->wrd][++i]
+			while (token->index[token->wrd][++i]
 				&& token->index[token->wrd][i] != DQ)
 				temp[j++] = token->index[token->wrd][i];
 		else if (token->index[token->wrd][i])
@@ -163,4 +170,3 @@ char	*remove_quotes(t_shell *shell, t_token *token, int i)
 	collect_garbage(shell, token->index[token->wrd], 0);
 	return (temp);
 }
-

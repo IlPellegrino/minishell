@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:26:12 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/20 18:56:30 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/21 11:03:06 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	shell.envp = envp;
-	while (1)
+	while (JESUS)
 	{
 		get_signal();
 		printf("%s", shell.arrow);
@@ -47,7 +47,8 @@ int	main(int argc, char **argv, char **envp)
 		get_path(&shell);
 		if (shell.input)
 		{
-			lexer(&shell);
+			if (!lexer(&shell))
+				continue;
 			if (!parsing(&shell))
 				shell.arrow = RED_ARROW;
 		}

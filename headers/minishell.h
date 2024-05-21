@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:59:59 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/20 18:57:28 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/21 11:04:17 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,7 @@
 # define DQ 34
 # define SQ 39
 # define PIPE 124
-# define $ 36
-# define MIN 
+# define JESUS 1
 # define COMMAND 0
 # define PARSE 1
 # define SYNTAX 2

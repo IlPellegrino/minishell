@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   readline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:52:55 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/21 10:32:47 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/21 11:20:29 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,10 @@ char	*lexer(t_shell *shell)
 
 	token = shell->tokens;
 	words = count_wrds(shell);
+	if (words == 0)
+		return (0);
 	token->flag = 0;
+	token->wrd = 0;
 	token->index = ft_calloc(sizeof (char *), words + 1);
 	if (!token->index)
 		return (0);

@@ -3,51 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_checker.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 13:46:29 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/21 10:34:32 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/21 11:26:29 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-// void	flag_for_parser(t_shell *shell, int i)
-// {
-// 	if (shell->input[i] == '>')
-// 		;
-// 		//shell->tokens->flag = 1;
-// }
-
-int	check_quotes(t_shell *shell, int i, int *words)
+int	check_quotes(t_shell *shell, int *i, int *words)
 {
-	if (shell->input[i] == DQ)
+	if (shell->input[*i] == DQ)
 	{
-		while (shell->input[++i] != DQ && shell->input[i])
+		while (shell->input[++*i] != DQ && shell->input[*i])
 			;
-		if (shell->input[i] == '\0')
-			close_shell(shell);
-		if (shell->input[++i] == '\0' || shell->input[i] == PIPE
-			|| shell->input[i] == '>' || shell->input[i] == '<')
-		{
+		if (shell->input[*i] == '\0')
+			return (0);
+		if (shell->input[++*i] == '\0' || shell->input[*i] == PIPE
+			|| shell->input[*i] == '>' || shell->input[*i] == '<')
 			(*words)++;
-			return (i);
-		}
 	}
-	else if (shell->input[i] == SQ)
+	else if (shell->input[*i] == SQ)
 	{
-		while (shell->input[++i] != SQ && shell->input[i])
+		while (shell->input[++*i] != SQ && shell->input[*i])
 			;
-		if (shell->input[i] == '\0')
-			close_shell(shell);
-		if (shell->input[++i] == '\0' || shell->input[i] == PIPE
-			|| shell->input[i] == '>' || shell->input[i] == '<')
-		{
+		if (shell->input[*i] == '\0')
+			return (0);
+		if (shell->input[++*i] == '\0' || shell->input[*i] == PIPE
+			|| shell->input[*i] == '>' || shell->input[*i] == '<')
 			(*words)++;
-			return (i);
-		}
 	}
-	return (i);
+	return (1);
 }
 
 int	pipe_checker(t_shell *shell, int i, int *words)
@@ -93,7 +80,10 @@ int	count_wrds(t_shell *shell)
 	while (shell->input[i] != '\0')
 	{
 		if (shell->input[i] == DQ || shell->input[i] == SQ)
-			i = check_quotes(shell, i, &words);
+		{
+			if (!check_quotes(shell, &i, &words))
+				return (0);
+		}
 		else if (shell->input[i] == SPACE)
 			words = check_space(shell, words, &i);
 		else if (shell->input[i] == '>' || shell->input[i] == '<'
@@ -217,8 +207,6 @@ void	create_minor(t_shell *shell, t_token *token, int (*i))
 		return ;
 	while (redir_nbr-- > 0)
 		token->index[token->wrd][r++] = '<';
-	//if (!token->flag)
-	//	token->flag = ft_calloc(sizeof (char *), token->wrd + 2);
 	token->flag = check_flag(token);
 	token->wrd++;
 }
@@ -240,8 +228,6 @@ void	create_major(t_shell *shell, t_token *token, int (*i))
 		return ;
 	while (redir_nbr-- > 0)
 		token->index[token->wrd][r++] = '>';
-	//if (!token->flag)
-	//	token->flag = ft_calloc(sizeof (char *), token->wrd + 2);
 	token->flag = check_flag(token);
 	token->wrd++;
 }
@@ -263,8 +249,6 @@ void	create_pipe(t_shell *shell, t_token *token, int (*i))
 		return ;
 	while (pipe_nbr-- > 0)
 		token->index[token->wrd][r++] = '|';
-	if (!token->flag)
-		token->flag = ft_calloc(sizeof (char *), token->wrd + 2);
 	token->flag = check_flag(token);
 	token->wrd++;
 }
@@ -279,8 +263,6 @@ void	create_word(t_shell *shell, t_token *token, int (*i))
 	if (!token->index[token->wrd])
 		return ;
 	write_word(shell, token, r, (*i));
-	//if (!token->flag)
-	//	token->flag = ft_calloc(sizeof (char *), token->wrd + 2);
 	token->flag = check_flag(token);
 	expand_value(shell, token);
 	token->index[token->wrd] = remove_quotes(shell, token, count_quotes(token));
@@ -307,7 +289,7 @@ void	choose_if(t_shell *shell, t_token *token, int (*i))
 void	setup_index(t_shell *shell, t_token *token, int *i)
 {
 	if (shell->input[(*i)] == PIPE
-		|| shell->input[(*i)] == '>'  || shell->input[(*i)] == '<')
+		|| shell->input[(*i)] == '>' || shell->input[(*i)] == '<')
 		choose_if(shell, token, &(*i));
 	else if (shell->input[(*i)] != PIPE
 		&& shell->input[(*i)] != '>' && shell->input[(*i)] != '<')
