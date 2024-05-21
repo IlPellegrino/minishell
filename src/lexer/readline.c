@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:52:55 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/21 11:20:29 by nromito          ###   ########.fr       */
+/*   Updated: 2024/05/21 12:20:36 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ char	*lexer(t_shell *shell)
 	t_token	*token;
 
 	token = shell->tokens;
+	shell->error = errno;
 	words = count_wrds(shell);
 	if (words == 0)
 		return (0);

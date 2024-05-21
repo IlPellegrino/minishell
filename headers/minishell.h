@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:59:59 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/21 11:04:17 by nromito          ###   ########.fr       */
+/*   Updated: 2024/05/21 14:30:25 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,11 @@ typedef struct s_table
 	t_cmd		*cmd;
 }			t_table;
 
+typedef struct s_bltin
+{
+	
+}			t_bltin;
+
 typedef struct s_token
 {
 		char 	**index;
@@ -83,6 +88,7 @@ typedef struct s_shell
 		char			**envp;
 		char			**path_env;
 		char			*new_input;
+		int				error;
 		int				sig_recived;
 		int				n_pipes;
 		char			*arrow;
@@ -100,13 +106,23 @@ t_garbage	*new_node(char *arg, char **mat);
 void		get_signal();
 
 /* lexer */
-char 		*lexer(t_shell *shell);
+void		copy_in_quotes(t_shell *shell, t_token *token, int (*r), int quote);
+void		write_word(t_shell *shell, t_token *token, int r, int i);
+void		create_minor(t_shell *shell, t_token *token, int (*i));
+void		create_major(t_shell *shell, t_token *token, int (*i));
+void		create_pipe(t_shell *shell, t_token *token, int (*i));
+void		create_word(t_shell *shell, t_token *token, int (*i));
+int			check_quotes(t_shell *shell, int *i, int *words);
+int			pipe_checker(t_shell *shell, int i, int *words);
+int			check_space(t_shell *shell, int words, int (*i));
+int			check_redirs(t_shell *shell, int words, int (*i));
 int			count_wrds(t_shell *shell);
+char 		*lexer(t_shell *shell);
 void		checker(t_shell *shell, t_token *token, int words);
 char		*ft_readline(char *str);
 /* expander */
 void		expander(t_shell *shell, t_token *token);
-void		expand_value(t_shell *shell, t_token *token);
+void		expand_values(t_shell *shell, t_token *token);
 char		*remove_quotes(t_shell *shell, t_token *token, int i);
 char		*check_flag(t_token *token);
 int			count_quotes(t_token *token);
