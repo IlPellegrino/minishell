@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exp.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:52:38 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/20 14:52:51 by nromito          ###   ########.fr       */
+/*   Updated: 2024/05/21 10:31:12 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 char	*check_flag(t_token *token)
 {
 	int		i;
-	char	*flags;
+	//char	*flags;
 
 	i = -1;
-	flags = ft_calloc(sizeof (char *), token->wrd + 2);
-	flags = strncpy(flags, token->flag, token->wrd);
+	//flags = ft_calloc(sizeof (char *), token->wrd + 2);
+	//flags = strncpy(flags, token->flag, token->wrd);
 	while (token->index[token->wrd][++i])
 	{
 		if (token->index[token->wrd][i] == SQ
@@ -34,10 +34,10 @@ char	*check_flag(t_token *token)
 	}
 	if (token->index[token->wrd][i] == '>'
 		|| token->index[token->wrd][i] == '<')
-		flags[token->wrd] = '1';
+		token->flag[token->wrd] = '1';
 	else if (token->index[token->wrd][i] == '\0')
-		flags[token->wrd] = '0';
-	return (flags);
+		token->flag[token->wrd] = '0';
+	return (token->flag);
 }
 
 char	*create_new_var(t_shell *shell, char *input, int n)
