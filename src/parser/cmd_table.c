@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 15:44:34 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/22 14:54:36 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/22 15:50:24 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int	fill_cmd_table(t_shell *shell, int start, int pipe)
 {
-
 	shell->cmd_table[shell->index].cmd = 0;
 	shell->cmd_table[shell->index].pos = pipe;
 	if (find_infile(start, shell))

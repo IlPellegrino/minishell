@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:54:36 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/22 15:20:26 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/22 15:54:05 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,22 +29,6 @@ int	parse_pipe(t_shell *shell)
 				return (ft_error(SYNTAX, "\\n"));
 		}
 	}
-	return (1);
-}
-
-int	parse_command(t_shell *shell)
-{
-	t_token	*token;
-	int		i;
-
-	token = shell->tokens;
-	token->temp_token = remove_redir(token);
-	collect_garbage(shell, token->temp_token, 0);
-	i = -1;
-	while (token->temp_token[i] == 'X')
-		i++;
-	if (token->temp_token[i] != 'C' && token->temp_token[i])
-		return (ft_error(COMMAND, token->index[i]));
 	return (1);
 }
 
@@ -72,10 +56,7 @@ int	parse_first_command(t_shell *shell)
 	while (temp_token[i] == 'X')
 		i++;
 	if (temp_token[i] != 'C' && temp_token[i])
-	{
-		free(temp_token);
-		return (ft_error(COMMAND, token->index[i]));
-	}
+		return (free(temp_token), ft_error(COMMAND, token->index[i]));
 	free(temp_token);
 	return (1);
 }
