@@ -6,7 +6,7 @@
 #    By: nromito <nromito@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/07 17:01:15 by ciusca            #+#    #+#              #
-#    Updated: 2024/05/21 13:52:09 by nromito          ###   ########.fr        #
+#    Updated: 2024/05/22 15:57:31 by nromito          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ HEADERS = headers/minishell.h
 
 PROTECTED_FUNC = protected_func/protected_functions.c
 CLOSING = close_and_free/close_shell.c
-BUILT_IN = built-in/echo.c
+BUILT_IN = built-in/echo.c built-in/cd.c
 EXECUTOR = executor/exec.c
 EXPANDER = expander/exp.c 
 PARSER = parser/parsing_utils.c parser/parsing.c parser/tokenizer.c parser/cmd_table.c parser/find_redirs.c
