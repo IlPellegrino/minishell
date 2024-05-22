@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:26:12 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/22 12:03:05 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/22 15:10:27 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int	main(int argc, char **argv, char **envp)
 				shell.arrow = RED_ARROW;
 				if (shell.cmd_table)
 					free_cmd_table(&shell);
+				continue;
 			}
 			executor(&shell);
 			if (shell.cmd_table)

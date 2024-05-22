@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:59:59 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/22 15:56:27 by nromito          ###   ########.fr       */
+/*   Updated: 2024/05/22 16:03:35 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,6 @@ typedef struct s_garbage
 
 typedef struct s_shell
 {
-	char		*infile;
-	char 		*outfile;
-	char		**redirect;
 	char 		*path;
 	int			index;
 	char		*cmd_name;
@@ -128,6 +125,7 @@ int			count_wrds(t_shell *shell);
 int 		lexer(t_shell *shell);
 void		checker(t_shell *shell, t_token *token, int words);
 char		*ft_readline(char *str);
+
 /* expander */
 void		expander(t_shell *shell, t_token *token);
 void		expand_values(t_shell *shell, t_token *token);
@@ -140,14 +138,13 @@ int			tokenizer(t_shell *shell);
 int			get_path(t_shell *shell);
 int			parsing(t_shell *shell);
 char		*remove_redir(t_token *token);
-/* parsing: count */
-int			count_pipes(t_shell *shell, char *tokens);
-int			count_redir(char *tokens);
+
 /* parsing: cmd table */
 int			init_cmd_table(t_shell *shell);
 int			find_infile(int start, t_shell *shell);
 int			find_outfile(int start, t_shell *shell);
 int			find_cmd(t_shell *shell, int start, t_token *token);
+
 /* parsing utils */
 void		print_cmd_table(t_shell *shell, int len);
 char		*remove_redir(t_token *token);

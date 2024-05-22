@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 17:09:43 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/21 12:24:30 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/22 15:53:44 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,23 +28,21 @@ int	n_args(t_token *token, int start)
 
 int	fill_cmd(t_shell *shell, t_table table, int i)
 {
-	t_token *tkn;
+	t_token	*tkn;
 
 	tkn = shell->tokens;
 	table.cmd = malloc(sizeof(t_cmd));
-	//collect_garbage(shell, table->cmd, 0);
 	table.command = tkn->index[i];
-	//collect_garbage(shell, 0, table->cmd->cmd_arg);
 	table.cmd->pathname = 0;
 	tkn->tokens[i] = 'X';
 	return (1);
 }
 
-
 int	find_infile(int i, t_shell *shell)
 {
 	t_token	*token;
-	t_table *table;
+	t_table	*table;
+	char	*temp_space;
 
 	table = &shell->cmd_table[shell->index];
 	token = shell->tokens;
@@ -52,7 +50,9 @@ int	find_infile(int i, t_shell *shell)
 	{
 		if (token->tokens[i] == 'I' || token->tokens[i] == 'H')
 		{
-			table->command = ft_strjoin(token->index[i], token->index[i + 1]);
+			temp_space = ft_strjoin(token->index[i], " ");
+			table->command = ft_strjoin(temp_space, token->index[i + 1]);
+			free(temp_space);
 			collect_garbage(shell, table->command, 0);
 			token->tokens[i] = 'X';
 			token->tokens[i + 1] = 'X';
@@ -68,7 +68,8 @@ int	find_outfile(int start, t_shell *shell)
 {
 	t_token	*token;
 	int		i;
-	t_table *table;
+	t_table	*table;
+	char	*temp_space;
 
 	table = &shell->cmd_table[shell->index];
 	i = start;
@@ -77,7 +78,9 @@ int	find_outfile(int start, t_shell *shell)
 	{
 		if (token->tokens[i] == 'O' || token->tokens[i] == 'A')
 		{
-			table->command = ft_strjoin(token->index[i], token->index[i + 1]);
+			temp_space = ft_strjoin(token->index[i], " ");
+			table->command = ft_strjoin(temp_space, token->index[i + 1]);
+			free(temp_space);
 			collect_garbage(shell, table->command, 0);
 			token->tokens[i] = 'X';
 			token->tokens[i + 1] = 'X';
@@ -94,7 +97,7 @@ int	find_cmd(t_shell *shell, int i, t_token *tkn)
 	int		found;
 	int		j;
 	t_table	*table;
-	
+
 	table = &shell->cmd_table[shell->index];
 	j = 0;
 	found = 0;
