@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 11:42:12 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/22 18:18:25 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/22 18:18:54 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	ft_cd(char **cd_mat)
 		move = getenv("HOME");
 	else if (cd_mat[1])
 		move = ft_strdup(cd_mat[1]);
-	if (matrix_len(cd_mat) < 3)
+	if (matrix_len(cd_mat) < 2)
 	{
 		folder = opendir(".");
 		if (!folder)
