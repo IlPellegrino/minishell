@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:52:38 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/21 14:58:28 by nromito          ###   ########.fr       */
+/*   Updated: 2024/05/22 14:39:38 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ char	*create_new_var(t_shell *shell, char *input, int n)
 	k = -1;
 	if (input[n + 1] == '?' && (input[n + 2] == '\0' || input[n + 2] == DQ))
 	{
-		printf("error = %d\n", shell->error);
 		if (shell->error != 0)
 			result = ft_itoa(shell->error);
 		else

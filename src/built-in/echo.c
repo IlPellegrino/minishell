@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 20:00:17 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/22 12:06:55 by nromito          ###   ########.fr       */
+/*   Updated: 2024/05/22 15:22:28 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,59 @@
 //bisogna passare anche la posizione all'interno della matrice(token->wrd),
 // per sapere echo dove sta.
 
+int	n_flag(char **echo_mat)
+{
+	int pos;
+	int i;
+	
+	pos = 1;
+	i = 0;
+	while (echo_mat[pos])
+	{
+		if (echo_mat[pos][0] == '-')
+		{
+			while(echo_mat[pos][++i] && echo_mat[pos][i] == 'n')
+				;
+			if (echo_mat[pos][i] == '\0' && i > 1)
+			{
+				pos++;
+				i = 0;
+			}
+			else
+				break;
+		}
+		else
+			break;
+	}
+	pos -= 1;
+	return (pos);
+}
+
 void	ft_echo(char **echo_mat)
 {
 	int pos;
 
 	pos = 0;
-	while (echo_mat[++pos])
+	if (!n_flag(echo_mat))
 	{
-        if (pos > 1)
-			write(1, " ", 1);
-		// if (token->flag[pos] == '1' || token->flag[pos] == '2')
-		// 	while (echo_mat[pos][++i])
-        //         write(1, &echo_mat[pos][i], 1);
-		printf("%s", echo_mat[pos]);
-    }
+		while (echo_mat[++pos])
+		{
+    	    if (pos > 1)
+				printf(" ");
+			printf("%s", echo_mat[pos]);
+   		}
+		printf("\n");
+	}
+	else if (n_flag(echo_mat))
+	{
+		pos += n_flag(echo_mat);
+		while (echo_mat[++pos])
+		{
+    	    if (pos > 1 + n_flag(echo_mat))
+				printf(" ");
+			printf("%s", echo_mat[pos]);
+   		}
+	}
 }
 
 int	ft_strcmp(char *s1, char *s2)
@@ -43,19 +82,3 @@ int	ft_strcmp(char *s1, char *s2)
 	else
 		return(0);
 }
-
-
-// void ft_initecho(t_token *token)
-// {
-// 	int	i;
-
-// 	i = -1;
-// 	while (token->index[++i])
-// 	{
-// 		if(ft_strcmp(token->index[i], "echo"))
-// 		{		
-// 			ft_echo(token, i);
-// 			break;
-// 		}
-// 	}
-// }

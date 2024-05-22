@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 13:46:29 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/22 12:07:46 by nromito          ###   ########.fr       */
+/*   Updated: 2024/05/22 15:26:24 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,18 +93,20 @@ int	quotes_reader(t_shell *shell, int i, int *k)
 
 void	choose_if(t_shell *shell, t_token *token, int (*i))
 {
-	if (shell->input[(*i)] == PIPE && shell->input[(*i) - 1] != SPACE
+	if ((*i) != 0 && shell->input[(*i)] == PIPE
+		&& shell->input[(*i) - 1] != SPACE
 		&& shell->input[(*i) - 1] != '>'
 		&& (*i) != 0 && shell->input[(*i) - 1] != '<')
 		create_word(shell, token, &(*i));
-	else if (shell->input[(*i)] == '<' && (*i) != 0
+	else if ((*i) != 0 && shell->input[(*i)] == '<'
 		&& shell->input[(*i) - 1] != SPACE
 		&& shell->input[(*i) - 1] != '>'
 		&& shell->input[(*i) - 1] != PIPE)
 		create_word(shell, token, &(*i));
-	else if (shell->input[(*i)] == '>' && shell->input[(*i) - 1] != SPACE
+	else if ((*i) != 0 && shell->input[(*i)] == '>'
+		&& shell->input[(*i) - 1] != SPACE
 		&& shell->input[(*i) - 1] != PIPE
-		&& (*i) != 0 && shell->input[(*i) - 1] != '<')
+		&& shell->input[(*i) - 1] != '<')
 		create_word(shell, token, &(*i));
 }
 
