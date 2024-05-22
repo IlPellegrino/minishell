@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   readline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:52:55 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/21 12:20:36 by nromito          ###   ########.fr       */
+/*   Updated: 2024/05/22 11:54:00 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	find_cmd_path(t_shell *shell, char *cmd)
 	return (0);
 }
 
-char	*lexer(t_shell *shell)
+int		lexer(t_shell *shell)
 {
 	int		words;
 	t_token	*token;
@@ -47,5 +47,5 @@ char	*lexer(t_shell *shell)
 	collect_garbage(shell, token->flag, 0);
 	checker(shell, token, words);
 	printf("flag %s\n", token->flag);
-	return (0);
+	return (1);
 }

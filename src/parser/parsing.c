@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:54:36 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/20 19:09:00 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/22 09:53:46 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,11 @@ int	parse_first_command(t_shell *shell)
 	while (temp_token[i] == 'X')
 		i++;
 	if (temp_token[i] != 'C' && temp_token[i])
+	{
+		free(temp_token);
 		return (ft_error(COMMAND, token->index[i]));
+	}
+	free(temp_token);
 	return (1);
 }
 
@@ -84,6 +88,7 @@ int	parse_input(t_shell *shell)
 
 	token = shell->tokens;
 	i = -1;
+	//printf("tokens after parse %s\n", token->tokens);
 	if (!parse_first_command(shell))
 		return (0);
 	while (token->tokens[++i])

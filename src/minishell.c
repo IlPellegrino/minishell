@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:26:12 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/21 11:03:06 by nromito          ###   ########.fr       */
+/*   Updated: 2024/05/22 12:03:05 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,14 @@ int	main(int argc, char **argv, char **envp)
 			if (!lexer(&shell))
 				continue;
 			if (!parsing(&shell))
+			{
 				shell.arrow = RED_ARROW;
+				if (shell.cmd_table)
+					free_cmd_table(&shell);
+			}
+			executor(&shell);
+			if (shell.cmd_table)
+					free_cmd_table(&shell);
 		}
 	}
 }

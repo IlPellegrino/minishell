@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 20:00:17 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/22 12:04:57 by nromito          ###   ########.fr       */
+/*   Updated: 2024/05/22 12:06:55 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,17 +45,17 @@ int	ft_strcmp(char *s1, char *s2)
 }
 
 
-void ft_initecho(t_token *token)
-{
-	int	i;
+// void ft_initecho(t_token *token)
+// {
+// 	int	i;
 
-	i = -1;
-	while (token->index[++i])
-	{
-		if(ft_strcmp(token->index[i], "echo"))
-		{		
-			ft_echo(token, i);
-			break;
-		}
-	}
-}
+// 	i = -1;
+// 	while (token->index[++i])
+// 	{
+// 		if(ft_strcmp(token->index[i], "echo"))
+// 		{		
+// 			ft_echo(token, i);
+// 			break;
+// 		}
+// 	}
+// }

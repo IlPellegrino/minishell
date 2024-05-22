@@ -6,11 +6,30 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 18:27:50 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/20 19:07:57 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/21 12:12:59 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
+
+void	print_cmd_table(t_shell *shell, int len)
+{
+	t_table	table;
+	int		i;
+	int		j;
+
+	i = -1;
+	printf("len %d\n", len);
+	while (++i < len)
+	{
+		table = shell->cmd_table[i];
+		j = 0;
+		printf("element = %s\n", table.command);
+		if (table.cmd)
+			while (table.cmd->cmd_arg[++j])
+				printf("[%d] args ---> %s\n", j, table.cmd->cmd_arg[j]);
+	}
+}
 
 int	is_redir(int c)
 {

@@ -6,24 +6,22 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 15:44:34 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/21 10:38:42 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/22 11:51:55 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-int	fill_cmd_table(t_shell *shell, int start, int pipe, int index)
+int	fill_cmd_table(t_shell *shell, int start, int pipe)
 {
-	t_table	*table;
 
-	table = &shell->cmd_table[index];
-	table->cmd = 0;
-	table->pos = pipe;
-	if (find_infile(start, shell, table))
+	shell->cmd_table[shell->index].cmd = 0;
+	shell->cmd_table[shell->index].pos = pipe;
+	if (find_infile(start, shell))
 		return (1);
-	else if (find_cmd(start - 1, shell->tokens, table))
+	else if (find_cmd(shell, start - 1, shell->tokens))
 		return (1);
-	else if (find_outfile(start, shell, table))
+	else if (find_outfile(start, shell))
 		return (1);
 	return (0);
 }
@@ -37,7 +35,7 @@ int	check_x(char *tokens, int start)
 	return (1);
 }
 
-int	find_token_pos(t_shell *shell, int start, int index)
+int	find_token_pos(t_shell *shell, int start)
 {
 	int		i;
 	int		pipe;
@@ -50,9 +48,12 @@ int	find_token_pos(t_shell *shell, int start, int index)
 		if (token->tokens[i] == 'P')
 			pipe++;
 	while (check_x(shell->tokens->tokens, i))
-		if (!fill_cmd_table(shell, i, pipe, index++))
+	{
+		if (!fill_cmd_table(shell, i, pipe))
 			return (0);
-	return (index);
+		shell->index++;
+	}
+	return (1);
 }
 
 int	count_tkn(char *tokens)
@@ -62,9 +63,12 @@ int	count_tkn(char *tokens)
 
 	count = 0;
 	i = -1;
+	printf("tokens = %s\n", tokens);
 	while (tokens[++i])
+	{
 		if (tokens[i] != 'P' && tokens[i] != 'S')
 			count++;
+	}
 	return (count);
 }
 
@@ -72,23 +76,22 @@ int	init_cmd_table(t_shell *shell)
 {
 	t_token		*token;
 	char		**input_args;
-	int			len;
 	int			i;
-	static int	index;
 
-	len = 0;
+	shell->index = 0;
+	shell->len = 0;
 	token = shell->tokens;
 	input_args = ft_split(token->tokens, 'P');
-	i = -1;
-	len = count_tkn(token->tokens);
-	shell->cmd_table = malloc(sizeof(t_table) * len);
+	shell->len = count_tkn(token->tokens);
+	shell->cmd_table = malloc(sizeof(t_table) * shell->len);
 	if (!shell->cmd_table)
 		return (0);
 	i = -1;
 	while (input_args[++i])
-		index = find_token_pos(shell, i, index);
-	index = 0;
+		find_token_pos(shell, i);
+	shell->index = 0;
 	collect_garbage(shell, 0, input_args);
-	print_cmd_table(shell, len);
+	print_cmd_table(shell, shell->len);
+	printf("hello\n");
 	return (1);
 }
