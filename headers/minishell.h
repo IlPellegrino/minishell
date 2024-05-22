@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:59:59 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/22 15:47:37 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/22 17:25:30 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,7 @@ int			tokenizer(t_shell *shell);
 int			get_path(t_shell *shell);
 int			parsing(t_shell *shell);
 char		*remove_redir(t_token *token);
+int			find_builtins(char *cmd);
 
 /* parsing: cmd table */
 int			init_cmd_table(t_shell *shell);
