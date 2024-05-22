@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:59:59 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/21 14:30:25 by nromito          ###   ########.fr       */
+/*   Updated: 2024/05/22 11:43:49 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,9 @@ t_garbage	*new_node(char *arg, char **mat);
 
 /* signals */
 void		get_signal();
+
+/* builtins */
+void		ft_initecho(t_token *token);
 
 /* lexer */
 void		copy_in_quotes(t_shell *shell, t_token *token, int (*r), int quote);
