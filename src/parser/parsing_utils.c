@@ -6,11 +6,33 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 18:27:50 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/21 12:12:59 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/22 15:16:46 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
+
+int	get_path(t_shell *shell)
+{
+	char	*path;
+	char	*temp;
+	int		i;
+
+	i = -1;
+	path = getenv("PATH");
+	shell->path_env = ft_split(path, ':');
+	if (!shell->path_env)
+		return (0);
+	while (shell->path_env[++i])
+	{
+		temp = ft_strdup(shell->path_env[i]);
+		free(shell->path_env[i]);
+		shell->path_env[i] = ft_strjoin(temp, "/");
+		free(temp);
+	}
+	collect_garbage(shell, 0, shell->path_env);
+	return (1);
+}
 
 void	print_cmd_table(t_shell *shell, int len)
 {

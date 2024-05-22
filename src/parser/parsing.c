@@ -6,31 +6,29 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:54:36 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/22 09:53:46 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/22 15:20:26 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-int	get_path(t_shell *shell)
+int	parse_pipe(t_shell *shell)
 {
-	char	*path;
-	char	*temp;
+	t_token	*token;
 	int		i;
 
+	token = shell->tokens;
 	i = -1;
-	path = getenv("PATH");
-	shell->path_env = ft_split(path, ':');
-	if (!shell->path_env)
-		return (0);
-	while (shell->path_env[++i])
+	while (token->tokens[++i])
 	{
-		temp = ft_strdup(shell->path_env[i]);
-		free(shell->path_env[i]);
-		shell->path_env[i] = ft_strjoin(temp, "/");
-		free(temp);
+		if (token->tokens[i] == 'P')
+		{
+			if (i == 0)
+				return (ft_error(SYNTAX, token->index[i]));
+			else if (!token->tokens[i + 1])
+				return (ft_error(SYNTAX, "\\n"));
+		}
 	}
-	collect_garbage(shell, 0, shell->path_env);
 	return (1);
 }
 
@@ -64,7 +62,8 @@ int	parse_first_command(t_shell *shell)
 		if (is_redir(temp_token[i]))
 		{
 			temp_token[i] = 'X';
-			temp_token[i + 1] = 'X';
+			if (temp_token [i + 1])
+				temp_token[i + 1] = 'X';
 		}
 		else if (temp_token[i] == 'P')
 			temp_token[i] = 'X';
@@ -88,7 +87,8 @@ int	parse_input(t_shell *shell)
 
 	token = shell->tokens;
 	i = -1;
-	//printf("tokens after parse %s\n", token->tokens);
+	if (!parse_pipe(shell))
+		return (0);
 	if (!parse_first_command(shell))
 		return (0);
 	while (token->tokens[++i])

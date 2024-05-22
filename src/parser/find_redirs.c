@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 17:09:43 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/21 12:24:30 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/22 15:13:50 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int	find_infile(int i, t_shell *shell)
 {
 	t_token	*token;
 	t_table *table;
+	char	*temp_space;
 
 	table = &shell->cmd_table[shell->index];
 	token = shell->tokens;
@@ -52,7 +53,9 @@ int	find_infile(int i, t_shell *shell)
 	{
 		if (token->tokens[i] == 'I' || token->tokens[i] == 'H')
 		{
-			table->command = ft_strjoin(token->index[i], token->index[i + 1]);
+			temp_space = ft_strjoin(token->index[i], " ");
+			table->command = ft_strjoin(temp_space, token->index[i + 1]);
+			free(temp_space);
 			collect_garbage(shell, table->command, 0);
 			token->tokens[i] = 'X';
 			token->tokens[i + 1] = 'X';
@@ -69,6 +72,7 @@ int	find_outfile(int start, t_shell *shell)
 	t_token	*token;
 	int		i;
 	t_table *table;
+	char	*temp_space;
 
 	table = &shell->cmd_table[shell->index];
 	i = start;
@@ -77,7 +81,9 @@ int	find_outfile(int start, t_shell *shell)
 	{
 		if (token->tokens[i] == 'O' || token->tokens[i] == 'A')
 		{
-			table->command = ft_strjoin(token->index[i], token->index[i + 1]);
+			temp_space = ft_strjoin(token->index[i], " ");
+			table->command = ft_strjoin(temp_space, token->index[i + 1]);
+			free(temp_space);
 			collect_garbage(shell, table->command, 0);
 			token->tokens[i] = 'X';
 			token->tokens[i + 1] = 'X';
