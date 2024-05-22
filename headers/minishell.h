@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:59:59 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/22 12:15:07 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/22 15:56:27 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <dirent.h>
 # include <unistd.h>
 # include <stdlib.h>
 # include <fcntl.h>
@@ -110,6 +111,7 @@ void		get_signal();
 
 /* builtins */
 void		ft_echo(char **echo_mat);
+int			ft_cd(char **cd_mat);
 
 /* lexer */
 void		copy_in_quotes(t_shell *shell, t_token *token, int (*r), int quote);

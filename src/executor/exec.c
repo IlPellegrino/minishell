@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:52:14 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/22 15:28:57 by nromito          ###   ########.fr       */
+/*   Updated: 2024/05/22 15:55:42 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ int	executor(t_shell *shell)
 		cmd_len = ft_strlen(table.command);
 		if (!(ft_strncmp(table.command, "echo", cmd_len)))
 			ft_echo(table.cmd->cmd_arg);
-		// else if (!(ft_strncmp(table.command, "cd", cmd_len)))
-		// 	ft_cd(table.cmd->cmd_arg);
+		else if (!(ft_strncmp(table.command, "cd", cmd_len)))
+			ft_cd(table.cmd->cmd_arg);
 	}
 	return (1);
 }
