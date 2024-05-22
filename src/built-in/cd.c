@@ -6,38 +6,53 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 11:42:12 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/22 15:58:54 by nromito          ###   ########.fr       */
+/*   Updated: 2024/05/22 17:22:25 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
+int	change_dir(char *cd_arg, DIR *folder)
+{
+	DIR	*dest;	
+
+	dest = opendir(cd_arg);
+	if (dest)
+	{
+		closedir(folder);
+		closedir(dest);
+		chdir(cd_arg);
+		return (0);
+	}
+	return (1);
+}
+
 int	ft_cd(char **cd_mat)
 {
 	DIR				*folder;
 	struct dirent	*entry;
+	char			*move;
 
-	if (cd_mat[1] && !cd_mat[2])
+	printf("cd_mat = %s\n", cd_mat[2]);
+	if (!cd_mat[1] || !ft_strncmp(cd_mat[1], "~", ft_strlen(cd_mat[1])))
+		move = getenv("HOME");
+	else if (cd_mat[1])
+		move = ft_strdup(cd_mat[1]);
+	if (!cd_mat[2])
 	{
 		folder = opendir(".");
 		if (!folder)
+			return(perror("minishell"), 1);
+		entry = readdir(folder);
+		while (entry)
 		{
-			perror("minishell");
-			return(1);
-		}
-		while ((entry = readdir(folder)))
-		{
-			if (!ft_strncmp(cd_mat[1], (char *)folder, ft_strlen(cd_mat[1])))
-			{
-				closedir(folder);
-				chdir(cd_mat[1]);
+			if (!change_dir(move, folder))
 				return (0);
-			}
+			entry = readdir(folder);
 		}
 		closedir(folder);
-		perror("minishell");
-		return(1);
+		return(perror("minishell"), 1);
 	}
-	else
-		return(1);
+	ft_putstr_fd("minishell: too many arguments\n", 2);
+	return(1);
 }
