@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 13:59:01 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/20 18:52:01 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/21 12:18:31 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,15 @@ int	tokenizer(t_shell *shell)
 
 	command = 0;
 	token = shell->tokens;
-	i = -1;
 	token->tokens = ft_calloc(sizeof(char *), matrix_len(token->index) + 1);
 	if (!token->tokens)
 		return (0);
 	collect_garbage(shell, token->tokens, 0);
+	i = -1;
 	while (token->index[++i])
 		if (!set_token(shell, token, &i, &command))
 			return (0);
+	printf("ciao\n");
 	printf("tokens = %s\n", token->tokens);
 	command = 0;
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:26:12 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/20 18:56:30 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/22 11:33:04 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ int	main(int argc, char **argv, char **envp)
 			lexer(&shell);
 			if (!parsing(&shell))
 				shell.arrow = RED_ARROW;
+			if (shell.cmd_table)
+				free_cmd_table(&shell);
 		}
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:59:59 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/20 18:57:28 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/22 09:40:48 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ typedef struct s_shell
 		char 			*outfile;
 		char			**redirect;
 		char 			*path;
+		int				index;
 		char			*cmd_name;
 		char			**mat_input;
 		char			*input;
@@ -86,6 +87,7 @@ typedef struct s_shell
 		char			*new_input;
 		int				sig_recived;
 		int				n_pipes;
+		int				len;
 		char			*arrow;
 		t_token			*tokens;
 		t_garbage  		*collector;
@@ -96,6 +98,7 @@ typedef struct s_shell
 void		close_shell(t_shell *shell);
 int			collect_garbage(t_shell *shell, char *arg, char **mat);
 t_garbage	*new_node(char *arg, char **mat);
+void		free_cmd_table(t_shell *shell);
 
 /* signals */
 void		get_signal();
@@ -122,9 +125,9 @@ int			count_pipes(t_shell *shell, char *tokens);
 int			count_redir(char *tokens);
 /* parsing: cmd table */
 int			init_cmd_table(t_shell *shell);
-int			find_infile(int start, t_shell *shell, t_table *table);
-int			find_outfile(int start, t_shell *shell, t_table *table);
-int			find_cmd(int start, t_token *token, t_table *table);
+int			find_infile(int start, t_shell *shell);
+int			find_outfile(int start, t_shell *shell);
+int			find_cmd(t_shell *shell, int start, t_token *token);
 /* parsing utils */
 void		print_cmd_table(t_shell *shell, int len);
 char		*remove_redir(t_token *token);

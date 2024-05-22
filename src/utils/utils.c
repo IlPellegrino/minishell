@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 19:59:43 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/20 19:10:37 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/22 11:35:22 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int	init_structs(t_shell *shell)
 	garbage->arg = 0;
 	garbage->mat = 0;
 	shell->collector = garbage;
+	shell->cmd_table = 0;
 	return (1);
 }
 
