@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+         #
+#    By: nromito <nromito@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/07 17:01:15 by ciusca            #+#    #+#              #
-#    Updated: 2024/05/20 18:30:44 by ciusca           ###   ########.fr        #
+#    Updated: 2024/05/21 13:52:09 by nromito          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ BUILT_IN = built-in/echo.c
 EXECUTOR = executor/exec.c
 EXPANDER = expander/exp.c 
 PARSER = parser/parsing_utils.c parser/parsing.c parser/tokenizer.c parser/cmd_table.c parser/find_redirs.c
-LEXER = lexer/readline.c lexer/lexer_checker.c
+LEXER = lexer/readline.c lexer/lexer_checker.c lexer/word_creation.c lexer/count_words.c
 UTILS = utils/utils.c utils/utils2.c
 SIGNAL = signals/signals.c
 MAIN	= minishell.c

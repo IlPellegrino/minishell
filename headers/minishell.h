@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:59:59 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/22 09:40:48 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/22 11:54:08 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,7 @@
 # define DQ 34
 # define SQ 39
 # define PIPE 124
-# define $ 36
-# define MIN 
+# define JESUS 1
 # define COMMAND 0
 # define PARSE 1
 # define SYNTAX 2
@@ -52,6 +51,11 @@ typedef struct s_table
 	int			pos;
 	t_cmd		*cmd;
 }			t_table;
+
+typedef struct s_bltin
+{
+	
+}			t_bltin;
 
 typedef struct s_token
 {
@@ -74,25 +78,26 @@ typedef struct s_garbage
 
 typedef struct s_shell
 {
-		char			*infile;
-		char 			*outfile;
-		char			**redirect;
-		char 			*path;
-		int				index;
-		char			*cmd_name;
-		char			**mat_input;
-		char			*input;
-		char			**envp;
-		char			**path_env;
-		char			*new_input;
-		int				sig_recived;
-		int				n_pipes;
-		int				len;
-		char			*arrow;
-		t_token			*tokens;
-		t_garbage  		*collector;
-		t_table			*cmd_table;
-}		t_shell;
+	char		*infile;
+	char 		*outfile;
+	char		**redirect;
+	char 		*path;
+	int			index;
+	char		*cmd_name;
+	char		**mat_input;
+	char		*input;
+	char		**envp;
+	char		**path_env;
+	char		*new_input;
+	int			error;
+	int			sig_recived;
+	int			n_pipes;
+	int			len;
+	char		*arrow;
+	t_token		*tokens;
+	t_garbage  	*collector;
+	t_table		*cmd_table;
+}	t_shell;
 
 /* close shell */
 void		close_shell(t_shell *shell);
@@ -104,13 +109,23 @@ void		free_cmd_table(t_shell *shell);
 void		get_signal();
 
 /* lexer */
-char 		*lexer(t_shell *shell);
+void		copy_in_quotes(t_shell *shell, t_token *token, int (*r), int quote);
+void		write_word(t_shell *shell, t_token *token, int r, int i);
+void		create_minor(t_shell *shell, t_token *token, int (*i));
+void		create_major(t_shell *shell, t_token *token, int (*i));
+void		create_pipe(t_shell *shell, t_token *token, int (*i));
+void		create_word(t_shell *shell, t_token *token, int (*i));
+int			check_quotes(t_shell *shell, int *i, int *words);
+int			pipe_checker(t_shell *shell, int i, int *words);
+int			check_space(t_shell *shell, int words, int (*i));
+int			check_redirs(t_shell *shell, int words, int (*i));
 int			count_wrds(t_shell *shell);
+int 		lexer(t_shell *shell);
 void		checker(t_shell *shell, t_token *token, int words);
 char		*ft_readline(char *str);
 /* expander */
 void		expander(t_shell *shell, t_token *token);
-void		expand_value(t_shell *shell, t_token *token);
+void		expand_values(t_shell *shell, t_token *token);
 char		*remove_quotes(t_shell *shell, t_token *token, int i);
 char		*check_flag(t_token *token);
 int			count_quotes(t_token *token);
@@ -141,6 +156,9 @@ void		execve_p(char *cmd_path, char **argv, char **envp);
 void		close_fds(void);
 int			ft_error(int error_type, char *str);
 int			is_redir(int c);
+
+/*executor*/
+int			executor(t_shell *shell);
 
 /* utils */
 int			find_space(char *index);

@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:26:12 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/22 11:33:04 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/22 12:03:05 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	shell.envp = envp;
-	while (1)
+	while (JESUS)
 	{
 		get_signal();
 		printf("%s", shell.arrow);
@@ -47,11 +47,17 @@ int	main(int argc, char **argv, char **envp)
 		get_path(&shell);
 		if (shell.input)
 		{
-			lexer(&shell);
+			if (!lexer(&shell))
+				continue;
 			if (!parsing(&shell))
+			{
 				shell.arrow = RED_ARROW;
+				if (shell.cmd_table)
+					free_cmd_table(&shell);
+			}
+			executor(&shell);
 			if (shell.cmd_table)
-				free_cmd_table(&shell);
+					free_cmd_table(&shell);
 		}
 	}
 }

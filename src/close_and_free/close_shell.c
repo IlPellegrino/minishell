@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 10:32:57 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/22 11:38:29 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/22 12:00:47 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,16 @@ void	free_cmd_table(t_shell *shell)
 	int		i;
 
 	i = -1;
-	while (++i < shell->len)
-	{
-		table = &shell->cmd_table[i];
-		if (table->cmd)
+	if (shell->len)
+		while (++i < shell->len)
 		{
-			free(table->cmd);
-			table->cmd = 0;
+			table = &shell->cmd_table[i];
+			if (table->cmd)
+			{
+				free(table->cmd);
+				table->cmd = 0;
+			}
 		}
-	}
 	free(shell->cmd_table);
 	shell->cmd_table = 0;
 }

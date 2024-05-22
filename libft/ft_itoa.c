@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 12:29:28 by nromito           #+#    #+#             */
-/*   Updated: 2023/10/29 16:42:35 by nromito          ###   ########.fr       */
+/*   Updated: 2024/05/21 14:58:36 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,6 @@ char	*ft_itoa(int n)
 
 	nb = n;
 	j = count_num(nb);
-	if (nb == 0 || nb == -0)
-		return (ft_strdup("0"));
 	digit = malloc(sizeof(char) * (j + 1));
 	if (digit == NULL)
 		return (NULL);
