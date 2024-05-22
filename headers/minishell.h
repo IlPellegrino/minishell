@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:59:59 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/22 12:08:57 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/22 12:15:07 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,9 @@ void		free_cmd_table(t_shell *shell);
 
 /* signals */
 void		get_signal();
+
+/* builtins */
+void		ft_echo(char **echo_mat);
 
 /* lexer */
 void		copy_in_quotes(t_shell *shell, t_token *token, int (*r), int quote);
