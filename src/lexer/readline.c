@@ -6,18 +6,32 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:52:55 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/22 16:01:44 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/22 17:25:48 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
+
+int	find_builtins(char *cmd)
+{
+	int	len;
+
+	len = ft_strlen(cmd);
+	if (!ft_strncmp(cmd, "exit", len))
+		return (1);
+	else if (!ft_strncmp(cmd, "unset", len))
+		return (1);
+	else if (!ft_strncmp(cmd, "export", len))
+		return (1);
+	return (0);
+}
 
 int	find_cmd_path(t_shell *shell, char *cmd)
 {
 	int		i;
 
 	i = -1;
-	if (!ft_strncmp(cmd, "cd", ft_strlen(cmd)))
+	if (find_builtins(cmd))
 		return (1);
 	while (shell->path_env[++i])
 	{

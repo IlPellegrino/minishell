@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:59:59 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/22 16:03:35 by nromito          ###   ########.fr       */
+/*   Updated: 2024/05/22 17:26:45 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,7 @@ int			tokenizer(t_shell *shell);
 int			get_path(t_shell *shell);
 int			parsing(t_shell *shell);
 char		*remove_redir(t_token *token);
+int			find_builtins(char *cmd);
 
 /* parsing: cmd table */
 int			init_cmd_table(t_shell *shell);
