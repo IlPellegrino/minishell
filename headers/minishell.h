@@ -6,10 +6,9 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:59:59 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/22 17:26:45 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/22 17:59:20 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -53,33 +52,28 @@ typedef struct s_table
 	t_cmd		*cmd;
 }			t_table;
 
-typedef struct s_bltin
-{
-	
-}			t_bltin;
-
 typedef struct s_token
 {
-		char 	**index;
-		int		*mat_ind;
-		char	*tokens;
-		int		exp;
-		char	*flag;
-		int		wrd;
-		int		start;
-		char	*temp_token;
+	char	**index;
+	int		*mat_ind;
+	char	*tokens;
+	int		exp;
+	char	*flag;
+	int		wrd;
+	int		start;
+	char	*temp_token;
 }		t_token;
 
 typedef struct s_garbage
 {
 	char				*arg;
 	char				**mat;
-	struct s_garbage 	*next;
-}		t_garbage;
+	struct s_garbage	*next;
+}			t_garbage;
 
 typedef struct s_shell
 {
-	char 		*path;
+	char		*path;
 	int			index;
 	char		*cmd_name;
 	char		**mat_input;
@@ -93,9 +87,9 @@ typedef struct s_shell
 	int			len;
 	char		*arrow;
 	t_token		*tokens;
-	t_garbage  	*collector;
+	t_garbage	*collector;
 	t_table		*cmd_table;
-}	t_shell;
+}			t_shell;
 
 /* close shell */
 void		close_shell(t_shell *shell);
@@ -104,7 +98,7 @@ t_garbage	*new_node(char *arg, char **mat);
 void		free_cmd_table(t_shell *shell);
 
 /* signals */
-void		get_signal();
+void		get_signal(void);
 
 /* builtins */
 void		ft_echo(char **echo_mat);
@@ -122,7 +116,7 @@ int			pipe_checker(t_shell *shell, int i, int *words);
 int			check_space(t_shell *shell, int words, int (*i));
 int			check_redirs(t_shell *shell, int words, int (*i));
 int			count_wrds(t_shell *shell);
-int 		lexer(t_shell *shell);
+int			lexer(t_shell *shell);
 void		checker(t_shell *shell, t_token *token, int words);
 char		*ft_readline(char *str);
 

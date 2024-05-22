@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:52:55 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/22 17:25:48 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/22 18:00:13 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ int	find_builtins(char *cmd)
 	else if (!ft_strncmp(cmd, "unset", len))
 		return (1);
 	else if (!ft_strncmp(cmd, "export", len))
+		return (1);
+	else if (!ft_strncmp(cmd, "cd", len))
 		return (1);
 	return (0);
 }
@@ -46,7 +48,7 @@ int	find_cmd_path(t_shell *shell, char *cmd)
 	return (0);
 }
 
-int		lexer(t_shell *shell)
+int	lexer(t_shell *shell)
 {
 	int		words;
 	t_token	*token;
