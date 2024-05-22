@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 15:44:34 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/22 11:51:55 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/22 12:15:38 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,5 @@ int	init_cmd_table(t_shell *shell)
 	shell->index = 0;
 	collect_garbage(shell, 0, input_args);
 	print_cmd_table(shell, shell->len);
-	printf("hello\n");
 	return (1);
 }
