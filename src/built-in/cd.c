@@ -6,9 +6,12 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 11:42:12 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/21 11:42:28 by nromito          ###   ########.fr       */
+/*   Updated: 2024/05/22 15:19:06 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
+void	ft_cd(char **cd_mat)
+{
+}
