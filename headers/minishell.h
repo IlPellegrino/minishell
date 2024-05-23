@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:59:59 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/22 18:19:05 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/23 10:58:39 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ int			find_builtins(char *cmd);
 int			init_cmd_table(t_shell *shell);
 int			find_infile(int start, t_shell *shell);
 int			find_outfile(int start, t_shell *shell);
-int			find_cmd(t_shell *shell, int start, t_token *token);
+int			find_cmd(t_shell *shell, int start, t_token *token, int found);
 
 /* parsing utils */
 void		print_cmd_table(t_shell *shell, int len);
@@ -161,6 +161,6 @@ int			executor(t_shell *shell);
 int			find_space(char *index);
 int			find_cmd_path(t_shell *shell, char *cmd);
 void		print_matrix(char **mat);
-int			init_structs(t_shell *shell);
+int			init_structs(t_shell *shell, int argc, char **argv, char **envp);
 
 #endif
