@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 12:34:56 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/23 14:54:57 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/23 15:53:19 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	open_redir(t_shell *shell, t_token *token, int i)
 		fd = open(token->index[i], O_CREAT | O_WRONLY | O_TRUNC, 0777);
 	shell->error = errno;
 	if (fd < 0)
-		return (ft_error(OPEN_ERR, token->index[i]));
+		return (ft_error(shell, OPEN_ERR, token->index[i]));
 	token->redirs[i] = fd;
 	return (1);
 }

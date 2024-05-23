@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:59:59 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/23 15:02:57 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/23 15:54:08 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,14 +76,13 @@ typedef struct s_garbage
 typedef struct s_shell
 {
 	char		*path;
-	int			index;
-	char		*cmd_name;
-	char		**mat_input;
-	char		*input;
 	char		**envp;
 	char		**path_env;
 	char		*new_input;
+	char		*input;
 	int			error;
+	int			index;
+	char		*cmd_name;
 	int			sig_recived;
 	int			n_pipes;
 	int			len;
@@ -105,6 +104,8 @@ void		get_signal(void);
 /* builtins */
 void		ft_echo(char **echo_mat);
 int			ft_cd(char **cd_mat);
+int			ft_pwd(void);
+int			ft_export(char **export_mat);
 
 /* lexer */
 int			check_word(t_shell *shell, t_token *token, int quote);

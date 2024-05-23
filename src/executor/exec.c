@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:52:14 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/23 14:39:32 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/23 15:52:00 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,10 @@ int	executor(t_shell *shell)
 			ft_echo(table.cmd->cmd_arg);
 		else if (!(ft_strncmp(table.command, "cd", cmd_len)))
 			ft_cd(table.cmd->cmd_arg);
+		else if (!(ft_strncmp(table.command, "pwd", cmd_len)))
+			ft_pwd();
+		else if (!(ft_strncmp(table.command, "export", cmd_len)))
+			ft_export(table.cmd->cmd_arg);
 	}
 	return (1);
 }

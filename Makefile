@@ -6,7 +6,7 @@
 #    By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/07 17:01:15 by ciusca            #+#    #+#              #
-#    Updated: 2024/05/23 14:39:18 by ciusca           ###   ########.fr        #
+#    Updated: 2024/05/23 15:51:32 by ciusca           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ HEADERS = headers/minishell.h
 
 PROTECTED_FUNC_SRC = protected_functions.c protected_functions2.c
 CLOSING_SRC = close_shell.c
-BUILT_IN_SRC = echo.c cd.c
+BUILT_IN_SRC = echo.c cd.c pwd.c export.c env.c
 EXECUTOR_SRC = exec.c
 EXPANDER_SRC = exp.c quotes_and_flag.c
 PARSER_SRC = parse_redirs.c parsing_utils.c parsing.c tokenizer.c cmd_table.c find_redirs.c
