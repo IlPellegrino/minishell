@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:59:59 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/22 17:26:45 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/23 10:26:58 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,11 @@ void		ft_echo(char **echo_mat);
 int			ft_cd(char **cd_mat);
 
 /* lexer */
+int			check_word(t_shell *shell, t_token *token, int quote);
+void		choose_if(t_shell *shell, t_token *token, int (*i));
+void		checker(t_shell *shell, t_token *token, int words);
+void		setup_index(t_shell *shell, t_token *token, int *i);
+int			quotes_reader(t_shell *shell, int i, int *k);
 void		copy_in_quotes(t_shell *shell, t_token *token, int (*r), int quote);
 void		write_word(t_shell *shell, t_token *token, int r, int i);
 void		create_minor(t_shell *shell, t_token *token, int (*i));
@@ -123,11 +128,9 @@ int			check_space(t_shell *shell, int words, int (*i));
 int			check_redirs(t_shell *shell, int words, int (*i));
 int			count_wrds(t_shell *shell);
 int 		lexer(t_shell *shell);
-void		checker(t_shell *shell, t_token *token, int words);
 char		*ft_readline(char *str);
 
 /* expander */
-void		expander(t_shell *shell, t_token *token);
 void		expand_values(t_shell *shell, t_token *token);
 char		*remove_quotes(t_shell *shell, t_token *token, int i);
 char		*check_flag(t_token *token);

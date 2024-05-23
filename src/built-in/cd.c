@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 11:42:12 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/22 17:36:22 by nromito          ###   ########.fr       */
+/*   Updated: 2024/05/23 10:30:06 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	ft_cd(char **cd_mat)
 		move = getenv("HOME");
 	else if (cd_mat[1])
 		move = ft_strdup(cd_mat[1]);
-	if (matrix_len(cd_mat) < 2)
+	if (matrix_len(cd_mat) < 3)
 	{
 		folder = opendir(".");
 		if (!folder)
