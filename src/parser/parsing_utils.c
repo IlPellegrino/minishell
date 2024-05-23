@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 18:27:50 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/23 10:45:05 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/23 12:04:20 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	print_cmd_table(t_shell *shell, int len)
 		table = shell->cmd_table[i];
 		j = -1;
 		printf("element = %s\n", table.command);
+		printf("pos = %d\n", table.pos);
 		if (table.cmd)
 			while (table.cmd->cmd_arg[++j])
 				printf("[%d] args ---> %s\n", j, table.cmd->cmd_arg[j]);

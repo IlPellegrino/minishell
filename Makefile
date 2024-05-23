@@ -6,7 +6,7 @@
 #    By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/07 17:01:15 by ciusca            #+#    #+#              #
-#    Updated: 2024/05/23 11:02:50 by ciusca           ###   ########.fr        #
+#    Updated: 2024/05/23 14:39:18 by ciusca           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,16 +17,26 @@ LIBFT = libft/libft.a
 
 HEADERS = headers/minishell.h
 
-PROTECTED_FUNC = protected_func/protected_functions.c protected_func/protected_functions2.c
-CLOSING = close_and_free/close_shell.c
-BUILT_IN = built-in/echo.c built-in/cd.c
-EXECUTOR = executor/exec.c
-EXPANDER = expander/exp.c expander/quotes_and_flag.c
-PARSER = parser/parsing_utils.c parser/parsing.c parser/tokenizer.c parser/cmd_table.c parser/find_redirs.c
-LEXER = lexer/readline.c lexer/lexer_checker.c lexer/word_creation.c lexer/count_words.c
-UTILS = utils/utils.c utils/utils2.c
-SIGNAL = signals/signals.c
+PROTECTED_FUNC_SRC = protected_functions.c protected_functions2.c
+CLOSING_SRC = close_shell.c
+BUILT_IN_SRC = echo.c cd.c
+EXECUTOR_SRC = exec.c
+EXPANDER_SRC = exp.c quotes_and_flag.c
+PARSER_SRC = parse_redirs.c parsing_utils.c parsing.c tokenizer.c cmd_table.c find_redirs.c
+LEXER_SRC = readline.c lexer_checker.c word_creation.c count_words.c
+UTILS_SRC = utils.c utils2.c
+SIGNAL_SRC = signals.c
 MAIN	= minishell.c
+
+PROTECTED_FUNC = $(addprefix protected_func/, $(PROTECTED_FUNC_SRC))
+CLOSING = $(addprefix close_and_free/, $(CLOSING_SRC))
+BUILT_IN = $(addprefix built-in/, $(BUILT_IN_SRC))
+EXECUTOR = $(addprefix executor/, $(EXECUTOR_SRC))
+EXPANDER = $(addprefix expander/, $(EXPANDER_SRC))
+PARSER = $(addprefix parser/, $(PARSER_SRC))
+LEXER = $(addprefix lexer/, $(LEXER_SRC))
+UTILS = $(addprefix utils/, $(UTILS_SRC))
+SIGNAL = $(addprefix signals/, $(SIGNAL_SRC))
 
 SRCS = $(addprefix src/, $(MAIN) $(CLOSING) $(SIGNAL) ${BUILT_IN} $(PROTECTED_FUNC) ${EXECUTOR} ${EXPANDER} ${PARSER} ${LEXER} ${UTILS})
 

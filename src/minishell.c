@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:26:12 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/23 10:29:42 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/23 15:47:33 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ int	main(int argc, char **argv, char **envp)
 			{
 				if (shell.cmd_table)
 					free_cmd_table(&shell);
+				shell.error = 0;
 				continue ;
 			}
 			if (shell.cmd_table)
