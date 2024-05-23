@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exp.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:52:38 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/23 10:33:47 by nromito          ###   ########.fr       */
+/*   Updated: 2024/05/23 15:13:43 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ void	expand_value(t_shell *shell, t_token *token, char *input, int j)
 	char	*new_var;
 
 	new_var = create_new_var(shell, input, j);
+	collect_garbage(shell, new_var, 0);
 	if (!new_var)
 		return ;
 	collect_garbage(shell, token->index[token->wrd], 0);

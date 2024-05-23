@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:59:59 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/23 13:10:53 by nromito          ###   ########.fr       */
+/*   Updated: 2024/05/23 16:45:21 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@
 # define PIPE 124
 # define JESUS 1
 # define COMMAND 0
-# define PARSE 1
+# define OPEN_ERR 1
 # define SYNTAX 2
 
 typedef struct s_cmd
@@ -49,6 +49,7 @@ typedef struct s_cmd
 typedef struct s_table
 {
 	char		*command;
+	int			fd;
 	int			pos;
 	t_cmd		*cmd;
 }			t_table;
@@ -62,6 +63,7 @@ typedef struct s_token
 	char	*flag;
 	int		wrd;
 	int		start;
+	int		*redirs;
 	char	*temp_token;
 }		t_token;
 
@@ -75,14 +77,13 @@ typedef struct s_garbage
 typedef struct s_shell
 {
 	char		*path;
-	int			index;
-	char		*cmd_name;
-	char		**mat_input;
-	char		*input;
 	char		**envp;
 	char		**path_env;
 	char		*new_input;
+	char		*input;
 	int			error;
+	int			index;
+	char		*cmd_name;
 	int			sig_recived;
 	int			n_pipes;
 	int			len;
@@ -140,6 +141,7 @@ int			get_path(t_shell *shell);
 int			parsing(t_shell *shell);
 char		*remove_redir(t_token *token);
 int			find_builtins(char *cmd);
+int			parse_redirs(t_shell *shell);
 
 /* parsing: cmd table */
 int			init_cmd_table(t_shell *shell);
@@ -158,7 +160,7 @@ void		wait_p(int *status);
 void		pipe_p(int pipe_fds[2]);
 void		execve_p(char *cmd_path, char **argv, char **envp);
 void		close_fds(void);
-int			ft_error(int error_type, char *str);
+int			ft_error(t_shell *shell, int error_type, char *str);
 int			is_redir(int c);
 
 /*executor*/
