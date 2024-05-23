@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:52:14 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/23 15:52:00 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/23 16:45:27 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	executor(t_shell *shell)
 		else if (!(ft_strncmp(table.command, "pwd", cmd_len)))
 			ft_pwd();
 		else if (!(ft_strncmp(table.command, "export", cmd_len)))
-			ft_export(table.cmd->cmd_arg);
+			ft_export(table.cmd->cmd_arg, shell->envp);
 	}
 	return (1);
 }

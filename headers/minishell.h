@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:59:59 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/23 19:30:42 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/23 19:36:39 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 # define MINISHELL "\e[1;96mminishell\033[0m$ "
 # define DQ 34
 # define SQ 39
+# define US 95
 # define PIPE 124
 # define JESUS 1
 # define COMMAND 0
@@ -106,7 +107,7 @@ void		get_signal(void);
 void		ft_echo(char **echo_mat);
 int			ft_cd(char **cd_mat);
 int			ft_pwd(void);
-int			ft_export(char **export_mat);
+int			ft_export(char **export_mat, char **env);
 
 /* lexer */
 int			check_word(t_shell *shell, t_token *token, int quote);
