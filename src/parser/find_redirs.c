@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 17:09:43 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/22 15:53:44 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/23 10:57:55 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,20 +92,18 @@ int	find_outfile(int start, t_shell *shell)
 	return (0);
 }
 
-int	find_cmd(t_shell *shell, int i, t_token *tkn)
+int	find_cmd(t_shell *shell, int i, t_token *tkn, int fnd)
 {
-	int		found;
 	int		j;
 	t_table	*table;
 
 	table = &shell->cmd_table[shell->index];
 	j = 0;
-	found = 0;
 	while (tkn->tokens[++i] && tkn->tokens[i] != 'P')
 	{
 		if (tkn->tokens[i] == 'C')
 		{
-			found = 1;
+			fnd = 1;
 			table->cmd = malloc(sizeof(t_cmd));
 			table->command = tkn->index[i];
 			table->cmd->cmd_arg = ft_calloc(sizeof(char *), n_args(tkn, i) + 1);
@@ -114,8 +112,7 @@ int	find_cmd(t_shell *shell, int i, t_token *tkn)
 			table->cmd->pathname = 0;
 			tkn->tokens[i] = 'X';
 		}
-		else if (tkn->tokens[i] == 'S'
-			&& found && !is_redir(tkn->tokens[i - 1]))
+		else if (tkn->tokens[i] == 'S' && fnd && !is_redir(tkn->tokens[i - 1]))
 		{
 			table->cmd->cmd_arg[j++] = ft_strdup(tkn->index[i]);
 			tkn->tokens[i] = 'X';

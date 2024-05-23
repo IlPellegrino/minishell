@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 19:59:43 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/22 18:18:03 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/23 10:26:47 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,15 @@ int	find_space(char *index)
 	return (1);
 }
 
-int	init_structs(t_shell *shell)
+int	init_structs(t_shell *shell, int argc, char **argv, char **envp)
 {
 	t_token		*token;
 	t_garbage	*garbage;
 
+	(void)argc;
+	(void)argv;
+	shell->error = 0;
+	shell->envp = envp;
 	token = malloc(sizeof(t_token));
 	shell->tokens = token;
 	garbage = malloc(sizeof(t_garbage));
@@ -39,6 +43,9 @@ int	init_structs(t_shell *shell)
 	shell->len = 0;
 	shell->collector = garbage;
 	shell->cmd_table = 0;
+	shell->arrow = ft_calloc(sizeof(char *), ft_strlen(GREEN_ARROW) + 1);
+	collect_garbage(shell, shell->arrow, 0);
+	shell->arrow = GREEN_ARROW;
 	return (1);
 }
 

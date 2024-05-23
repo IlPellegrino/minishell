@@ -1,36 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export.c                                           :+:      :+:    :+:   */
+/*   protected_functions2.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/21 11:40:46 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/23 12:53:28 by nromito          ###   ########.fr       */
+/*   Created: 2024/05/23 11:02:14 by ciusca            #+#    #+#             */
+/*   Updated: 2024/05/23 11:02:33 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-int	ft_setenv()
+void	close_fds(void)
 {
-	return (0);
-}
+	int	i;
 
-int	ft_getenv()
-{
-	return (0);
-}
-
-int	ft_export(char **export_mat)
-{
-	char	**env_copy;
-
-	if (export_mat)
-	{
-		env_copy = NULL;
-		*env_copy = getenv("NULL");
-		return (0);
-	}
-	return (1);
+	i = 0;
+	while (i < 1024)
+		close(i++);
 }

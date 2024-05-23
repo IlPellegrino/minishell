@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 15:02:12 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/20 18:57:50 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/23 11:03:36 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,4 @@ int	access_p(char *file, int mode)
 	if (ret == -1 && errno != ENOENT)
 		return (0);
 	return (ret);
-}
-
-void	close_fds(void)
-{
-	int	i;
-
-	i = 0;
-	while (i < 1024)
-		close(i++);
 }

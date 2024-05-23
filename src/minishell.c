@@ -6,11 +6,20 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:26:12 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/22 18:17:42 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/23 10:29:42 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/minishell.h"
+
+void	set_arrow(t_shell *shell)
+{
+	if (!shell->error)
+		shell->arrow = GREEN_ARROW;
+	else
+		shell->arrow = RED_ARROW;
+	printf("%s ", shell->arrow);
+}
 
 char	*ft_readline(char *str)
 {
@@ -28,18 +37,11 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_shell		shell;
 
-	init_structs(&shell);
-	shell.arrow = ft_calloc(sizeof(char *), ft_strlen(GREEN_ARROW) + 1);
-	collect_garbage(&shell, shell.arrow, 0);
-	shell.arrow = GREEN_ARROW;
-	(void)argc;
-	(void)argv;
-	shell.envp = envp;
+	init_structs(&shell, argc, argv, envp);
 	while (JESUS)
 	{
 		get_signal();
-		printf("%s", shell.arrow);
-		shell.arrow = GREEN_ARROW;
+		set_arrow(&shell);
 		shell.input = ft_readline(MINISHELL);
 		if (!shell.input)
 			close_shell(&shell);
@@ -47,18 +49,14 @@ int	main(int argc, char **argv, char **envp)
 		get_path(&shell);
 		if (shell.input)
 		{
-			if (!lexer(&shell))
-				continue;
-			if (!parsing(&shell))
+			if (lexer(&shell) && parsing(&shell) && executor(&shell))
 			{
-				shell.arrow = RED_ARROW;
 				if (shell.cmd_table)
 					free_cmd_table(&shell);
 				continue ;
 			}
-			executor(&shell);
 			if (shell.cmd_table)
-					free_cmd_table(&shell);
+				free_cmd_table(&shell);
 		}
 	}
 }
