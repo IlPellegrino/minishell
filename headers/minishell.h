@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:59:59 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/23 10:33:36 by nromito          ###   ########.fr       */
+/*   Updated: 2024/05/23 12:18:00 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ void		get_signal(void);
 /* builtins */
 void		ft_echo(char **echo_mat);
 int			ft_cd(char **cd_mat);
+int			ft_pwd(void);
 
 /* lexer */
 int			check_word(t_shell *shell, t_token *token, int quote);
