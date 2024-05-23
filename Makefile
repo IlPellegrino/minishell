@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nromito <nromito@student.42.fr>            +#+  +:+       +#+         #
+#    By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/07 17:01:15 by ciusca            #+#    #+#              #
-#    Updated: 2024/05/22 15:57:31 by nromito          ###   ########.fr        #
+#    Updated: 2024/05/23 11:02:50 by ciusca           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,11 +17,11 @@ LIBFT = libft/libft.a
 
 HEADERS = headers/minishell.h
 
-PROTECTED_FUNC = protected_func/protected_functions.c
+PROTECTED_FUNC = protected_func/protected_functions.c protected_func/protected_functions2.c
 CLOSING = close_and_free/close_shell.c
 BUILT_IN = built-in/echo.c built-in/cd.c
 EXECUTOR = executor/exec.c
-EXPANDER = expander/exp.c 
+EXPANDER = expander/exp.c expander/quotes_and_flag.c
 PARSER = parser/parsing_utils.c parser/parsing.c parser/tokenizer.c parser/cmd_table.c parser/find_redirs.c
 LEXER = lexer/readline.c lexer/lexer_checker.c lexer/word_creation.c lexer/count_words.c
 UTILS = utils/utils.c utils/utils2.c

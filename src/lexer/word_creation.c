@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 13:45:16 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/21 14:12:14 by nromito          ###   ########.fr       */
+/*   Updated: 2024/05/23 10:17:43 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,18 +89,24 @@ void	create_pipe(t_shell *shell, t_token *token, int (*i))
 	token->wrd++;
 }
 
-void	create_word(t_shell *shell, t_token *token, int (*i))
+void	copy_in_quotes(t_shell *shell, t_token *token, int (*r), int quote)
 {
-	int	r;
-
-	r = 0;
-	token->index[token->wrd]
-		= ft_calloc(sizeof(char*), (*i) - token->start);
-	if (!token->index[token->wrd])
-		return ;
-	write_word(shell, token, r, (*i));
-	token->flag = check_flag(token);
-	expand_values(shell, token);
-	token->index[token->wrd] = remove_quotes(shell, token, count_quotes(token));
-	token->wrd++;
+	if (quote == DQ)
+	{
+		if (check_word(shell, token, DQ))
+			return ;
+		token->index[token->wrd][(*r)++] = shell->input[token->start - 1];
+		while (shell->input[token->start] != DQ)
+			token->index[token->wrd][(*r)++] = shell->input[token->start++];
+		token->index[token->wrd][(*r)++] = shell->input[token->start];
+	}
+	else if (quote == SQ)
+	{
+		if (check_word(shell, token, SQ))
+			return ;
+		token->index[token->wrd][(*r)++] = shell->input[token->start - 1];
+		while (shell->input[token->start] != SQ)
+			token->index[token->wrd][(*r)++] = shell->input[token->start++];
+		token->index[token->wrd][(*r)++] = shell->input[token->start];
+	}
 }
