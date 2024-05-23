@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ciusca <cristianiusca13@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/12 12:13:41 by nromito           #+#    #+#             */
-/*   Updated: 2023/10/26 16:48:46 by nromito          ###   ########.fr       */
+/*   Created: 2023/10/12 17:20:23 by ciusca            #+#    #+#             */
+/*   Updated: 2023/10/29 19:11:39 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,32 +14,22 @@
 
 char	*ft_strrchr(const char *s, int c)
 {
-	int				i;
-	unsigned char	j;
+	int			i;
+	const char	*s_start;
 
-	j = (unsigned char)c;
-	i = ft_strlen(s);
-	i -= 1;
-	if (s == NULL)
-		return (NULL);
-	if (s[i + 1] == j)
-		return ((char *)&s[i + 1]);
-	while (i >= 0)
+	i = -1;
+	s_start = s;
+	while (s[++i])
 	{
-		if (s[i] == j)
-			return ((char *)s + i);
-		i--;
+		if ((unsigned char)s[i] == (unsigned char)c)
+		{
+			s += i;
+			i = 0;
+		}
 	}
-	if (s[i] == j)
-		return ((char *)s + i);
-	return (0);
+	if ((unsigned char)c == '\0')
+		return ((char *)&s[i]);
+	if (s_start == s && (unsigned char)*s_start != (unsigned char)c)
+		return (NULL);
+	return ((char *)s);
 }
-
-// int main(void)
-// {
-//     const char *str = "Hello, World!";
-//     // int search_char = 0;
-//     char *result = ft_strrchr(str, '\0');
-//     printf("Result: %s\n", result);
-//     return 0;
-// }

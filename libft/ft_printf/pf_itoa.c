@@ -1,20 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_itoa.c                                          :+:      :+:    :+:   */
+/*   pf_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ciusca <cristianiusca13@gmail.com>         +#+  +:+       +#+        */
+/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 16:45:44 by ciusca            #+#    #+#             */
-/*   Updated: 2023/10/30 20:57:54 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/02/17 19:08:45 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include <stdio.h>
-#include <stddef.h>
+#include "../libft.h"
 
-int	n_len(long n)
+int	nb_len(long n)
 {
 	int	i;
 
@@ -34,18 +32,17 @@ int	n_len(long n)
 	return (i);
 }
 
-char	*ft_itoa(int n)
+int	pf_itoa(long cifra)
 {
 	char	*str;
-	long	cifra;
 	int		len;
+	int		count;
 
-	cifra = n;
-	len = n_len(cifra);
-	str = (char *) malloc(sizeof(char) * len + 1);
+	count = 0;
+	len = nb_len(cifra) -1;
+	str = (char *) malloc(sizeof(char) * len + 2);
 	if (!str)
-		return (NULL);
-	len -= 1;
+		return (0);
 	if (cifra < 0)
 	{
 		cifra *= -1;
@@ -56,9 +53,10 @@ char	*ft_itoa(int n)
 	str[len + 1] = 0;
 	while (cifra > 0)
 	{
-		str[len] = cifra % 10 + 48;
+		str[len--] = cifra % 10 + 48;
 		cifra /= 10;
-		len --;
 	}
-	return (str);
+	count += pf_putstr(str);
+	free(str);
+	return (count);
 }

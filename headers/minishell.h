@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:59:59 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/23 15:54:08 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/23 19:30:42 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # include <signal.h>
 # include <errno.h>
 
+# define HEREDOC "\033[1;33m> \033[0m"
 # define RED_ARROW "\033[1;31m-> "
 # define GREEN_ARROW "\033[1;32m-> "
 # define MINISHELL "\e[1;96mminishell\033[0m$ "
@@ -141,6 +142,7 @@ int			parsing(t_shell *shell);
 char		*remove_redir(t_token *token);
 int			find_builtins(char *cmd);
 int			parse_redirs(t_shell *shell);
+int			ft_heredoc(char *eof);
 
 /* parsing: cmd table */
 int			init_cmd_table(t_shell *shell);
@@ -167,7 +169,7 @@ int			executor(t_shell *shell);
 
 /* utils */
 int			find_space(char *index);
-int			find_cmd_path(t_shell *shell, char *cmd);
+int			find_cmd_path(t_shell *shell, char *cmd, int pos);
 void		print_matrix(char **mat);
 int			init_structs(t_shell *shell, int argc, char **argv, char **envp);
 

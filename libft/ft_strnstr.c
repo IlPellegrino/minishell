@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ciusca <cristianiusca13@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/12 17:04:23 by nromito           #+#    #+#             */
-/*   Updated: 2023/10/26 18:58:44 by nromito          ###   ########.fr       */
+/*   Created: 2023/10/12 22:14:16 by ciusca            #+#    #+#             */
+/*   Updated: 2023/10/23 17:40:22 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,25 @@
 
 char	*ft_strnstr(const char *big, const char *little, size_t len)
 {
-	unsigned int	i;
-	unsigned int	n;
+	size_t	i;
+	size_t	n;
+	size_t	little_len;
 
-	n = 0;
 	i = 0;
-	if (little[n] == '\0' || little == NULL)
+	n = 0;
+	little_len = ft_strlen(little);
+	if (little[0] == '\0')
 		return ((char *)big);
-	if (len == 0)
-		return (0);
-	while (big[i] && i < len)
+	while (i < len && big[i])
 	{
-		while (big[i + n] == little[n] && big[i + n] && i + n < len)
+		while (big[i + n] == little[n] && n + i < len)
+		{
+			if (n >= little_len - 1)
+				return ((char *)&big[i]);
 			n++;
-		if (n == ft_strlen(little))
-			return ((char *)big + i);
+		}
 		n = 0;
 		i++;
 	}
-	return (NULL);
+	return (0);
 }

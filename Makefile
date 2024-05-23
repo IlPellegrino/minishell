@@ -6,7 +6,7 @@
 #    By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/07 17:01:15 by ciusca            #+#    #+#              #
-#    Updated: 2024/05/23 15:51:32 by ciusca           ###   ########.fr        #
+#    Updated: 2024/05/23 18:14:22 by ciusca           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ CLOSING_SRC = close_shell.c
 BUILT_IN_SRC = echo.c cd.c pwd.c export.c env.c
 EXECUTOR_SRC = exec.c
 EXPANDER_SRC = exp.c quotes_and_flag.c
-PARSER_SRC = parse_redirs.c parsing_utils.c parsing.c tokenizer.c cmd_table.c find_redirs.c
+PARSER_SRC = parse_redirs.c ft_heredoc.c parsing_utils.c parsing.c tokenizer.c cmd_table.c find_redirs.c
 LEXER_SRC = readline.c lexer_checker.c word_creation.c count_words.c
 UTILS_SRC = utils.c utils2.c
 SIGNAL_SRC = signals.c

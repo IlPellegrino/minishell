@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:26:12 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/23 15:53:07 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/23 19:27:30 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	set_arrow(t_shell *shell)
 		shell->arrow = GREEN_ARROW;
 	else
 		shell->arrow = RED_ARROW;
-	printf("%s ", shell->arrow);
+	printf("%s", shell->arrow);
 }
 
 char	*ft_readline(char *str)

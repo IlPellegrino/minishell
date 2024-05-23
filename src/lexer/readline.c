@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:52:55 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/23 15:11:04 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/23 16:37:43 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,17 @@ int	find_builtins(char *cmd)
 	return (0);
 }
 
-int	find_cmd_path(t_shell *shell, char *cmd)
+int	find_cmd_path(t_shell *shell, char *cmd, int pos)
 {
 	int		i;
 
 	i = -1;
+	if (!cmd[0])
+		return (0);
 	if (find_builtins(cmd))
 		return (1);
+	if (pos && is_redir(shell->tokens->tokens[pos - 1]))
+		return (0);
 	while (shell->path_env[++i])
 	{
 		if (!ft_strchr(cmd, '/'))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/12 18:49:47 by nicolo            #+#    #+#             */
-/*   Updated: 2023/10/26 19:10:59 by nromito          ###   ########.fr       */
+/*   Created: 2023/10/13 11:19:07 by ciusca            #+#    #+#             */
+/*   Updated: 2024/02/17 18:49:54 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,32 +14,27 @@
 
 int	ft_atoi(const char *str)
 {
-	int	a;
-	int	num;
-	int	neg;
+	long int	i;
+	long int	number;
+	long int	neg;
 
 	neg = 1;
-	a = 0;
-	num = 0;
-	while (str[a] == 32 || (str[a] >= 9 && str[a] <= 13))
-		a++;
-	if (str[a] == 43)
-		a++;
-	else if (str[a] == 45)
+	number = 0;
+	i = 0;
+	while (str[i] == ' ' || str[i] == '\n'
+		|| str[i] == '\t' || str[i] == '\v'
+		|| str[i] == '\f' || str[i] == '\r')
+		i ++;
+	if (str[i] == '-' || str[i] == '+')
 	{
-		neg = -1;
-		a++;
+		if (str[i] == '-')
+			neg *= -1;
+		i ++;
 	}
-	while (str[a] <= 57 && str[a] >= 48)
+	while (str[i] <= '9' && str[i] >= '0')
 	{
-		num = (10 * num) + str[a] - 48;
-		a++;
+		number = number * 10 + (str[i] - 48);
+		i++;
 	}
-	return (num * neg);
+	return (number * neg);
 }
-
-// int	main(void)
-// {
-// 	char a[50] = "";
-// 	printf("%d", ft_atoi(a));
-// }

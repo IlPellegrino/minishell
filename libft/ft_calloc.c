@@ -3,24 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ciusca <cristianiusca13@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/12 10:14:29 by nromito           #+#    #+#             */
-/*   Updated: 2024/02/25 15:29:03 by nromito          ###   ########.fr       */
+/*   Created: 2023/10/13 16:20:53 by ciusca            #+#    #+#             */
+/*   Updated: 2023/10/24 21:02:51 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_calloc(size_t nmemb, size_t size)
+void	*ft_calloc(size_t nitems, size_t size)
 {
-	void	*a;
+	void	*arr;
 
-	if (nmemb * size > ULONG_MAX)
+	if (nitems != 0 && size > ULONG_MAX / nitems)
 		return (NULL);
-	a = malloc(nmemb * size);
-	if (!a)
+	arr = (void *)malloc(size * nitems);
+	if (arr == NULL)
 		return (NULL);
-	ft_bzero(a, nmemb * size);
-	return (a);
+	ft_bzero(arr, size * nitems);
+	return (arr);
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memmove.c                                       :+:      :+:    :+:   */
+/*   memmove.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ciusca <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/10 16:24:34 by nromito           #+#    #+#             */
-/*   Updated: 2023/11/14 11:25:00 by nromito          ###   ########.fr       */
+/*   Created: 2023/10/10 21:49:06 by ciusca            #+#    #+#             */
+/*   Updated: 2023/10/10 21:49:06 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,32 +14,35 @@
 
 void	*ft_memmove(void *dest, const void *src, size_t n)
 {
-	const char	*s;
-	char		*d;
+	char		*dest_ptr;
+	const char	*src_ptr;
 	size_t		i;
 
-	s = (const char *)src;
-	d = (char *)dest;
-	i = 0;
-	if (dest == src)
+	dest_ptr = (char *)dest;
+	src_ptr = (const char *)src;
+	if (dest_ptr == src_ptr)
 		return (dest);
-	if (d > s)
-		while (n-- > 0)
-			d[n] = s[n];
+	if (src_ptr < dest_ptr)
+	{
+		i = n + 1;
+		while (--i > 0)
+			dest_ptr[i - 1] = src_ptr[i - 1];
+	}
 	else
 	{
-		while (i < n)
-		{
-			d[i] = s[i];
-			i++;
-		}
+		i = -1;
+		while (++i < n)
+			dest_ptr[i] = src_ptr[i];
 	}
 	return (dest);
 }
 
-// int	main()
-// {
-// 	unsigned char s[] = "ciao";
-// 	unsigned char d[] = "bella";
-// 	printf("Output: %c\n", ft_memmove(d, s, 4));
-// 	return (0);!=
+/*int main(void)
+{
+	int 	size = 128 * 1024 * 1024;
+	char *dst = (char *)malloc(sizeof(char) * size);
+	char *data = (char *)malloc(sizeof(char) * size);
+
+	ft_memmove(dst, data, size);
+	printf("%s",dst);
+}*/

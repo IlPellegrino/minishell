@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 13:59:01 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/23 15:53:28 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/23 16:38:27 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	set_token(t_shell *shell, t_token *token, int *i, int *command)
 {
-	if (find_cmd_path(shell, token->index[*i]) && *command == 0)
+	if (find_cmd_path(shell, token->index[*i], *i) && *command == 0) // da riscriviere
 	{
 		*command = 1;
 		token->tokens[*i] = 'C';
@@ -55,7 +55,6 @@ int	tokenizer(t_shell *shell)
 	while (token->index[++i])
 		if (!set_token(shell, token, &i, &command))
 			return (0);
-	printf("ciao\n");
 	printf("tokens = %s\n", token->tokens);
 	command = 0;
 	return (1);

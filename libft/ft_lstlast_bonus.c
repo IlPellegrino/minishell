@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstlast_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ciusca <cristianiusca13@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/31 11:00:15 by nromito           #+#    #+#             */
-/*   Updated: 2023/10/31 11:30:58 by nromito          ###   ########.fr       */
+/*   Created: 2023/10/20 16:04:54 by ciusca            #+#    #+#             */
+/*   Updated: 2023/10/30 20:46:48 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ t_list	*ft_lstlast(t_list *lst)
 	if (lst == NULL)
 		return (NULL);
 	while (lst->next != NULL)
+	{
 		lst = lst->next;
+	}
 	return (lst);
 }

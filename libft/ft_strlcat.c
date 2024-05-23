@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ciusca <cristianiusca13@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/12 09:43:33 by nromito           #+#    #+#             */
-/*   Updated: 2023/10/26 14:35:30 by nromito          ###   ########.fr       */
+/*   Created: 2023/10/12 13:50:10 by ciusca            #+#    #+#             */
+/*   Updated: 2023/10/21 16:53:50 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,25 @@
 
 size_t	ft_strlcat(char *dst, const char *src, size_t size)
 {
-	int		i;
-	size_t	j;
+	size_t		len_dst;
+	size_t		res;
+	size_t		len_src;
+	size_t		i;
 
+	len_dst = ft_strlen(dst);
+	len_src = ft_strlen(src);
+	res = 0;
 	i = 0;
-	j = ft_strlen(dst);
-	if (size == 0)
-		return (ft_strlen(src));
-	if (size < j)
-		return (size + ft_strlen(src));
-	while (src[i] != '\0' && i + j < size - 1)
+	if (size > len_dst)
+		res = len_src + len_dst;
+	else
+		res = len_src + size;
+	while (src[i] != 0 && (len_dst + 1) < size)
 	{
-		dst[j + i] = src[i];
+		dst[len_dst] = src[i];
+		len_dst++;
 		i++;
 	}
-	dst[j + i] = '\0';
-	return (j + ft_strlen(src));
+	dst[len_dst] = '\0';
+	return (res);
 }
-
-// int	main(void)
-// {
-// 	char dst[13] = "Gesu' Cristo";
-// 	char src[] = "hfwjh";
-// 	printf("La rivelazione e' che %zu\n", ft_strlcat(dst, "123", 0));
-// 	printf("%s", dst);
-// 	return (0);
-// }

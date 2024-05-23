@@ -1,23 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_front_bonus.c                            :+:      :+:    :+:   */
+/*   pf_putchar.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ciusca <cristianiusca13@gmail.com>         +#+  +:+       +#+        */
+/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/20 15:18:48 by ciusca            #+#    #+#             */
-/*   Updated: 2023/10/25 16:36:45 by ciusca           ###   ########.fr       */
+/*   Created: 2023/11/01 19:18:34 by ciusca            #+#    #+#             */
+/*   Updated: 2024/02/17 18:59:59 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../libft.h"
 
-void	ft_lstadd_front(t_list **lst, t_list *new)
+int	ft_putchar(char c)
 {
-	if (lst)
-	{
-		if (*lst)
-			new->next = *lst;
-		*lst = new;
-	}
+	int	count;
+
+	count = 1;
+	write (1, &c, 1);
+	return (count);
 }

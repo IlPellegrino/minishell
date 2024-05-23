@@ -1,23 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_front_bonus.c                            :+:      :+:    :+:   */
+/*   pf_toupper.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ciusca <cristianiusca13@gmail.com>         +#+  +:+       +#+        */
+/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/20 15:18:48 by ciusca            #+#    #+#             */
-/*   Updated: 2023/10/25 16:36:45 by ciusca           ###   ########.fr       */
+/*   Created: 2023/10/12 17:05:52 by ciusca            #+#    #+#             */
+/*   Updated: 2024/02/17 19:03:55 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../libft.h"
 
-void	ft_lstadd_front(t_list **lst, t_list *new)
+int	pf_toupper(int c, int change)
 {
-	if (lst)
-	{
-		if (*lst)
-			new->next = *lst;
-		*lst = new;
-	}
+	if (c == 0)
+		return (0);
+	if (c <= 'z' && c >= 'a' && change == 1)
+		c -= 32;
+	return (c);
 }

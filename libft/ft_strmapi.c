@@ -3,52 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ciusca <cristianiusca13@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/10 15:40:11 by nromito           #+#    #+#             */
-/*   Updated: 2023/11/10 15:40:13 by nromito          ###   ########.fr       */
+/*   Created: 2023/10/18 21:11:45 by ciusca            #+#    #+#             */
+/*   Updated: 2023/10/30 20:45:27 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
+char	*ft_strmapi(const char *s, char (*f)(unsigned int, char))
 {
 	int		i;
-	char	*ms;
+	char	*new_str;
 
-	i = 0;
-	ms = malloc(sizeof(char) * (ft_strlen(s) + 1));
-	if (ms == NULL)
+	i = -1;
+	new_str = malloc(sizeof(char) * (ft_strlen(s) + 1));
+	if (new_str == NULL)
 		return (NULL);
-	while (s[i] != 0)
-	{
-		ms[i] = f(i, s[i]);
-		i++;
-	}
-	ms[i] = '\0';
-	return (ms);
+	while (s[++i] != '\0')
+		new_str[i] = f(i, s[i]);
+	new_str[i] = '\0';
+	return (new_str);
 }
-
-// char mapping_function(unsigned int index, char c)
-// {
-//     /* Add 1 to the character's ASCII value */
-//     return c - 32;
-// }
-// int main()
-// {
-//     char *input_string = "helloworld";
-//     char *mapped_string = ft_strmapi(input_string, mapping_function);
-//     if (mapped_string != NULL)
-//     {
-//         printf("Input string: %s\n", input_string);
-//         printf("Mapped string: %s\n", mapped_string);
-//         /* Remember to free the allocated memory */
-//         free(mapped_string);
-//     }
-//     else
-//     {
-//         printf("Memory allocation failed.\n");
-//     }
-//     return 0;
-// }

@@ -3,64 +3,55 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ciusca <cristianiusca13@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/16 13:37:52 by nromito           #+#    #+#             */
-/*   Updated: 2023/10/29 15:00:15 by nromito          ###   ########.fr       */
+/*   Created: 2023/10/18 10:52:14 by ciusca            #+#    #+#             */
+/*   Updated: 2023/10/30 20:44:10 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	boolean(const char s1, const char *set)
+static int	ft_cinstr(const char *str, const char c);
+/*
+int	main(void)
 {
-	int	i;
+	char *str1 = "My name is Simon";
+	char *set = "";
 
-	i = 0;
-	while (set[i])
-	{
-		if (s1 == set[i])
-			return (1);
-		i++;
-	}
-	return (0);
-}
+	printf("nuova stringa: %s\n", ft_strtrim(str1, set));
+}*/
 
 char	*ft_strtrim(const char *s1, const char *set)
 {
-	char	*trim;
+	char	*newstr;
 	size_t	i;
-	size_t	len;
-	size_t	j;
 
-	j = 0;
 	i = 0;
-	len = ft_strlen(s1) - 1;
-	if (s1[i] == 0)
-		return (ft_strdup(""));
-	while (s1[i] && boolean(s1[i], set))
-		i++;
-	while (len > i && boolean(s1[len], set))
-		len--;
-	trim = malloc(sizeof(char) * (len - i) + 2);
-	if (trim == NULL)
+	while (*s1 != '\0' && ft_cinstr(set, *s1))
+		s1++;
+	i = ft_strlen(s1);
+	while (i > 0 && ft_cinstr(set, s1[i - 1]))
+		i--;
+	newstr = malloc(sizeof(char) * (i + 1));
+	if (newstr == NULL)
 		return (NULL);
-	while (i <= len)
+	newstr[i] = '\0';
+	while (i > 0)
 	{
-		trim[j] = s1[i];
-		i++;
-		j++;
+		newstr[i - 1] = s1[i - 1];
+		i--;
 	}
-	trim[j] = '\0';
-	return (trim);
+	return (newstr);
 }
 
-// int main(void)
-// {
-//     const char *s1 = "\t\t\n\n\t   \t\n \t   He ";
-//     const char *set = " \n\t";
-//     char *result = ft_strtrim(s1, set);
-//     printf("Trimmed string:%s\n", result);
-//     free(result);
-//     return 0;
-// }
+static int	ft_cinstr(const char *str, const char c)
+{
+	while (*str != '\0')
+	{
+		if (*str == c)
+			return (1);
+		str++;
+	}
+	return (0);
+}

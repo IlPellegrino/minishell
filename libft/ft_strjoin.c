@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ciusca <cristianiusca13@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/16 13:43:40 by nromito           #+#    #+#             */
-/*   Updated: 2023/10/29 09:39:36 by nromito          ###   ########.fr       */
+/*   Created: 2023/10/17 22:24:37 by ciusca            #+#    #+#             */
+/*   Updated: 2023/10/29 19:39:45 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,39 +14,24 @@
 
 char	*ft_strjoin(const char *s1, const char *s2)
 {
-	char	*join;
-	size_t	len1;
-	size_t	len2;
-	size_t	i;
+	char	*newstr;
+	int		i;
+	int		n;
+	size_t	s1_len;
+	size_t	s2_len;
 
-	if (s1 && s2)
-	{
-		len1 = ft_strlen(s1);
-		len2 = ft_strlen(s2);
-		join = malloc(sizeof(char) * (len1 + len2 + 1));
-		if (join == NULL)
-			return (NULL);
-		i = -1;
-		while (s1[++i])
-			join[i] = s1[i];
-		i = -1;
-		while (s2[++i])
-		{
-			join[len1] = s2[i];
-			len1++;
-		}
-		join[len1] = '\0';
-		return (join);
-	}
-	return (NULL);
+	s1_len = ft_strlen(s1);
+	s2_len = ft_strlen(s2);
+	i = -1;
+	newstr = malloc(sizeof(char) * (s1_len + s2_len + 1));
+	if (newstr == NULL)
+		return (NULL);
+	while (s1[++i] != '\0')
+		newstr[i] = s1[i];
+	n = i;
+	i = -1;
+	while (s2[++i] != '\0')
+		newstr[n + i] = s2[i];
+	newstr[n + i] = '\0';
+	return (newstr);
 }
-
-// int main(void)
-// {
-//     const char *s1 = "Hello, ";
-//     const char *s2 = "world!";
-//     char *result = ft_strjoin(s1, s2);
-//     printf("Joined string: %s\n", result);
-//     free(result);
-//     return 0;
-// }
