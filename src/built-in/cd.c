@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 11:42:12 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/23 10:30:06 by nromito          ###   ########.fr       */
+/*   Updated: 2024/05/23 10:33:42 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	ft_cd(char **cd_mat)
 	{
 		folder = opendir(".");
 		if (!folder)
-			return(perror("minishell"), 1);
+			return (perror("minishell"), 1);
 		entry = readdir(folder);
 		while (entry)
 		{
@@ -50,8 +50,8 @@ int	ft_cd(char **cd_mat)
 			entry = readdir(folder);
 		}
 		closedir(folder);
-		return(perror("minishell"), 1);
+		return (perror("minishell"), 1);
 	}
 	ft_putstr_fd("minishell: too many arguments\n", 2);
-	return(1);
+	return (1);
 }
