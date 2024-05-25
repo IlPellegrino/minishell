@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:52:38 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/25 11:41:32 by nromito          ###   ########.fr       */
+/*   Updated: 2024/05/25 18:08:11 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,11 @@ char	*create_new_var(t_shell *shell, char *input, int n)
 	else
 	{
 		env_var = ft_calloc(sizeof (char *), ft_strlen(input));
-		while (input[++n] != SPACE && input[n] != '>'
-			&& input[n] != PIPE && input[n] != '<'
-			&& input[n] != '$' && input[n] != DQ && input[n] != SQ && input[n])
+		if (ft_isdigit(input[++n])&& input[n] != '\0')
 			env_var[++k] = input[n];
+		else if (ft_isalpha(input[n]) || input[n] == US)
+			while (input[n] && (ft_isalnum(input[n]) || input[n] == US))
+				env_var[++k] = input[n++];
 		result = getenv(env_var);
 		collect_garbage(shell, env_var, 0);
 	}
@@ -54,14 +55,14 @@ void	recreate_str(t_token *token, int j, char *input, char *new_var)
 		token->index[token->wrd][k++] = old_str[n++];
 	n = 0;
 	if (new_var[n] == '\0')
-		token->index[token->wrd][k] = new_var[n];
+		token->index[token->wrd][k] = new_var[n]; 
 	while (new_var[n])
 		token->index[token->wrd][k++] = new_var[n++];
-	while (old_str[++j] != SPACE && old_str[j] != '>'
-		&& old_str[j] != PIPE && old_str[j] != '<'
-		&& old_str[j] != '$' && old_str[j] != SQ
-		&& old_str[j] != DQ && old_str[j])
-		;
+	if (!ft_isalpha(old_str[++j]) && old_str[j] != US)
+		j += 1;
+	else
+		while (old_str[++j] && (ft_isalnum(old_str[j]) || old_str[j] == US))
+			;
 	while (old_str[j])
 		token->index[token->wrd][k++] = old_str[j++];
 }
@@ -80,10 +81,11 @@ char	*ft_allocate(t_token *token, char *input, char *new_var)
 void	expand_value(t_shell *shell, t_token *token, char *input, int j)
 {
 	char	*new_var;
+	
 	new_var = create_new_var(shell, input, j);
-	collect_garbage(shell, new_var, 0);
 	if (!new_var)
 		return ;
+	collect_garbage(shell, new_var, 0);
 	collect_garbage(shell, token->index[token->wrd], 0);
 	token->index[token->wrd] = ft_allocate(token, input, new_var);
 	if (!token->index[token->wrd])
@@ -109,10 +111,10 @@ void	expand_values(t_shell *shell, t_token *token)
 		else if (input[j] == DQ)
 		{
 			while (input[++j] != DQ)
-				if (input[j] == '$')
+				if (input[j] == '$' && input[j + 1] != '\0')
 					is_heredoc(shell, token, input, j);
 		}
-		else if (input[j] == '$')
+		else if (input[j] == '$' && input[j + 1] != '\0')
 			is_heredoc(shell, token, input, j);
 	}
 }
