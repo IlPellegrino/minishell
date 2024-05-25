@@ -1,16 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   quotes_and flag.c                                  :+:      :+:    :+:   */
+/*   quotes_and_flag.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 10:22:43 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/23 10:23:33 by nromito          ###   ########.fr       */
+/*   Updated: 2024/05/25 11:41:38 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
+
+void	is_heredoc(t_shell *shell, t_token *token, char *input, int j)
+{
+	if (token->wrd >= 1 && token->index[token->wrd - 1][0] == '<'
+		&& token->index[token->wrd - 1][1] == '<'
+		&& token->index[token->wrd - 1][2] == '\0'
+		&& token->flag[token->wrd - 1] == '0')
+		j++;
+	else
+		expand_value(shell, token, input, j);
+}
 
 char	*check_flag(t_token *token)
 {
