@@ -6,52 +6,57 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 18:04:21 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/23 19:29:39 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/27 15:26:04 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-int	read_heredoc(char *eof, int fds[2])
+int	read_heredoc(t_shell *shell, char *eof, int fd)
 {
 	char	*line;
 	int		len;
-	
-	close(fds[0]);
+
+	(void)shell;
 	while (1)
 	{
+		g_sig_type = IN_HEREDOC;
 		line = ft_readline(HEREDOC);
+		if (!line)
+			return (0);
+		collect_garbage(shell, line, 0);
 		len = ft_strlen(line);
 		if (!len)
 			len = 1;
 		if (!ft_strncmp(line, eof, len))
-		{
-			free(line);
 			return (1);
-		}
-		write (fds[1], line, ft_strlen(line));
-		free(line);
+		write (fd, line, ft_strlen(line));
 	}
-	return (1);
+	return (0);
 }
 
-int	ft_heredoc(char *eof)
+int	ft_heredoc(t_shell *shell, char *eof)
 {
-	pid_t	pid;
-	int		fds[2];
+	int	fd;
+	int	temp_stdin;
 
-	if (pipe(fds) == -1)
+	fd = open(".heredoc", O_CREAT | O_WRONLY | O_TRUNC, 0777);
+	if (fd == -1)
 		return (0);
-	pid = fork();
-	if (pid == -1)
-		return (0);
-	if (pid == 0)
-		read_heredoc(eof, fds);
-	else if (pid)
+	temp_stdin = dup(STDIN_FILENO);
+	dup2(STDIN_FILENO, temp_stdin);
+	if (!read_heredoc(shell, eof, fd))
 	{
-		close(fds[1]);
-		dup2(fds[0], STDIN_FILENO);
-		wait(NULL);
+		if (g_sig_type == SIG_C)
+			shell->error = 130;
+		else
+		{
+			shell->error = 0;
+			ft_error(shell, HERE_EOF, 0);
+		}
+		dup2(temp_stdin, 0);
+		close(fd);
+		return (0);
 	}
 	return (1);
 }

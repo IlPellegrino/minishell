@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 19:59:43 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/23 15:11:18 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/27 15:00:45 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,7 @@ int	ft_error(t_shell *shell, int error_type, char *str)
 {
 	if (error_type == COMMAND)
 	{
-		ft_putstr_fd("minishell: command not found: ", 2);
-		ft_putstr_fd("[", 2);
+		ft_putstr_fd("minishell: command not found: [", 2);
 		ft_putstr_fd(str, 2);
 		ft_putendl_fd("]", 2);
 		shell->error = 127;
@@ -82,9 +81,10 @@ int	ft_error(t_shell *shell, int error_type, char *str)
 	{
 		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(str, 2);
-		ft_putstr_fd(": ", 2);
-		ft_putendl_fd("No such file or directory", 2);
+		ft_putendl_fd(": No such file or directory", 2);
 		shell->error = 1;
 	}
+	else if (error_type == HERE_EOF)
+		ft_putendl_fd(EOF_ERROR, 2);
 	return (0);
 }

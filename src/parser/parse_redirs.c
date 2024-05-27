@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 12:34:56 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/23 19:21:39 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/27 15:20:01 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	open_redir(t_shell *shell, t_token *token, int i)
 {
 	int	fd;
-	
+
 	fd = -1;
 	if (token->tokens[i - 1] == 'I')
 		fd = open(token->index[i], O_RDONLY);
@@ -40,12 +40,12 @@ int	count_redirs(char *tokens)
 	while (tokens[++i])
 		if (is_redir(tokens[i]))
 			count++;
-	return (count);	
+	return (count);
 }
 
 int	parse_redirs(t_shell *shell)
 {
-	t_token *token;
+	t_token	*token;
 	int		n_red;
 	int		i;
 
@@ -60,12 +60,13 @@ int	parse_redirs(t_shell *shell)
 	while (token->tokens[++i])
 	{
 		if (token->tokens[i] == 'H')
-			ft_heredoc(token->index[i + 1]);
-		else if (is_redir(token->tokens[i]))
 		{
-			if (!open_redir(shell, token, i + 1))
+			if (!ft_heredoc(shell, token->index[i + 1]))
 				return (0);
 		}
+		else if (is_redir(token->tokens[i]))
+			if (!open_redir(shell, token, i + 1))
+				return (0);
 	}
 	return (1);
 }

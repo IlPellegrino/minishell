@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 17:09:43 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/23 10:57:55 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/27 11:51:46 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int	find_infile(int i, t_shell *shell)
 			collect_garbage(shell, table->command, 0);
 			token->tokens[i] = 'X';
 			token->tokens[i + 1] = 'X';
+			table->fd = token->redirs[i + 1];
 			table->cmd = 0;
 			return (1);
 		}
@@ -84,6 +85,7 @@ int	find_outfile(int start, t_shell *shell)
 			collect_garbage(shell, table->command, 0);
 			token->tokens[i] = 'X';
 			token->tokens[i + 1] = 'X';
+			table->fd = token->redirs[i + 1];
 			table->cmd = 0;
 			return (1);
 		}

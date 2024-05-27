@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 19:12:56 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/23 19:15:18 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/27 15:18:19 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,11 @@ int		n_len(long n);
 void	ft_striteri(char *s, void (*f)(unsigned int, char *));
 void	ft_putendl_fd(char *s, int fd);
 void	ft_putstr_fd(char *s, int fd);
-int	count_words(char *str);
+int		count_words(char *str);
 
 /* matrix functions */
 char	**ft_split(char const *s, char const c);
-int	matrix_len(char **mat);
+int		matrix_len(char **mat);
 void	free_matrix(char **mat);
 
 /* memory functions */
