@@ -1,16 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   quotes_and flag.c                                  :+:      :+:    :+:   */
+/*   quotes_and_flag.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 10:22:43 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/23 10:23:33 by nromito          ###   ########.fr       */
+/*   Updated: 2024/05/25 18:11:28 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
+
+void	is_heredoc(t_shell *shell, t_token *token, char *input, int j)
+{
+	printf("j = %d\n", j);
+	if (j >= 1 && input[j - 1] != '$' && input[j + 1] != '$')
+		expand_value(shell, token, input, j);
+	else if (input[0] == '$' && (input[1] != '$' && input[2] != '$'))
+		expand_value(shell, token, input, j);
+	else
+		return ;
+	if (token->wrd >= 1 && token->index[token->wrd - 1][0] == '<'
+		&& token->index[token->wrd - 1][1] == '<'
+		&& token->index[token->wrd - 1][2] == '\0'
+		&& token->flag[token->wrd - 1] == '0')
+		j++;
+	expand_value(shell, token, input, j);
+}
 
 char	*check_flag(t_token *token)
 {

@@ -6,14 +6,16 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 11:40:46 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/23 13:27:09 by nromito          ###   ########.fr       */
+/*   Updated: 2024/05/25 12:52:37 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-int	ft_setenv()
+int	ft_addtoenv()
 {
+	
+	
 	return (0);
 }
 
@@ -49,9 +51,9 @@ int	ft_export(char **export_mat, char **env)
 						printf("minishell: export: `%s': not a valid identifier", export_mat[i], stderr);
 						return (1);
 					}
-					ft_setenv();
-				}	
-					
+					// ft_addtoenv(export_mat[i], env);
+				}
+				
 			}
 			return (0);
 		}

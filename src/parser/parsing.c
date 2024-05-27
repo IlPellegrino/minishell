@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:54:36 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/27 16:00:48 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/27 16:02:25 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int	parse_pipe(t_shell *shell)
 	}
 	return (1);
 }
+
 char	*set_x(char *str)
 {
 	int	i;
