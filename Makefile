@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+         #
+#    By: nromito <nromito@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/07 17:01:15 by ciusca            #+#    #+#              #
-#    Updated: 2024/05/28 17:58:57 by ciusca           ###   ########.fr        #
+#    Updated: 2024/05/28 22:25:18 by nromito          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ PROTECTED_FUNC_SRC = protected_functions.c protected_functions2.c
 CLOSING_SRC = close_shell.c
 BUILT_IN_SRC = echo.c cd.c pwd.c export.c env.c
 EXECUTOR_SRC = exec.c
-EXPANDER_SRC = expand_pid.c exp.c quotes_and_flag.c
+EXPANDER_SRC = env_and_pid.c exp.c quotes_and_flag.c
 PARSER_SRC = heredoc_utils.c parse_redirs.c ft_heredoc.c parsing_utils.c parsing.c tokenizer.c cmd_table.c find_redirs.c
 LEXER_SRC = readline.c lexer_checker.c word_creation.c count_words.c
 UTILS_SRC = utils.c utils2.c
@@ -53,7 +53,7 @@ BLUE = "\033[1;34m"
 MAGENTA = "\033[1;35m"
 CYAN = "\033[1;36m"
 WHITE = "\033[1;37m"
-NONE = '\033[0m'
+NONE = "\033[0m"
 
 all: ${NAME}
 %.o: %.c
