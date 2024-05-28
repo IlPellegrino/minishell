@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:59:59 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/27 16:01:39 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/28 17:58:55 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,10 @@ char		*remove_quotes(t_shell *shell, t_token *token, int i);
 char		*check_flag(t_token *token);
 int			count_quotes(t_token *token);
 void		is_heredoc(t_shell *shell, t_token *token, char *input, int j);
+char		*create_new_var(t_shell *shell, char *input, int n);
+
+/* expander pid */
+char		*expand_pid(void);
 
 /* parsing */
 int			tokenizer(t_shell *shell);
@@ -152,7 +156,13 @@ int			parsing(t_shell *shell);
 char		*remove_redir(t_token *token);
 int			find_builtins(char *cmd);
 int			parse_redirs(t_shell *shell);
-int			ft_heredoc(t_shell *shell, char *eof);
+int			ft_heredoc(t_shell *shell, char *eof, int flag);
+
+/* expand heredoc*/
+char		*copy_expanded(char *expanded, char *final_line, int *j);
+char		*expand_var(char *line, int *i);
+int			find_len(char *line);
+char		*expand_heredoc(char *line);
 
 /* parsing: cmd table */
 int			init_cmd_table(t_shell *shell);

@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 12:34:56 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/27 15:20:01 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/28 11:04:10 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	parse_redirs(t_shell *shell)
 	{
 		if (token->tokens[i] == 'H')
 		{
-			if (!ft_heredoc(shell, token->index[i + 1]))
+			if (!ft_heredoc(shell, token->index[i + 1], token->flag[i]))
 				return (0);
 		}
 		else if (is_redir(token->tokens[i]))

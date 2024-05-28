@@ -6,13 +6,13 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 18:04:21 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/27 15:26:04 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/28 17:45:53 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-int	read_heredoc(t_shell *shell, char *eof, int fd)
+int	read_heredoc(t_shell *shell, char *eof, int fd, int flag)
 {
 	char	*line;
 	int		len;
@@ -24,6 +24,10 @@ int	read_heredoc(t_shell *shell, char *eof, int fd)
 		line = ft_readline(HEREDOC);
 		if (!line)
 			return (0);
+		if (ft_strchr(line, '$') && flag == '0')
+		{
+			line = expand_heredoc(line);
+		}
 		collect_garbage(shell, line, 0);
 		len = ft_strlen(line);
 		if (!len)
@@ -35,7 +39,7 @@ int	read_heredoc(t_shell *shell, char *eof, int fd)
 	return (0);
 }
 
-int	ft_heredoc(t_shell *shell, char *eof)
+int	ft_heredoc(t_shell *shell, char *eof, int flag)
 {
 	int	fd;
 	int	temp_stdin;
@@ -45,7 +49,7 @@ int	ft_heredoc(t_shell *shell, char *eof)
 		return (0);
 	temp_stdin = dup(STDIN_FILENO);
 	dup2(STDIN_FILENO, temp_stdin);
-	if (!read_heredoc(shell, eof, fd))
+	if (!read_heredoc(shell, eof, fd, flag))
 	{
 		if (g_sig_type == SIG_C)
 			shell->error = 130;

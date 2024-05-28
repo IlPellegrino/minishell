@@ -6,7 +6,7 @@
 #    By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/07 17:01:15 by ciusca            #+#    #+#              #
-#    Updated: 2024/05/23 18:14:22 by ciusca           ###   ########.fr        #
+#    Updated: 2024/05/28 17:58:57 by ciusca           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,8 +21,8 @@ PROTECTED_FUNC_SRC = protected_functions.c protected_functions2.c
 CLOSING_SRC = close_shell.c
 BUILT_IN_SRC = echo.c cd.c pwd.c export.c env.c
 EXECUTOR_SRC = exec.c
-EXPANDER_SRC = exp.c quotes_and_flag.c
-PARSER_SRC = parse_redirs.c ft_heredoc.c parsing_utils.c parsing.c tokenizer.c cmd_table.c find_redirs.c
+EXPANDER_SRC = expand_pid.c exp.c quotes_and_flag.c
+PARSER_SRC = heredoc_utils.c parse_redirs.c ft_heredoc.c parsing_utils.c parsing.c tokenizer.c cmd_table.c find_redirs.c
 LEXER_SRC = readline.c lexer_checker.c word_creation.c count_words.c
 UTILS_SRC = utils.c utils2.c
 SIGNAL_SRC = signals.c
