@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 11:40:46 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/28 17:57:21 by nromito          ###   ########.fr       */
+/*   Updated: 2024/05/28 18:23:44 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,7 +189,7 @@ int	ft_export(char **export_mat, t_shell *shell)
 	{
 		if (matrix_len(export_mat) < 2)
 		{
-			while (shell->envp[++i])
+			while (shell->envp[++i])//stampare le virgolette per ogni env variable
 				printf("declare -x %s\n", shell->envp[i]);
 			return (0);
 		}
