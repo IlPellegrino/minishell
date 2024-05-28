@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:52:38 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/25 18:08:11 by nromito          ###   ########.fr       */
+/*   Updated: 2024/05/27 14:36:30 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,11 +97,9 @@ void	expand_value(t_shell *shell, t_token *token, char *input, int j)
 void	expand_values(t_shell *shell, t_token *token)
 {
 	int		j;
-	int		i;
 	char	*input;
 
 	j = -1;
-	i = 0;
 	input = token->index[token->wrd];
 	while (input[++j])
 	{
