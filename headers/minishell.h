@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:59:59 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/28 17:58:55 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/28 18:43:20 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,8 +114,7 @@ void		get_signal(void);
 void		ft_echo(char **echo_mat);
 int			ft_cd(char **cd_mat);
 int			ft_pwd(void);
-int			ft_export(char **export_mat, char **env);
-
+int			ft_export(char **export_mat, t_shell *shell);
 /* lexer */
 int			check_word(t_shell *shell, t_token *token, int quote);
 void		choose_if(t_shell *shell, t_token *token, int (*i));

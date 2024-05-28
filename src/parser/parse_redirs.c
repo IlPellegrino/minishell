@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 12:34:56 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/28 11:04:10 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/28 18:44:37 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,11 @@ int	count_redirs(char *tokens)
 int	parse_redirs(t_shell *shell)
 {
 	t_token	*token;
-	int		n_red;
+	// int		n_red;
 	int		i;
 
 	token = shell->tokens;
-	n_red = count_redirs(token->tokens);
+	// n_red = count_redirs(token->tokens);
 	token->redirs = malloc(sizeof(int) * ft_strlen(token->tokens));
 	collect_garbage(shell, (char *)token->redirs, 0);
 	i = -1;
