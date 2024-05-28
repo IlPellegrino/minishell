@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:59:59 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/27 14:34:24 by nromito          ###   ########.fr       */
+/*   Updated: 2024/05/28 18:03:07 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@
 # define RED_ARROW "\033[1;31m-> "
 # define GREEN_ARROW "\033[1;32m-> "
 # define MINISHELL "\e[1;96mminishell\033[0m$ "
+# define EOF_ERROR "minishell: warning: here-document at\
+line 1 delimited by end-of-file (wanted `eof')"
 # define DQ 34
 # define SQ 39
 # define US 95
@@ -40,6 +42,11 @@
 # define COMMAND 0
 # define OPEN_ERR 1
 # define SYNTAX 2
+# define HERE_EOF 3
+# define IN_HEREDOC 1
+# define SIG_C 2
+
+extern int	g_sig_type;
 
 typedef struct s_cmd
 {
@@ -144,7 +151,7 @@ int			parsing(t_shell *shell);
 char		*remove_redir(t_token *token);
 int			find_builtins(char *cmd);
 int			parse_redirs(t_shell *shell);
-int			ft_heredoc(char *eof);
+int			ft_heredoc(t_shell *shell, char *eof);
 
 /* parsing: cmd table */
 int			init_cmd_table(t_shell *shell);

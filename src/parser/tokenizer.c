@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 13:59:01 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/23 16:38:27 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/27 15:25:53 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,20 @@
 
 int	set_token(t_shell *shell, t_token *token, int *i, int *command)
 {
-	if (find_cmd_path(shell, token->index[*i], *i) && *command == 0) // da riscriviere
+	if (find_cmd_path(shell, token->index[*i], *i) && *command == 0)
 	{
 		*command = 1;
 		token->tokens[*i] = 'C';
 	}
-	else if (!(ft_strncmp(token->index[*i], "<<", 2)) && token->flag[*i] == '0')
+	else if (!(ft_strncmp(token->index[*i], "<<", 3)) && token->flag[*i] == '0')
 		token->tokens[*i] = 'H';
-	else if (!(ft_strncmp(token->index[*i], ">>", 2)) && token->flag[*i] == '0')
+	else if (!(ft_strncmp(token->index[*i], ">>", 3)) && token->flag[*i] == '0')
 		token->tokens[*i] = 'A';
-	else if (token->index[*i][0] == '>' && token->flag[*i] == '0')
+	else if (!(ft_strncmp(token->index[*i], ">", 2)) && token->flag[*i] == '0')
 		token->tokens[*i] = 'O';
-	else if (token->index[*i][0] == '<' && token->flag[*i] == '0')
+	else if (!(ft_strncmp(token->index[*i], "<", 2)) && token->flag[*i] == '0')
 		token->tokens[*i] = 'I';
-	else if (!(ft_strncmp(token->index[*i], "||", 2)))
+	else if (!(ft_strncmp(token->index[*i], "||", 3)))
 		return (ft_error(shell, SYNTAX, token->index[*i]));
 	else if (token->index[*i][0] == '|')
 	{
