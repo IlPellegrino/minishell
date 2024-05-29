@@ -6,55 +6,56 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 17:45:12 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/29 17:25:44 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/29 18:14:56 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
 
-char	*here_expand(char *str, int start)
+char	*copy_prev(char *str, int start)
 {
-	char	*new_str;
-	char	*before;
 	int		i;
-	int		count;
-	char	*expand;
-	char	*after;
-	char	*after_expand;
-	char	*temp;
-	int		len;
+	char	*before;
 
-	count = 0;
-	i = start;
-	while (str[++i] && (ft_isalpha(str[i]) || str[i] == US))
-		count++;
-	if (!count)
-		count = 1;
-	expand = ft_calloc(sizeof(char *), count + 1);
-	if (!expand)
-		return(0);
-	/* ---- copy all the previous string until the $ ----*/
+	i = -1;
 	before = ft_calloc(sizeof(char *), (start) + 1);
 	if (!before)
 		return(0);
-	i = -1;
 	while (++i < start)
 		before[i] = str[i];
 	printf("before = %s\n", before);
+	return (before);
+}
 
-	/* ---- copy the string to expand ---- */
+char	*copy_str_exp(int count, int *start, char *str)
+{
+	char	*after_expand;
+	char	*expand;
+	int		i;
+	
+	i = -1;
+	
+	expand = ft_calloc(sizeof(char *), count + 1);
+	if (!expand)
+		return(0);
 	i = -1;
 	while (++i < count)
-		expand[i] = str[++start];
+		expand[i] = str[++(*start)];
 	printf("to expand = %s\n", expand);
 	after_expand = getenv(expand);
 	if (!after_expand)
 		after_expand = "";
-	printf("after expand = %s\n", after_expand);
-	/* ---- concatenate everything ---- */
-	new_str = ft_strjoin(before, after_expand);
-	printf("concat expansion = %s\n", new_str);
+	free(expand);
+	return (after_expand);
+}
+
+char	*get_after(char *str, char *new_str, int start)
+{
+	char	*after;
+	int		len;
+	int		i;
+
 	len =  (ft_strlen(str) - ft_strlen(new_str));
 	if (len <= 0)
 		len = 1;
@@ -62,17 +63,35 @@ char	*here_expand(char *str, int start)
 	i = -1;
 	while (str[++start])
 		after[++i] = str[start];
-	printf("after = %s\n", after);
-	temp = ft_strdup(new_str);
-	free(new_str);
-	new_str = ft_strjoin(temp, after);
+	return (after);
+}
+
+char	*here_expand(char *str, int start)
+{
+	char	*before;
+	int		i;
+	int		count;
+	char	*after;
+	char	*temp;
+
+	count = 0;
+	i = start;
+	while (str[++i] && (ft_isalpha(str[i]) || str[i] == US))
+		count++;
+	if (!count)
+		count = 1;
+	before = copy_prev(str, start);
+	after = copy_str_exp(count, &start, str); //expand
+	temp = ft_strdup(before);
+	free(before);
+	before = ft_strjoin(temp, after);
 	free(temp);
+	after = get_after(str, before, start);
+	temp = ft_strjoin(before, after);
 	free(str);
 	free(after);
-	free(expand);
 	free(before);
-	printf("new str return %s \n", new_str);
-	return (new_str);
+	return (temp);
 }
 
 int find_expansion(char *temp)
@@ -104,9 +123,6 @@ char	*expand_heredoc(char *line)
 				free(final_str);
 			final_str = here_expand(temp, find_expansion(temp));
 			temp = ft_strdup(final_str);
-			//if (i > (int)ft_strlen(line))
-			//	break ;
-			//free(final_str);
 		}
 	}
 	free(temp);
