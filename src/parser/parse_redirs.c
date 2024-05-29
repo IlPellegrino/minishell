@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 12:34:56 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/28 18:44:37 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/29 10:00:23 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	open_redir(t_shell *shell, t_token *token, int i)
 {
 	int	fd;
 
-	fd = -1;
+	fd = 0;
 	if (token->tokens[i - 1] == 'I')
 		fd = open(token->index[i], O_RDONLY);
 	else if (token->tokens[i - 1] == 'A')
