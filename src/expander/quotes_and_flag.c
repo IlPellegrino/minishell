@@ -6,23 +6,24 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 10:22:43 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/29 00:16:59 by nromito          ###   ########.fr       */
+/*   Updated: 2024/05/29 11:53:56 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-char	*is_heredoc(t_shell *shell, t_token *token, char *input, int j)
+void	is_heredoc(t_shell *shell, t_token *token, char *input, int j)
 {
-	if (j >= 1 && input[j - 1] == '$')
-		return (0);
+	if (input[0] == '$')
+		expand_value(shell, token, input, j - 1);
+	else if (j >= 1 && input[j - 1] == '$')
+		return ;
 	if (token->wrd >= 1 && token->index[token->wrd - 1][0] == '<'
 		&& token->index[token->wrd - 1][1] == '<'
 		&& token->index[token->wrd - 1][2] == '\0'
 		&& token->flag[token->wrd - 1] == '0')
 		j++;
-	input = expand_value(shell, token, input, j);
-	return (input);
+	expand_value(shell, token, input, j);
 }
 
 char	*check_flag(t_token *token)
@@ -40,7 +41,8 @@ char	*check_flag(t_token *token)
 			while (token->index[token->wrd][++i] != '>'
 				&& token->index[token->wrd][i] != '<'
 				&& token->index[token->wrd][i])
-				j = 5;
+				;
+			j = 5;
 			break ;
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:52:38 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/29 00:28:35 by nromito          ###   ########.fr       */
+/*   Updated: 2024/05/29 11:50:25 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,11 @@ char	*create_new_var(t_shell *shell, char *input, int n)
 	else
 	{
 		env_var = ft_calloc(sizeof (char *), ft_strlen(input));
-		if (ft_isdigit(input[++n])&& input[n] != '\0')
+		if (input[++n] == DQ)
+			return (ft_strdup("\""));
+		else if (input[n] == SQ)
+			return (ft_strdup("\'"));
+		else if (ft_isdigit(input[n])&& input[n] != '\0')
 			env_var[++k] = input[n];
 		else if (ft_isalpha(input[n]) || input[n] == US)
 			while (input[n] && (ft_isalnum(input[n]) || input[n] == US))
@@ -84,26 +88,23 @@ char	*ft_allocate(t_token *token, char *input, char *new_var)
 	return (token->index[token->wrd]);
 }
 
-char	*expand_value(t_shell *shell, t_token *token, char *input, int j)
+void	expand_value(t_shell *shell, t_token *token, char *input, int j)
 {
 	char	*new_var;
 
-	// if (j >= 1 && (input[j - 1] == '$' || input[j + 1] == '$'))
-	// 	new_var = expand_pid();
 	if (input[j] == '$' && input[j + 1] == '$')
 		new_var = expand_pid();
 	else
 		new_var = create_new_var(shell, input, j);
 	if (!new_var)
-		return (0);
+		return ;
 	collect_garbage(shell, new_var, 0);
 	collect_garbage(shell, token->index[token->wrd], 0);
 	token->index[token->wrd] = ft_allocate(token, input, new_var);
 	if (!token->index[token->wrd])
-		return (0);
+		return ;
 	recreate_str(token, j, input, new_var);
 	input = token->index[token->wrd];
-	return (input);
 }
 
 void	expand_values(t_shell *shell, t_token *token)
@@ -116,16 +117,16 @@ void	expand_values(t_shell *shell, t_token *token)
 	while (input[++j])
 	{
 		if (input[j] == SQ)
-			while (input[++j] != SQ)
+			while (input[++j] != SQ && input[j])
 				;
 		else if (input[j] == DQ)
 		{
 			while (input[++j] && input[j] != DQ)
 				if (input[j] == '$' && input[j + 1] != '\0')
-					input = is_heredoc(shell, token, input, j);
+					is_heredoc(shell, token, input, j);
 		}
-		else if (input[j] == '$' && input[j + 1] != '\0')
-			input = is_heredoc(shell, token, input, j);
-		printf("input = %s\n", input);
+		else if (input[j] == '$' && input[j + 1] != '\0'&& input[j - 1] != SQ)
+			is_heredoc(shell, token, input, j);
+		input = token->index[token->wrd];
 	}
 }
