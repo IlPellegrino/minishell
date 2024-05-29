@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 11:40:46 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/28 18:44:32 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/29 15:29:59 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +36,9 @@ char	*create_var(char *new_var, char *new_str)
 
 	pos = -1;
 	j = -1;
-	new_str = ft_calloc(sizeof (char *), ft_strlen(new_var) + 3);
-	while (new_var[++j] && new_var[j - 1] != '=')
+	new_str = ft_calloc(sizeof (char *), ft_strlen(new_var) + 1);
+	while (new_var[++j])
 		new_str[++pos] = new_var[j];
-	if (new_str[pos++] == '=')
-	{
-		new_str[pos] = DQ;
-		while (new_var[j])
-			new_str[++pos] = new_var[j++];
-		new_str[++pos] = DQ;
-	}
 	return (new_str);
 }
 
@@ -58,6 +51,8 @@ void	change_var(char *new_var, t_shell *shell)
 	len = -1;
 	while (new_var[++len] && new_var[len] != '=')
 		;
+	if (new_var[len] == '\0')
+		return;
 	while (shell->envp[++i])
 	{
 		if (!ft_strncmp(shell->envp[i], new_var, len))
@@ -81,7 +76,7 @@ int	ft_addtoenv(char *new_var, t_shell *shell)
 			;
 		shell->envp[i] = create_var(new_var, shell->envp[i]);
 		collect_garbage(shell, shell->envp[i], 0);
-		//shell->envp[++i] = 0;
+		shell->envp[++i] = 0;
 	}
 	return (0);
 }
@@ -116,26 +111,22 @@ char	*create_plus_var(char *new_var, char *new_str)
 	i = -1;
 	old = new_str;
 	len = pick_old_var(new_str);
-	new_str = ft_calloc(sizeof (char *), (ft_strlen(new_var) - 1) + len + 3);
-	while (new_var[++j] && new_var[j - 1] != '=')
-	{
-		if (new_var[j] == '+')
-			j += 1;
+	new_str = ft_calloc(sizeof (char *), ft_strlen(new_var) + len + 1);
+	while (new_var[++j] && new_var[j] != '+')
 		new_str[++pos] = new_var[j];
-	}
-	if (new_str[pos++] == '=')
+	if (new_var[j++] == '+')
 	{
-		new_str[pos] = DQ;
+		if (new_var[j] == '=')
+			new_str[++pos] = new_var[j];
 		if (old)
 		{
-			while (old[++i] && old[i] != DQ)
+			while (old[++i] && old[i] != '=')
 				;
-			while (old[++i] && old[i] != DQ)
+			while (old[++i])
 				new_str[++pos] = old[i];
 		}
-		while (new_var[j])
-			new_str[++pos] = new_var[j++];
-		new_str[++pos] = DQ;
+		while (new_var[++j])
+			new_str[++pos] = new_var[j];
 	}
 	return (new_str);
 }
@@ -172,7 +163,7 @@ int	join_env(char *new_var, t_shell *shell)
 			;
 		shell->envp[i] = create_plus_var(new_var, shell->envp[i]);
 		collect_garbage(shell, shell->envp[i], 0);
-		//shell->envp[++i] = '\0';
+		shell->envp[++i] = '\0';
 	}
 	return (0);
 }
@@ -184,13 +175,29 @@ int	ft_export(char **export_mat, t_shell *shell)
 	int	flag;
 
 	i = -1;
-	pos = -1;
 	if (export_mat[0])
 	{
 		if (matrix_len(export_mat) < 2)
 		{
-			while (shell->envp[++i])//stampare le virgolette per ogni env variable
-				printf("declare -x %s\n", shell->envp[i]);
+			while (shell->envp[++i])
+			{
+				pos = -1;
+				printf("declare -x ");
+				while (shell->envp[i][++pos])
+				{
+					if (shell->envp[i][pos] == '=')
+					{
+						printf("%c", shell->envp[i][pos]);
+						printf("\"");
+						while (shell->envp[i][++pos])
+							printf("%c", shell->envp[i][pos]);
+						printf("\"");
+						break;
+					}
+					printf("%c", shell->envp[i][pos]);
+				}
+				printf("\n");
+			}
 			return (0);
 		}
 		else
@@ -199,6 +206,7 @@ int	ft_export(char **export_mat, t_shell *shell)
 			while (export_mat[++i])
 			{
 				flag = 0;
+				pos = -1;
 				while (export_mat[i][++pos] && export_mat[i][pos] != '=')
 				{
 					if (export_mat[i][pos] == '+' && export_mat[i][pos + 1] == '=')
