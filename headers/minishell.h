@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:59:59 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/28 18:43:20 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/29 09:58:26 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,8 +144,7 @@ char		*check_flag(t_token *token);
 int			count_quotes(t_token *token);
 void		is_heredoc(t_shell *shell, t_token *token, char *input, int j);
 char		*create_new_var(t_shell *shell, char *input, int n);
-
-/* expander pid */
+char		*ft_getenv(const char *name, t_shell *shell);
 char		*expand_pid(void);
 
 /* parsing */
