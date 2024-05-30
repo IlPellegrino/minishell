@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:52:14 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/27 12:49:48 by nromito          ###   ########.fr       */
+/*   Updated: 2024/05/29 16:32:57 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,12 @@ int	executor(t_shell *shell)
 			ft_pwd();
 		else if (!(ft_strncmp(table.command, "export", cmd_len)))
 			ft_export(table.cmd->cmd_arg, shell);
+		else if (!(ft_strncmp(table.command, "unset", cmd_len)))
+			ft_unset(table.cmd->cmd_arg, shell);
+		// else if (!(ft_strncmp(table.command, "env", cmd_len)))
+		// 	ft_env(table.cmd->cmd_arg, shell);
+		else if (!(ft_strncmp(table.command, "exit", cmd_len)))
+			ft_exit(shell);
 	}
 	return (1);
 }

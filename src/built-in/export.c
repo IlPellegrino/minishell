@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 11:40:46 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/29 15:29:59 by nromito          ###   ########.fr       */
+/*   Updated: 2024/05/30 10:06:52 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	it_exist(char *new_var, t_shell *shell)
 		;
 	while (shell->envp[++i])
 	{
+		//printf("new_var %s len %d\n", new_var, len);
 		if (!ft_strncmp(shell->envp[i], new_var, len))
 			return (1);
 	}
@@ -163,7 +164,7 @@ int	join_env(char *new_var, t_shell *shell)
 			;
 		shell->envp[i] = create_plus_var(new_var, shell->envp[i]);
 		collect_garbage(shell, shell->envp[i], 0);
-		shell->envp[++i] = '\0';
+		shell->envp[++i] = 0;
 	}
 	return (0);
 }
@@ -211,8 +212,8 @@ int	ft_export(char **export_mat, t_shell *shell)
 				{
 					if (export_mat[i][pos] == '+' && export_mat[i][pos + 1] == '=')
 						flag = 1;
-					else if (!ft_isalpha(export_mat[i][pos]) && export_mat[i][pos] != US
-						&& !ft_isdigit(export_mat[i][0]))
+					else if ((!ft_isalpha(export_mat[i][pos]) && export_mat[i][pos] != US)
+						&& ft_isdigit(export_mat[i][0]))
 					{
 						printf("minishell: export: `%s': not a valid identifier\n", export_mat[i]);
 						return (1);

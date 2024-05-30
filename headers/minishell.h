@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:59:59 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/29 09:58:26 by nromito          ###   ########.fr       */
+/*   Updated: 2024/05/29 17:27:47 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,9 @@ void		ft_echo(char **echo_mat);
 int			ft_cd(char **cd_mat);
 int			ft_pwd(void);
 int			ft_export(char **export_mat, t_shell *shell);
+int			it_exist(char *new_var, t_shell *shell);
+void		ft_exit(t_shell *shell);
+int			ft_unset(char **unset_mat, t_shell *shell);
 /* lexer */
 int			check_word(t_shell *shell, t_token *token, int quote);
 void		choose_if(t_shell *shell, t_token *token, int (*i));
