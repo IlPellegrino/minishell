@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 17:45:12 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/29 18:14:56 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/30 09:55:56 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ char	*here_expand(char *str, int start)
 	if (!count)
 		count = 1;
 	before = copy_prev(str, start);
-	after = copy_str_exp(count, &start, str); //expand
+	after = copy_str_exp(count, &start, str);
 	temp = ft_strdup(before);
 	free(before);
 	before = ft_strjoin(temp, after);

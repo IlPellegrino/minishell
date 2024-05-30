@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 12:34:56 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/29 10:00:23 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/30 10:05:55 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,9 @@ int	count_redirs(char *tokens)
 int	parse_redirs(t_shell *shell)
 {
 	t_token	*token;
-	// int		n_red;
 	int		i;
 
 	token = shell->tokens;
-	// n_red = count_redirs(token->tokens);
 	token->redirs = malloc(sizeof(int) * ft_strlen(token->tokens));
 	collect_garbage(shell, (char *)token->redirs, 0);
 	i = -1;
@@ -61,7 +59,8 @@ int	parse_redirs(t_shell *shell)
 	{
 		if (token->tokens[i] == 'H')
 		{
-			if (!ft_heredoc(shell, token->index[i + 1], token->flag[i]))
+			token->redirs[i + 1] = ft_heredoc(shell, token, i + 1);
+			if (!token->redirs)
 				return (0);
 		}
 		else if (is_redir(token->tokens[i]))

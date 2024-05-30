@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 18:04:21 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/29 17:01:15 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/30 09:58:04 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	read_heredoc(t_shell *shell, char *eof, int fd, int flag)
 	return (0);
 }
 
-int	ft_heredoc(t_shell *shell, char *eof, int flag)
+int	ft_heredoc(t_shell *shell, t_token *token, int i)
 {
 	int	fd;
 	int	temp_stdin;
@@ -49,7 +49,7 @@ int	ft_heredoc(t_shell *shell, char *eof, int flag)
 		return (0);
 	temp_stdin = dup(STDIN_FILENO);
 	dup2(STDIN_FILENO, temp_stdin);
-	if (!read_heredoc(shell, eof, fd, flag))
+	if (!read_heredoc(shell, token->index[i], fd, token->flag[i]))
 	{
 		if (g_sig_type == SIG_C)
 			shell->error = 130;
@@ -62,5 +62,5 @@ int	ft_heredoc(t_shell *shell, char *eof, int flag)
 		close(fd);
 		return (0);
 	}
-	return (1);
+	return (fd);
 }

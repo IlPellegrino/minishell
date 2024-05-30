@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:59:59 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/29 09:58:26 by nromito          ###   ########.fr       */
+/*   Updated: 2024/05/30 09:57:49 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,7 @@ int			parsing(t_shell *shell);
 char		*remove_redir(t_token *token);
 int			find_builtins(char *cmd);
 int			parse_redirs(t_shell *shell);
-int			ft_heredoc(t_shell *shell, char *eof, int flag);
+int			ft_heredoc(t_shell *shell, t_token *token, int i);
 
 /* expand heredoc*/
 char		*copy_expanded(char *expanded, char *final_line, int *j);
