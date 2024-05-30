@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exp.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:52:38 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/29 11:50:25 by nromito          ###   ########.fr       */
+/*   Updated: 2024/05/30 10:51:17 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*create_new_var(t_shell *shell, char *input, int n)
 		if (shell->error != 0)
 			result = ft_itoa(shell->error);
 		else
-			return ("0");
+			return (ft_strdup("0"));
 	}
 	else
 	{
@@ -44,7 +44,7 @@ char	*create_new_var(t_shell *shell, char *input, int n)
 		collect_garbage(shell, env_var, 0);
 	}
 	if (result == NULL)
-		return ("");
+		return (ft_strdup(""));
 	return (result);
 }
 
