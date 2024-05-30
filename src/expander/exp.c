@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exp.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:52:38 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/30 10:51:17 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/30 13:04:52 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,18 @@ char	*create_new_var(t_shell *shell, char *input, int n)
 			return (ft_strdup("\""));
 		else if (input[n] == SQ)
 			return (ft_strdup("\'"));
-		else if (ft_isdigit(input[n])&& input[n] != '\0')
-			env_var[++k] = input[n];
-		else if (ft_isalpha(input[n]) || input[n] == US)
-			while (input[n] && (ft_isalnum(input[n]) || input[n] == US))
+		else
+			while (input[n] && input[n] != DQ
+				&& input[n] != SQ && input[n] != '$'
+				&& input[n] != SPACE)
 				env_var[++k] = input[n++];
-		else if (input[n] == DQ || input[n] == SQ)
-			env_var[++k] = input[n];
+		// else if (ft_isdigit(input[n]) && input[n] != '\0')
+		// 	env_var[++k] = input[n];
+		// else if (ft_isalpha(input[n]) || input[n] == US)
+		// 	while (input[n] && (ft_isalnum(input[n]) || input[n] == US))
+		// 		env_var[++k] = input[n++];
+		// else if (input[n] == DQ || input[n] == SQ)
+		// 	env_var[++k] = input[n];
 		result = ft_getenv(env_var, shell);
 		collect_garbage(shell, env_var, 0);
 	}
@@ -122,11 +127,24 @@ void	expand_values(t_shell *shell, t_token *token)
 		else if (input[j] == DQ)
 		{
 			while (input[++j] && input[j] != DQ)
+			{
 				if (input[j] == '$' && input[j + 1] != '\0')
+				{
 					is_heredoc(shell, token, input, j);
+					input = token->index[token->wrd];
+					j = -1;
+					break;
+				}
+			}
 		}
-		else if (input[j] == '$' && input[j + 1] != '\0'&& input[j - 1] != SQ)
-			is_heredoc(shell, token, input, j);
-		input = token->index[token->wrd];
+		else if ((input[j] == '$' && input[j + 1] != '\0'))
+		{
+			if (j == 0 || (j >= 1 && input[j - 1] != SQ))
+			{
+				is_heredoc(shell, token, input, j);
+				input = token->index[token->wrd];
+				j = -1;
+			}
+		}
 	}
 }

@@ -6,11 +6,25 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 17:46:33 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/29 00:05:31 by nromito          ###   ########.fr       */
+/*   Updated: 2024/05/30 12:30:40 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
+
+char	*check_name(const char *name)
+{
+	int	len;
+
+	len = -1;
+	while (name[++len])
+	{
+		if ((!ft_isalpha(name[len]) && name[len] != US)
+			|| ft_isdigit(name[0]))
+			return ((char *)name);
+	}
+	return (0);
+}
 
 char	*ft_getenv(const char *name, t_shell *shell)
 {
@@ -22,24 +36,32 @@ char	*ft_getenv(const char *name, t_shell *shell)
 
 	i = -1;
 	pos = -1;
-	len = 0;
 	be = 0;
 	while (shell->envp[++i])
 	{
-		if (!ft_strncmp(name, shell->envp[i], ft_strlen(name)))
+		len = -1;
+		while (shell->envp[i][++len] && shell->envp[i][len] != '=')
+			;
+		if (check_name(name))
+			return (ft_strjoin("$", name));
+		if (len == (int)ft_strlen(name))
 		{
-			while (shell->envp[i][++pos] && shell->envp[i][++pos] != '=')
-				be++;
-			if (shell->envp[i][pos] != '\0')
-				while (shell->envp[i][++pos])
-					len++;
-			res = ft_calloc(sizeof (char *), len + 1);
-			if (!res)
-				return (NULL);
-			len = -1;
-			while (shell->envp[i][++be])
-				res[++len] = shell->envp[i][be];
-			return (res);
+			len = 0;
+			if (!ft_strncmp(name, shell->envp[i], ft_strlen(name)))
+			{
+				while (shell->envp[i][++pos] && shell->envp[i][pos] != '=')
+					be++;
+				if (shell->envp[i][pos] != '\0')
+					while (shell->envp[i][++pos])
+						len++;
+				res = ft_calloc(sizeof (char *), len + 1);
+				if (!res)
+					return (NULL);
+				len = -1;
+				while (shell->envp[i][++be])
+					res[++len] = shell->envp[i][be];
+				return (res);
+			}
 		}
 	}
 	return (NULL);

@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 10:22:43 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/29 11:53:56 by nromito          ###   ########.fr       */
+/*   Updated: 2024/05/30 12:44:16 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	is_heredoc(t_shell *shell, t_token *token, char *input, int j)
 {
 	if (input[0] == '$')
-		expand_value(shell, token, input, j - 1);
+		expand_value(shell, token, input, j);
 	else if (j >= 1 && input[j - 1] == '$')
 		return ;
 	if (token->wrd >= 1 && token->index[token->wrd - 1][0] == '<'
