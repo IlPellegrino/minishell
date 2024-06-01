@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_heredoc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 18:04:21 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/30 09:58:04 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/01 10:52:19 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	read_heredoc(t_shell *shell, char *eof, int fd, int flag)
 			return (0);
 		if (ft_strchr(line, '$') && flag == '0')
 		{
-			line = expand_heredoc(line);
+			line = expand_heredoc(shell, line);
 		}
 		collect_garbage(shell, line, 0);
 		len = ft_strlen(line);

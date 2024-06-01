@@ -6,13 +6,13 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 10:22:43 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/30 12:44:16 by nromito          ###   ########.fr       */
+/*   Updated: 2024/06/01 10:39:27 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-void	is_heredoc(t_shell *shell, t_token *token, char *input, int j)
+/*void	is_heredoc(t_shell *shell, t_token *token, char *input, int j)
 {
 	if (input[0] == '$')
 		expand_value(shell, token, input, j);
@@ -24,7 +24,7 @@ void	is_heredoc(t_shell *shell, t_token *token, char *input, int j)
 		&& token->flag[token->wrd - 1] == '0')
 		j++;
 	expand_value(shell, token, input, j);
-}
+}*/
 
 char	*check_flag(t_token *token)
 {

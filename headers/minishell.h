@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:59:59 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/30 10:55:41 by nromito          ###   ########.fr       */
+/*   Updated: 2024/06/01 16:23:08 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ typedef struct s_token
 	char	*tokens;
 	int		exp;
 	char	*flag;
+	int		null_flag;
 	int		wrd;
 	int		start;
 	int		*redirs;
@@ -116,7 +117,7 @@ int			ft_cd(char **cd_mat);
 int			ft_pwd(void);
 int			ft_export(char **export_mat, t_shell *shell);
 int			it_exist(char *new_var, t_shell *shell);
-void		ft_exit(t_shell *shell);
+void		ft_exit(char **exit_mat, t_shell *shell);
 int			ft_unset(char **unset_mat, t_shell *shell);
 /* lexer */
 int			check_word(t_shell *shell, t_token *token, int quote);
@@ -149,6 +150,10 @@ void		is_heredoc(t_shell *shell, t_token *token, char *input, int j);
 char		*create_new_var(t_shell *shell, char *input, int n);
 char		*ft_getenv(const char *name, t_shell *shell);
 char		*expand_pid(void);
+int			find_expansion(char *temp, int *start);
+char		*here_expand(t_shell *shell, char *str, int start);
+char		*copy_str_exp(t_shell *shell, int count, int *start, char *str);
+char		*copy_prev(char *str, int start);
 
 /* parsing */
 int			tokenizer(t_shell *shell);
@@ -158,12 +163,13 @@ char		*remove_redir(t_token *token);
 int			find_builtins(char *cmd);
 int			parse_redirs(t_shell *shell);
 int			ft_heredoc(t_shell *shell, t_token *token, int i);
+char		*get_after(char *str, char *new_str, int start);
 
 /* expand heredoc*/
 char		*copy_expanded(char *expanded, char *final_line, int *j);
 char		*expand_var(char *line, int *i);
 int			find_len(char *line);
-char		*expand_heredoc(char *line);
+char		*expand_heredoc(t_shell *shell, char *line);
 
 /* parsing: cmd table */
 int			init_cmd_table(t_shell *shell);

@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 17:46:33 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/30 12:30:40 by nromito          ###   ########.fr       */
+/*   Updated: 2024/06/01 11:43:44 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,11 @@ char	*check_name(const char *name)
 	len = -1;
 	while (name[++len])
 	{
-		if ((!ft_isalpha(name[len]) && name[len] != US)
-			|| ft_isdigit(name[0]))
+		if (ft_isdigit(name[0]))
+			return(0);
+		else if (name[0] == SQ || name[0] == DQ)
+			return (0);
+		else if ((!ft_isalnum(name[len]) && name[len] != US))
 			return ((char *)name);
 	}
 	return (0);

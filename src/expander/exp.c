@@ -6,145 +6,67 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:52:38 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/30 13:04:52 by nromito          ###   ########.fr       */
+/*   Updated: 2024/06/01 16:46:08 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-char	*create_new_var(t_shell *shell, char *input, int n)
+int	to_expand(int i, char	*line)
 {
-	int		k;
-	char	*result;
-	char	*env_var;
-
-	k = -1;
-	if (input[n + 1] == '?' && (input[n + 2] == '\0' || input[n + 2] == DQ))
-	{
-		if (shell->error != 0)
-			result = ft_itoa(shell->error);
-		else
-			return (ft_strdup("0"));
-	}
-	else
-	{
-		env_var = ft_calloc(sizeof (char *), ft_strlen(input));
-		if (input[++n] == DQ)
-			return (ft_strdup("\""));
-		else if (input[n] == SQ)
-			return (ft_strdup("\'"));
-		else
-			while (input[n] && input[n] != DQ
-				&& input[n] != SQ && input[n] != '$'
-				&& input[n] != SPACE)
-				env_var[++k] = input[n++];
-		// else if (ft_isdigit(input[n]) && input[n] != '\0')
-		// 	env_var[++k] = input[n];
-		// else if (ft_isalpha(input[n]) || input[n] == US)
-		// 	while (input[n] && (ft_isalnum(input[n]) || input[n] == US))
-		// 		env_var[++k] = input[n++];
-		// else if (input[n] == DQ || input[n] == SQ)
-		// 	env_var[++k] = input[n];
-		result = ft_getenv(env_var, shell);
-		collect_garbage(shell, env_var, 0);
-	}
-	if (result == NULL)
-		return (ft_strdup(""));
-	return (result);
+	if ( line[i + 1] == SQ
+		|| line[i+ 1] == DQ
+		|| ft_isalnum(line[i + 1])
+		|| line[i + 1] == US
+		|| line[i + 1] == '$')
+		return(1);
+	return (0);
 }
-
-void	recreate_str(t_token *token, int j, char *input, char *new_var)
-{
-	int		n;
-	int		k;
-	char	*old_str;
-
-	n = 0;
-	k = 0;
-	old_str = input;
-	while (n < j)
-		token->index[token->wrd][k++] = old_str[n++];
-	n = 0;
-	if (new_var[n] == '\0')
-		token->index[token->wrd][k] = new_var[n]; 
-	while (new_var[n])
-		token->index[token->wrd][k++] = new_var[n++];
-	printf("old = %c\n", old_str[j]);
-	if (old_str[j] == '$' && old_str[j + 1] == '$')
-		j += 2;
-	else if (!ft_isalpha(old_str[++j]) && old_str[j] != US)
-		j += 1;
-	else
-		while (old_str[++j] && (ft_isalnum(old_str[j]) || old_str[j] == US))
-			;
-	while (old_str[j])
-		token->index[token->wrd][k++] = old_str[j++];
-	printf("stringa = %s\n", token->index[token->wrd]);
-}
-
-char	*ft_allocate(t_token *token, char *input, char *new_var)
-{
-	int	len1;
-	int	len2;
-
-	len1 = ft_strlen(input);
-	len2 = ft_strlen(new_var);
-	token->index[token->wrd] = ft_calloc(sizeof (char *), len1 + len2);
-	return (token->index[token->wrd]);
-}
-
-void	expand_value(t_shell *shell, t_token *token, char *input, int j)
-{
-	char	*new_var;
-
-	if (input[j] == '$' && input[j + 1] == '$')
-		new_var = expand_pid();
-	else
-		new_var = create_new_var(shell, input, j);
-	if (!new_var)
-		return ;
-	collect_garbage(shell, new_var, 0);
-	collect_garbage(shell, token->index[token->wrd], 0);
-	token->index[token->wrd] = ft_allocate(token, input, new_var);
-	if (!token->index[token->wrd])
-		return ;
-	recreate_str(token, j, input, new_var);
-	input = token->index[token->wrd];
-}
-
 void	expand_values(t_shell *shell, t_token *token)
 {
-	int		j;
-	char	*input;
+	int		i;
+	char	*final_str;
+	char	*line;
+	int		dq;
+	int		sq;
 
-	j = -1;
-	input = token->index[token->wrd];
-	while (input[++j])
+	sq = 0;
+	dq = 0;
+	line = token->index[token->wrd];
+	final_str = 0;
+	if (!ft_strchr(line, '$'))
+		return ;
+	i = -1;
+	while (line[++i])
 	{
-		if (input[j] == SQ)
-			while (input[++j] != SQ && input[j])
-				;
-		else if (input[j] == DQ)
+		if (line[i] == SQ && sq)
+			sq = 0;
+		else if (line[i] == SQ && !dq)
+			sq = 1;
+		else if (line[i] == DQ && dq)
 		{
-			while (input[++j] && input[j] != DQ)
-			{
-				if (input[j] == '$' && input[j + 1] != '\0')
-				{
-					is_heredoc(shell, token, input, j);
-					input = token->index[token->wrd];
-					j = -1;
-					break;
-				}
-			}
+			dq = 0;
+			sq = 0;
 		}
-		else if ((input[j] == '$' && input[j + 1] != '\0'))
+		else if (line[i] == DQ)
+			dq = 1;
+		printf("sq %d\n", sq);
+		if (line[i] == '$' && line[i + 1] && !sq && to_expand(i, line))
 		{
-			if (j == 0 || (j >= 1 && input[j - 1] != SQ))
-			{
-				is_heredoc(shell, token, input, j);
-				input = token->index[token->wrd];
-				j = -1;
-			}
+			if (final_str)
+				free(final_str);
+			final_str = here_expand(shell, line, i);
+			printf("final str = %s\n", final_str);
+			line = ft_strdup(final_str);
+			dq = 0;
+			sq = 0;
+			i = -1;
 		}
+	
 	}
+	printf("new_str = %s\n", final_str);
+	if (!final_str)
+		final_str = line;
+	token->index[token->wrd] = final_str;
 }
+
