@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 11:41:30 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/30 12:20:07 by nromito          ###   ########.fr       */
+/*   Updated: 2024/06/02 17:56:40 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,6 @@ char	**create_matrix(char *to_delete, t_shell *shell)
 				return (0);
 			}
 		}
-		// matrix = copy_new_envp(shell->envp[i], len, matrix, to_delete);
-		// if (!matrix)
-		// 	return (0);
 		while (shell->envp[i][++len2] && shell->envp[i][len2] != '=')
 			;
 		if (len2 == len)
@@ -89,9 +86,7 @@ char	**create_matrix(char *to_delete, t_shell *shell)
 
 int	ft_unset(char **unset_mat, t_shell *shell)
 {
-	int		i;
 	int		j;
-	int		g;
 	char	**env_copy;
 
 	j = 0;
@@ -101,8 +96,6 @@ int	ft_unset(char **unset_mat, t_shell *shell)
 	{
 		while (unset_mat[++j])
 		{
-			g = 0;
-			i = -1;
 			env_copy = create_matrix(unset_mat[j], shell);
 			collect_garbage(shell, 0, env_copy);
 			if (env_copy)

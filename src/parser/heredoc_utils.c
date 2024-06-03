@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 17:45:12 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/01 15:48:56 by nromito          ###   ########.fr       */
+/*   Updated: 2024/06/02 17:58:27 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,12 +123,10 @@ char	*expand_heredoc(t_shell *shell, char *line)
 {
 	int		i;
 	char	*final_str;
-	int		j;
 	char	*temp;
 
 	final_str = 0;
 	temp = ft_strdup(line);
-	j = 0;
 	i = -1;
 	while (line[++i])
 	{
