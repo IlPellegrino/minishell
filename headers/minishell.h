@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:59:59 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/01 16:23:08 by nromito          ###   ########.fr       */
+/*   Updated: 2024/06/03 11:04:01 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ line 1 delimited by end-of-file (wanted `eof')"
 # define COMMAND 0
 # define OPEN_ERR 1
 # define SYNTAX 2
+# define EXIT 4
 # define HERE_EOF 3
 # define IN_HEREDOC 1
 # define SIG_C 2

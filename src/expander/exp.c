@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:52:38 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/01 16:46:08 by nromito          ###   ########.fr       */
+/*   Updated: 2024/06/03 11:09:53 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,11 @@
 int	to_expand(int i, char	*line)
 {
 	if ( line[i + 1] == SQ
-		|| line[i+ 1] == DQ
+		|| line[i + 1] == DQ
 		|| ft_isalnum(line[i + 1])
 		|| line[i + 1] == US
-		|| line[i + 1] == '$')
+		|| line[i + 1] == '$'
+		|| line[i + 1] == '?')
 		return(1);
 	return (0);
 }
@@ -56,7 +57,6 @@ void	expand_values(t_shell *shell, t_token *token)
 			if (final_str)
 				free(final_str);
 			final_str = here_expand(shell, line, i);
-			printf("final str = %s\n", final_str);
 			line = ft_strdup(final_str);
 			dq = 0;
 			sq = 0;
@@ -64,7 +64,6 @@ void	expand_values(t_shell *shell, t_token *token)
 		}
 	
 	}
-	printf("new_str = %s\n", final_str);
 	if (!final_str)
 		final_str = line;
 	token->index[token->wrd] = final_str;

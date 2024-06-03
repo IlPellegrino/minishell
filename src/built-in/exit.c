@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 11:42:41 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/02 20:15:27 by nromito          ###   ########.fr       */
+/*   Updated: 2024/06/03 11:11:24 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 unsigned int	ft_atoi_mod(const char *str)
 {
-	int	i;
+	int				i;
 	unsigned int	number;
 	unsigned int	neg;
 
@@ -40,20 +40,20 @@ void	two_args(char **exit_mat, t_shell *shell)
 	i = -1;
 	while (exit_mat[1][++i])
 		if (!ft_isdigit(exit_mat[1][i]) && exit_mat[1][0] != '-')
-			break;
+			break ;
 	if (!exit_mat[1][i])
 	{
 		shell->error = (ft_atoi_mod(exit_mat[1]) % 256);
 		ft_putstr_fd("exit\n", STDERR_FILENO);
 		if (ft_atoi_mod(exit_mat[1]) != 256
 			&& ft_atoi_mod(exit_mat[1]) % 256 == 0)
-			printf("minishell: exit: %s: numeric argument required\n", exit_mat[1]);
+			ft_error(shell, EXIT, exit_mat[1]);
 		close_shell(shell);
 	}
 	else
 	{
 		ft_putstr_fd("exit\n", STDERR_FILENO);
-		printf("minishell: exit: %s: numeric argument required\n", exit_mat[1]);
+		ft_error(shell, EXIT, exit_mat[1]);
 		shell->error = 2;
 		close_shell(shell);
 	}
@@ -72,7 +72,7 @@ void	more_args(char **exit_mat, t_shell *shell)
 	if (first == 1)
 	{
 		ft_putstr_fd("exit\n", STDERR_FILENO);
-		printf("minishell: exit: %s: numeric argument required\n", exit_mat[1]);
+		ft_error(shell, EXIT, exit_mat[1]);
 		shell->error = 2;
 		close_shell(shell);
 	}

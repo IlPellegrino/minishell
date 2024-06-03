@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 19:59:43 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/27 15:00:45 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/03 11:02:45 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,12 @@ int	ft_error(t_shell *shell, int error_type, char *str)
 		ft_putstr_fd(str, 2);
 		ft_putendl_fd("]", 2);
 		shell->error = 127;
+	}
+	else if (error_type == EXIT)
+	{
+		ft_putstr_fd("minishell: exit: ", 2);
+		ft_putstr_fd(str, 2);
+		ft_putendl_fd(": numeric argument required", 2);
 	}
 	else if (error_type == SYNTAX)
 	{

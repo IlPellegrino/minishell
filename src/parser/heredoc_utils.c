@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 17:45:12 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/02 17:58:27 by nromito          ###   ########.fr       */
+/*   Updated: 2024/06/03 11:08:46 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ char	*copy_str_exp(t_shell *shell, int count, int *start, char *str)
 		after_expand = expand_pid();
 	else if (!ft_strncmp(expand, "'", len))
 		after_expand = ft_strdup("'");
+	else if (!ft_strncmp(expand, "$", len))
+		after_expand = ft_itoa(shell->error);
 	else
 		after_expand = ft_getenv(expand, shell);
 	printf("expanded = %s\n",after_expand);
