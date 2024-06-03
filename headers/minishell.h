@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:59:59 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/03 11:04:01 by nromito          ###   ########.fr       */
+/*   Updated: 2024/06/03 20:16:01 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,13 @@ line 1 delimited by end-of-file (wanted `eof')"
 # define JESUS 1
 # define COMMAND 0
 # define OPEN_ERR 1
-# define SYNTAX 2
-# define EXIT 4
-# define HERE_EOF 3
 # define IN_HEREDOC 1
+# define SYNTAX 2
 # define SIG_C 2
+# define HERE_EOF 3
+# define EXIT 4
+# define UNSET 5
+# define EXPORT 6
 
 extern int	g_sig_type;
 
@@ -54,6 +56,26 @@ typedef struct s_cmd
 	char	*pathname;
 	char	**cmd_arg;
 }			t_cmd;
+
+typedef struct s_export
+{
+	int		pos;
+	int		old_pos;
+	char	*old;
+}			t_export;
+
+
+typedef struct s_exp
+{
+	int		sq;
+	int		dq;
+	int		begin;
+	int		len;
+	int		pos;
+	char	*res;
+	char	*line;
+	char	*final_str;
+}			t_exp;
 
 typedef struct s_table
 {
@@ -114,12 +136,21 @@ void		get_signal(void);
 
 /* builtins */
 void		ft_echo(char **echo_mat);
-int			ft_cd(char **cd_mat);
+int			ft_cd(char **cd_mat, t_shell *shell);
 int			ft_pwd(void);
-int			ft_export(char **export_mat, t_shell *shell);
 int			it_exist(char *new_var, t_shell *shell);
-void		ft_exit(char **exit_mat, t_shell *shell);
+int			ft_exit(char **exit_mat, t_shell *shell);
 int			ft_unset(char **unset_mat, t_shell *shell);
+
+/*export only*/
+int			ft_export(char **export_mat, t_shell *shell);
+char		*create_plus_var(char *new_var, char *new_str);
+void		change_var(char *new_var, t_shell *shell);
+int			pick_old_var(char *s);
+char		*create_var(char *new_var, char *new_str);
+void		add_var(char *new_var, t_shell *shell);
+int			it_exist(char *new_var, t_shell *shell);
+char		*write_inside(char *result, char *new_var, t_export *export);
 /* lexer */
 int			check_word(t_shell *shell, t_token *token, int quote);
 void		choose_if(t_shell *shell, t_token *token, int (*i));

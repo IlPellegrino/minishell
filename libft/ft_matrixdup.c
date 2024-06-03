@@ -1,23 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   ft_matrixdup.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/21 11:43:26 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/03 12:42:49 by nromito          ###   ########.fr       */
+/*   Created: 2024/06/03 12:22:04 by nromito           #+#    #+#             */
+/*   Updated: 2024/06/03 12:23:54 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../headers/minishell.h"
+#include "libft.h"
 
-int	ft_pwd(void)
+char	**ft_matrix_dup(char **matrix)
 {
-	char	*path;
+	int		i;
+	int		size;
+	char	**dup;
 
-	path = getcwd(NULL, 0);
-	printf("%s\n", path);
-	free(path);
-	return (1);
+	size = 0;
+	while (matrix[size])
+		size++;
+	dup = ft_calloc(sizeof(char *), size + 1);
+	i = -1;
+	while (matrix[++i])
+		dup[i] = ft_strdup(matrix[i]);
+	return (dup);
 }

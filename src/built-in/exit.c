@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 11:42:41 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/03 11:11:24 by nromito          ###   ########.fr       */
+/*   Updated: 2024/06/03 11:28:30 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ unsigned int	ft_atoi_mod(const char *str)
 	return (number * neg);
 }
 
-void	two_args(char **exit_mat, t_shell *shell)
+int	two_args(char **exit_mat, t_shell *shell)
 {
 	int	i;
 
@@ -57,9 +57,10 @@ void	two_args(char **exit_mat, t_shell *shell)
 		shell->error = 2;
 		close_shell(shell);
 	}
+	return (0);
 }
 
-void	more_args(char **exit_mat, t_shell *shell)
+int	more_args(char **exit_mat, t_shell *shell)
 {
 	int	first;
 	int	i;
@@ -81,9 +82,10 @@ void	more_args(char **exit_mat, t_shell *shell)
 		shell->error = 1;
 		printf("minishell: exit: too many arguments\n");
 	}
+	return (0);
 }
 
-void	ft_exit(char **exit_mat, t_shell *shell)
+int	ft_exit(char **exit_mat, t_shell *shell)
 {
 	if (matrix_len(exit_mat) < 2)
 	{
@@ -91,7 +93,14 @@ void	ft_exit(char **exit_mat, t_shell *shell)
 		close_shell(shell);
 	}
 	else if (matrix_len(exit_mat) < 3)
-		two_args(exit_mat, shell);
+	{
+		if (!two_args(exit_mat, shell))
+			return (0);
+	}
 	else if (matrix_len(exit_mat) > 2)
-		more_args(exit_mat, shell);
+	{
+		if (!more_args(exit_mat, shell))
+			return (0);
+	}
+	return (0);
 }

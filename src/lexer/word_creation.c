@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 13:45:16 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/23 10:17:43 by nromito          ###   ########.fr       */
+/*   Updated: 2024/06/03 18:06:53 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,8 @@ void	write_word(t_shell *shell, t_token *token, int r, int i)
 			copy_in_quotes(shell, token, &r, DQ);
 		else if (shell->input[token->start] == SQ)
 			copy_in_quotes(shell, token, &r, SQ);
-		else
-			if (shell->input[token->start] != '\0')
-				token->index[token->wrd][r++] = shell->input[token->start];
+		else if (shell->input[token->start] != '\0')
+			token->index[token->wrd][r++] = shell->input[token->start];
 	}
 }
 

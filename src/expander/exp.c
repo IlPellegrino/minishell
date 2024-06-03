@@ -6,66 +6,79 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:52:38 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/03 11:09:53 by nromito          ###   ########.fr       */
+/*   Updated: 2024/06/03 17:28:00 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-int	to_expand(int i, char	*line)
+int	to_expand(int i, char *line)
 {
-	if ( line[i + 1] == SQ
+	if (line[i + 1] == SQ
 		|| line[i + 1] == DQ
 		|| ft_isalnum(line[i + 1])
 		|| line[i + 1] == US
 		|| line[i + 1] == '$'
 		|| line[i + 1] == '?')
-		return(1);
+		return (1);
 	return (0);
 }
+
+void	quotes_handler(char line_pos, t_exp *exp)
+{
+	if (line_pos == SQ && exp->sq)
+		exp->sq = 0;
+	else if (line_pos == SQ && !exp->dq)
+		exp->sq = 1;
+	else if (line_pos == DQ && exp->dq)
+	{
+		exp->dq = 0;
+		exp->sq = 0;
+	}
+	else if (line_pos == DQ)
+		exp->dq = 1;
+}
+
+void	init_exp(t_token *token, t_exp *exp)
+{
+	exp->sq = 0;
+	exp->dq = 0;
+	exp->line = token->index[token->wrd];
+	exp->final_str = 0;
+}
+
+void	re_init(t_exp *exp, int *i)
+{
+	exp->dq = 0;
+	exp->sq = 0;
+	*i = -1;
+}
+
 void	expand_values(t_shell *shell, t_token *token)
 {
 	int		i;
-	char	*final_str;
-	char	*line;
-	int		dq;
-	int		sq;
+	t_exp	exp;
 
-	sq = 0;
-	dq = 0;
-	line = token->index[token->wrd];
-	final_str = 0;
-	if (!ft_strchr(line, '$'))
+	init_exp(token, &exp);
+	if (!ft_strchr(exp.line, '$'))
 		return ;
 	i = -1;
-	while (line[++i])
+	while (exp.line[++i])
 	{
-		if (line[i] == SQ && sq)
-			sq = 0;
-		else if (line[i] == SQ && !dq)
-			sq = 1;
-		else if (line[i] == DQ && dq)
+		quotes_handler(exp.line[i], &exp);
+		if (exp.line[i] == '$' && exp.line[i + 1]
+			&& !exp.sq && to_expand(i, exp.line))
 		{
-			dq = 0;
-			sq = 0;
+			if (exp.final_str)
+				free(exp.final_str);
+			exp.final_str = here_expand(shell, exp.line, i);
+			free(exp.line);
+			exp.line = ft_strdup(exp.final_str);
+			re_init(&exp, &i);
 		}
-		else if (line[i] == DQ)
-			dq = 1;
-		printf("sq %d\n", sq);
-		if (line[i] == '$' && line[i + 1] && !sq && to_expand(i, line))
-		{
-			if (final_str)
-				free(final_str);
-			final_str = here_expand(shell, line, i);
-			line = ft_strdup(final_str);
-			dq = 0;
-			sq = 0;
-			i = -1;
-		}
-	
 	}
-	if (!final_str)
-		final_str = line;
-	token->index[token->wrd] = final_str;
+	if (!exp.final_str)
+		exp.final_str = ft_strdup(exp.line);
+	free(exp.line);
+	token->index[token->wrd] = exp.final_str;
 }
-
