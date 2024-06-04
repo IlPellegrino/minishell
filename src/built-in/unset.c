@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 11:41:30 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/03 20:09:15 by nromito          ###   ########.fr       */
+/*   Updated: 2024/06/04 12:15:21 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ char	**create_matrix(char *to_delete, t_shell *shell)
 
 	i = -1;
 	j = -1;
-	matrix = ft_calloc(sizeof (char **), matrix_len(shell->envp));
+	matrix = ft_calloc(sizeof (char **), matrix_len(shell->envp) + 1);
 	while (shell->envp[++i])
 	{
 		len2 = -1;

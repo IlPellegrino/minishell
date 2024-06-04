@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 15:44:34 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/03 16:09:49 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/04 12:39:29 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	fill_redirs(int end, t_token *token, t_table *table)
 		j = find_infile(table, token, end, &fd_pos);
 		find_outfile(table, &fd_pos, end, j);
 	}
-	return (1);
+	return (0);
 }
 
 char	**get_args(t_token *token, int end)
@@ -129,6 +129,7 @@ int	init_cmd_table(t_shell *shell)
 		}
 	}
 	fill_cmd_table(shell, &table[j++], token, i);
+	printf("filled cmd table\n");
 	token->redirs = 0;
 	return (1);
 }

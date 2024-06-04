@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 18:59:18 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/04 11:51:31 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/04 12:45:06 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ int	is_builtin(char *str)
 {
 	int		cmd_len;
 
+	if (!str)
+		return (0);
 	cmd_len = ft_strlen(str);
 	if (!(ft_strncmp(str, "echo", cmd_len)))
 		return (1);

@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:52:14 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/04 11:49:22 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/04 12:56:51 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,19 +48,19 @@ int	perform_redir(t_shell *shell, int i)
 	exec = shell->executor;
 	table = shell->cmd_table[i];
 	i = -1;
-	if (!table.redirs)
+	if (!table.redirs || !table.command)
 		return (0);
 	while (table.redirs[++i])
 	{
 		if (!ft_strncmp(table.redirs[i], "<<", 2) || !ft_strncmp(table.redirs[i], "<", 1))
-		{		printf("in exec\n");
-
+		{
+			printf("i = %d\n", i);
 			dup2(table.fd[i], STDIN_FILENO);
 			close(table.fd[i]);
 		}
 		else if (!ft_strncmp(table.redirs[i], ">", 1) || !ft_strncmp(table.redirs[i], ">>", 2))
 		{
-			exec->saved_out = dup(STDOUT_FILENO);
+			printf("redir i = %d\n", i);
 			dup2(table.fd[i], STDOUT_FILENO);
 			close(table.fd[i]);
 		}
@@ -74,6 +74,8 @@ int	normal_exec(t_table table)
 	char	*str;
 
 	str = table.command;
+	if (!str)
+		return (0);
 	cmd_len = ft_strlen(str);
 	if (!(ft_strncmp(str, "echo", cmd_len)))
 		ft_echo(table.cmd->cmd_arg);
@@ -146,8 +148,13 @@ int	executor(t_shell *shell)
 	table = shell->cmd_table;
 	exec->saved_in = dup(0);
 	g_sig_type = 1;
-	if (shell->len == 1 && is_builtin(table[0].command))
+		printf("normal exec\n");
+	if (shell->len == 1 && (is_builtin(table[0].command) || !table[0].command))
+	{
+		perform_redir(shell, 0);
+		printf("hello\n");
 		normal_exec(table[0]);
+	}
 	else
 	{
 		if (!to_fork(shell))
