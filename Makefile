@@ -6,7 +6,7 @@
 #    By: nromito <nromito@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/07 17:01:15 by ciusca            #+#    #+#              #
-#    Updated: 2024/06/03 20:13:39 by nromito          ###   ########.fr        #
+#    Updated: 2024/06/04 11:44:10 by nromito          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ HEADERS = headers/minishell.h
 
 PROTECTED_FUNC_SRC = protected_functions.c protected_functions2.c
 CLOSING_SRC = close_shell.c
-BUILT_IN_SRC = echo.c cd.c pwd.c export.c export_2.c export_3.c env.c exit.c unset.c env.c
+BUILT_IN_SRC = echo.c cd.c pwd.c export.c export_2.c export_3.c env.c exit.c unset.c
 EXECUTOR_SRC = exec.c
 EXPANDER_SRC = env_and_pid.c exp.c quotes_and_flag.c
 PARSER_SRC = heredoc_utils.c parse_redirs.c ft_heredoc.c parsing_utils.c parsing.c tokenizer.c cmd_table.c find_redirs.c

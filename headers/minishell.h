@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:59:59 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/03 20:16:01 by nromito          ###   ########.fr       */
+/*   Updated: 2024/06/04 11:41:08 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ line 1 delimited by end-of-file (wanted `eof')"
 # define EXIT 4
 # define UNSET 5
 # define EXPORT 6
+# define ENV 7
 
 extern int	g_sig_type;
 
@@ -135,6 +136,7 @@ void		free_cmd_table(t_shell *shell);
 void		get_signal(void);
 
 /* builtins */
+int			ft_env(char **env_mat, t_shell *shell);
 void		ft_echo(char **echo_mat);
 int			ft_cd(char **cd_mat, t_shell *shell);
 int			ft_pwd(void);

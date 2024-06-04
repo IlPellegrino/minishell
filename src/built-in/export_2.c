@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 18:09:04 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/03 20:13:11 by nromito          ###   ########.fr       */
+/*   Updated: 2024/06/04 12:13:44 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	it_exist(char *new_var, t_shell *shell)
 	while (new_var[++len] && new_var[len] != '=' && new_var[len] != '+')
 		;
 	while (shell->envp[++i])
-		if (!ft_strncmp(shell->envp[i], new_var, len))
+		if (!ft_strncmp(shell->envp[i], new_var, len + 1))
 			return (1);
 	return (0);
 }
