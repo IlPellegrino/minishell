@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:26:12 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/27 15:23:56 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/03 11:11:41 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,31 +42,21 @@ int	main(int argc, char **argv, char **envp)
 	init_structs(&shell, argc, argv, envp);
 	while (JESUS)
 	{
-		//printf("sig type = %d\n", sig_type);
 		g_sig_type = 0;
-		//printf("shell.input = %	s\n", shell.input);
+		shell.len = 0;
 		get_signal();
 		set_arrow(&shell);
 		shell.input = ft_readline(MINISHELL);
 		if (!shell.input)
+		{
+			ft_putendl_fd("exit", 2);
 			close_shell(&shell);
-		//{
-		//	printf("entro qui\n");
-		//}
-		//printf("shell.input = %s\n", shell.input);
-		//collect_garbage(&shell, shell.input, 0);
-		//free(shell.input);
+		}
 		get_path(&shell);
 		if (shell.input)
 		{
 			if (lexer(&shell) && parsing(&shell) && executor(&shell))
-			{
-				if (shell.cmd_table)
-					free_cmd_table(&shell);
 				shell.error = 0;
-				free(shell.input);
-				continue ;
-			}
 			free(shell.input);
 			if (shell.cmd_table)
 				free_cmd_table(&shell);

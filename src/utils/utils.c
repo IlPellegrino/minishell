@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 19:59:43 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/27 15:00:45 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/01 16:22:47 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int	find_space(char *index)
 	i = 0;
 	while (index[i] != SPACE)
 		i++;
-	printf("index[i] = %c\n", index[i]);
 	if (!index[i])
 		return (0);
 	return (1);
@@ -33,6 +32,7 @@ int	init_structs(t_shell *shell, int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	shell->error = 0;
+	shell->len = 0;
 	shell->envp = envp;
 	token = malloc(sizeof(t_token));
 	shell->tokens = token;

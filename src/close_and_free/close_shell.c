@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 10:32:57 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/22 18:08:55 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/03 15:44:32 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,24 @@ void	free_cmd_table(t_shell *shell)
 		while (++i < shell->len)
 		{
 			table = &shell->cmd_table[i];
+			if (table->redirs)
+			{
+				free_matrix(table->redirs);
+				table->redirs = 0;
+				free(table->fd);
+			}
 			if (table->cmd)
 			{
+				if(table->cmd->cmd_arg)
+				{
+					free_matrix(table->cmd->cmd_arg);
+					table->cmd->cmd_arg = 0;
+				}
+				if (table->cmd->pathname)
+				{
+					free(table->cmd->pathname);
+					table->cmd->pathname = 0;	
+				}
 				free(table->cmd);
 				table->cmd = 0;
 			}

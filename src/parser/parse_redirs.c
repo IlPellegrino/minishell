@@ -6,13 +6,32 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 12:34:56 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/30 10:05:55 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/03 15:50:05 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-int	open_redir(t_shell *shell, t_token *token, int i)
+int	parse_heredoc(t_shell *shell, t_token *token)
+{
+	int	i;
+
+	i = -1;
+	while (token->tokens[++i])
+	{
+		if (token->tokens[i] == 'H')
+		{
+			token->redirs[i + 1] = ft_heredoc(shell, token, i + 1);
+			printf("heredoc fd in parse rheredoc %d\n", token->redirs[i + 1]);
+			if (!token->redirs)
+				return (0);
+		}
+	}
+	return (1);
+}
+
+
+int	open_files(t_shell *shell, t_token *token, int i)
 {
 	int	fd;
 
@@ -23,10 +42,26 @@ int	open_redir(t_shell *shell, t_token *token, int i)
 		fd = open(token->index[i], O_CREAT | O_WRONLY | O_APPEND, 0777);
 	else if (token->tokens[i - 1] == 'O')
 		fd = open(token->index[i], O_CREAT | O_WRONLY | O_TRUNC, 0777);
+	else
+		fd = token->redirs[i];
 	shell->error = errno;
+	printf("open file %d\n", fd);
 	if (fd < 0)
 		return (ft_error(shell, OPEN_ERR, token->index[i]));
 	token->redirs[i] = fd;
+	return (1);
+}
+int	open_redirs(t_shell *shell, t_token *token)
+{
+	int	i;
+
+	i = -1;
+	while (token->tokens[++i])
+	{	
+		if (is_redir(token->tokens[i]))
+			if (!open_files(shell, token, i + 1))
+				return (0);
+	}
 	return (1);
 }
 
@@ -47,25 +82,23 @@ int	parse_redirs(t_shell *shell)
 {
 	t_token	*token;
 	int		i;
+	int		j;
 
+	i = -1;
+	j = 0;
 	token = shell->tokens;
 	token->redirs = malloc(sizeof(int) * ft_strlen(token->tokens));
+	i = -1;
 	collect_garbage(shell, (char *)token->redirs, 0);
-	i = -1;
-	while (++i < (int)ft_strlen(token->tokens))
-		token->redirs[i] = -1;
-	i = -1;
-	while (token->tokens[++i])
+	if (!parse_heredoc(shell, token))
 	{
-		if (token->tokens[i] == 'H')
-		{
-			token->redirs[i + 1] = ft_heredoc(shell, token, i + 1);
-			if (!token->redirs)
-				return (0);
-		}
-		else if (is_redir(token->tokens[i]))
-			if (!open_redir(shell, token, i + 1))
-				return (0);
+		//free(token->redirs);
+		return (0);
+	}
+	if (!open_redirs(shell, token))
+	{
+	//	free(token->redirs);
+		return (0);
 	}
 	return (1);
 }

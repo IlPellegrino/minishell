@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 17:45:12 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/30 09:55:56 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/30 18:12:44 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,11 @@ char	*copy_str_exp(int count, int *start, char *str)
 	while (++i < count)
 		expand[i] = str[++(*start)];
 	printf("to expand = %s\n", expand);
-	after_expand = getenv(expand);
+	if (!ft_strncmp(expand, "$", ft_strlen(expand)))
+		expand = expand_pid();
+	else
+		expand = getenv(expand);
+	after_expand = expand;
 	if (!after_expand)
 		after_expand = "";
 	free(expand);

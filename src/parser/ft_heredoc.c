@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 18:04:21 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/30 09:58:04 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/31 15:33:33 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int	read_heredoc(t_shell *shell, char *eof, int fd, int flag)
 {
 	char	*line;
 	int		len;
-	//char	*temp;
 
 	while (1)
 	{
@@ -25,9 +24,7 @@ int	read_heredoc(t_shell *shell, char *eof, int fd, int flag)
 		if (!line)
 			return (0);
 		if (ft_strchr(line, '$') && flag == '0')
-		{
 			line = expand_heredoc(line);
-		}
 		collect_garbage(shell, line, 0);
 		len = ft_strlen(line);
 		if (!len)
@@ -44,9 +41,10 @@ int	ft_heredoc(t_shell *shell, t_token *token, int i)
 	int	fd;
 	int	temp_stdin;
 
-	fd = open(".heredoc", O_CREAT | O_WRONLY | O_TRUNC, 0777);
+	fd = open(".heredoc", O_CREAT | O_RDWR | O_TRUNC, 0777);
 	if (fd == -1)
 		return (0);
+	printf("heredoc fd = %d\n", fd);
 	temp_stdin = dup(STDIN_FILENO);
 	dup2(STDIN_FILENO, temp_stdin);
 	if (!read_heredoc(shell, token->index[i], fd, token->flag[i]))
@@ -59,8 +57,8 @@ int	ft_heredoc(t_shell *shell, t_token *token, int i)
 			ft_error(shell, HERE_EOF, 0);
 		}
 		dup2(temp_stdin, 0);
-		close(fd);
 		return (0);
 	}
+	//printf("fd heredo = %d\n", fd);
 	return (fd);
 }

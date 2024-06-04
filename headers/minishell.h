@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:59:59 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/30 09:57:49 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/03 12:09:50 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@
 # define RED_ARROW "\033[1;31m-> "
 # define GREEN_ARROW "\033[1;32m-> "
 # define MINISHELL "\e[1;96mminishell\033[0m$ "
-# define EOF_ERROR "minishell: warning: here-document at\
-line 1 delimited by end-of-file (wanted `eof')"
+# define EOF_ERROR "minishell: warning: here-document\
+delimited by end-of-file (wanted `eof')"
 # define DQ 34
 # define SQ 39
 # define US 95
@@ -48,32 +48,43 @@ line 1 delimited by end-of-file (wanted `eof')"
 
 extern int	g_sig_type;
 
+typedef struct s_exec
+{
+	int	fds[2];
+	int	saved_out;
+	int	saved_in;
+	int	inf_dup;
+	int	out_dup;
+}			t_exec;
+
 typedef struct s_cmd
 {
 	char	*pathname;
 	char	**cmd_arg;
 }			t_cmd;
 
-typedef struct s_table
-{
-	char		*command;
-	int			fd;
-	int			pos;
-	t_cmd		*cmd;
-}			t_table;
-
 typedef struct s_token
 {
-	char	**index;
-	int		*mat_ind;
-	char	*tokens;
-	int		exp;
-	char	*flag;
-	int		wrd;
-	int		start;
-	int		*redirs;
-	char	*temp_token;
+	char			**index;
+	int				*mat_ind;
+	char			*tokens;
+	int				exp;
+	char			*flag;
+	int				wrd;
+	int				start;
+	int				*redirs;
+	char			*temp_token;
+	struct t_shell	*shell;
 }		t_token;
+
+typedef struct s_table
+{
+	char			*command;
+	char			**redirs;
+	int				*fd;
+	t_cmd			*cmd;
+	struct s_token	*token;
+}			t_table;
 
 typedef struct s_garbage
 {
@@ -99,6 +110,7 @@ typedef struct s_shell
 	t_token		*tokens;
 	t_garbage	*collector;
 	t_table		*cmd_table;
+	t_exec		*executor;
 }			t_shell;
 
 /* close shell */
@@ -155,22 +167,28 @@ char		*remove_redir(t_token *token);
 int			find_builtins(char *cmd);
 int			parse_redirs(t_shell *shell);
 int			ft_heredoc(t_shell *shell, t_token *token, int i);
+int			fill_fds(t_token *token, t_table *table);
+char		*get_cmd(t_shell *shell, char *str);
 
 /* expand heredoc*/
-char		*copy_expanded(char *expanded, char *final_line, int *j);
-char		*expand_var(char *line, int *i);
-int			find_len(char *line);
 char		*expand_heredoc(char *line);
 
 /* parsing: cmd table */
 int			init_cmd_table(t_shell *shell);
-int			find_infile(int start, t_shell *shell);
-int			find_outfile(int start, t_shell *shell);
-int			find_cmd(t_shell *shell, int start, t_token *token, int found);
+int			find_outfile(t_table *table, int *fd_pos, int end, int j);
+int			find_infile(t_table *table, t_token *token, int end, int *fd_pos);
+int			is_cmd(t_token *token, int end);
+int			count_pipes(char *str);
+int			count_redirects(t_token *token, int end);
+//int			find_infile(int start, t_shell *shell);
+//int			find_outfile(int start, t_shell *shell);
+//int			find_cmd(t_shell *shell, int start, t_token *token, int found);
 
 /* parsing utils */
 void		print_cmd_table(t_shell *shell, int len);
 char		*remove_redir(t_token *token);
+int			is_redir(int c);
+char		*get_pathname(t_shell *shell, char *str);
 
 /* protected functions */
 int			fork_p(void);
@@ -184,6 +202,8 @@ int			is_redir(int c);
 
 /*executor*/
 int			executor(t_shell *shell);
+int			pipe_handler(t_shell *shell, int i, int pid);
+int			is_builtin(char *str);
 
 /* utils */
 int			find_space(char *index);
