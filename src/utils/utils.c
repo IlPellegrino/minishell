@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 19:59:43 by nromito           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/06/04 15:07:10 by ciusca           ###   ########.fr       */
-=======
-/*   Updated: 2024/06/04 16:40:30 by nromito          ###   ########.fr       */
->>>>>>> c0b735dedcdd538715f6d5e487be7e7a35d6f00b
+/*   Updated: 2024/06/04 17:25:50 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,16 +84,7 @@ int	ft_error(t_shell *shell, int error_type, char *str)
 	else if (error_type == ENV)
 		print_err("env: `", str, "': No such file or directory");
 	else if (error_type == EXIT)
-<<<<<<< HEAD
 		print_err("minishell: exit: ", str, ": numeric argument required");
-=======
-	{
-		ft_putstr_fd("minishell: exit: ", 2);
-		ft_putstr_fd(str, 2);
-		ft_putendl_fd(": numeric argument required", 2);
-		shell->error = 2;
-	}
->>>>>>> c0b735dedcdd538715f6d5e487be7e7a35d6f00b
 	else if (error_type == UNSET)
 		print_err("minishell: unset: `", str, "': not a valid identifier");
 	else if (error_type == EXPORT)
