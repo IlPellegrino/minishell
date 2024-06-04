@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 13:59:01 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/04 13:01:02 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/04 16:48:20 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	set_token(t_shell *shell, t_token *token, int *i, int *command)
 		token->tokens[*i] = 'I';
 	else if (!(ft_strncmp(token->index[*i], "||", 3)))
 		return (ft_error(shell, SYNTAX, token->index[*i]));
-	else if (token->index[*i][0] == '|' && token->flag[*i] == '0`')
+	else if (token->index[*i][0] == '|' && token->flag[*i] == '0')
 	{
 		*command = 0;
 		token->tokens[*i] = 'P';
@@ -38,9 +38,9 @@ int	set_token(t_shell *shell, t_token *token, int *i, int *command)
 		token->tokens[*i] = 'S';
 	return (1);
 }
-
 int	tokenizer(t_shell *shell)
 {
+
 	t_token	*token;
 	int		i;
 	int		command;

@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 10:10:12 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/31 15:26:49 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/04 14:06:14 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	find_infile(t_table *table, t_token *token, int end, int *fd_pos)
 	char	*redir;
 
 	j = 0;
-	i =-1;
+	i = -1;
 	while (++i < end)
 	{
 		if (token->tokens[i] == 'I' || token->tokens[i] == 'H')
@@ -84,9 +84,9 @@ int	find_outfile(t_table *table, int *fd_pos, int end, int j)
 	char	*redir;
 	char	*space;
 	t_token	*token;
-	
+
 	token = (t_token *)table->token;
-	i =-1;
+	i = -1;
 	while (++i < end)
 	{
 		if (token->tokens[i] == 'O' || token->tokens[i] == 'A')

@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 18:27:50 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/01 10:04:19 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/04 14:07:00 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,33 +48,6 @@ int	get_path(t_shell *shell)
 	}
 	collect_garbage(shell, 0, shell->path_env);
 	return (1);
-}
-
-void	print_cmd_table(t_shell *shell, int len)
-{
-	t_table	table;
-	int		i;
-	int		j;
-
-	i = -1;
-	printf("len %d\n", len);
-	while (++i < shell->len)
-	{
-		table = shell->cmd_table[i];
-		j = -1;
-		if (table.redirs)
-		{
-			printf("redirs\n");
-			for (int i = 0; i < matrix_len(table.redirs); i++)
-				printf("[%d] ", table.fd[i]);
-			printf("\n");
-			print_matrix(table.redirs);
-		}
-		printf("element = %s\n", table.command);
-		if (table.cmd)
-			while (table.cmd->cmd_arg[++j])
-				printf("[%d] args ---> %s\n", j, table.cmd->cmd_arg[j]);
-	}
 }
 
 int	is_redir(int c)

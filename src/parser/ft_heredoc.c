@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 18:04:21 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/04 11:50:19 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/04 17:23:48 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,11 @@ int	ft_heredoc(t_shell *shell, t_token *token, int i)
 	int	fd;
 	int	temp_stdin;
 
-	fd = open(".heredoc", O_CREAT | O_RDWR | O_TRUNC, 0777);
+	fd = open(".heredoc.txt", O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (fd == -1)
 		return (0);
-	printf("heredoc fd = %d\n", fd);
 	temp_stdin = dup(STDIN_FILENO);
-	dup2(STDIN_FILENO, temp_stdin);
+	//dup2(STDIN_FILENO, temp_stdin);
 	if (!read_heredoc(shell, token->index[i], fd, token->flag[i]))
 	{
 		if (g_sig_type == SIG_C)
@@ -59,8 +58,11 @@ int	ft_heredoc(t_shell *shell, t_token *token, int i)
 			ft_error(shell, HERE_EOF, 0);
 		}
 		dup2(temp_stdin, 0);
+		close(temp_stdin);
+		close(fd);
 		return (0);
 	}
-	//printf("fd heredo = %d\n", fd);
+	printf("heredoc fd = %d\n", fd);
+	//write(fd, "ciao", 4);
 	return (fd);
 }

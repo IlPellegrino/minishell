@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:59:59 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/04 12:36:09 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/04 14:44:33 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ typedef struct s_export
 	int		old_pos;
 	char	*old;
 }			t_export;
-
 
 typedef struct s_exp
 {
@@ -228,10 +227,11 @@ int			count_redirects(t_token *token, int end);
 //int			find_cmd(t_shell *shell, int start, t_token *token, int found);
 
 /* parsing utils */
-void		print_cmd_table(t_shell *shell, int len);
 char		*remove_redir(t_token *token);
 int			is_redir(int c);
 char		*get_pathname(t_shell *shell, char *str);
+char		*after_exp(char *expand, int len, t_shell *shell);
+char		*here_expand(t_shell *shell, char *str, int start);
 
 /* protected functions */
 int			fork_p(void);
@@ -247,6 +247,8 @@ int			is_redir(int c);
 int			executor(t_shell *shell);
 int			pipe_handler(t_shell *shell, int i, int pid);
 int			is_builtin(char *str);
+int			pipe_handler(t_shell *shell, int i, int pid);
+int			perform_redir(t_shell *shell, int i);
 
 /* utils */
 int			find_space(char *index);

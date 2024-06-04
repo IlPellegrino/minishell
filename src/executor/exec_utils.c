@@ -6,11 +6,70 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 18:59:18 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/04 12:45:06 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/04 17:24:05 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
+
+int	pipe_handler(t_shell *shell, int i, int pid)
+{
+	t_table	*table;
+	t_exec	*exec;
+
+	table = shell->cmd_table;
+	exec = shell->executor;
+	if (shell->len > 1 && !pid)
+	{
+		close(exec->fds[0]);
+		dup2(exec->fds[1], STDOUT_FILENO);
+		close(exec->fds[1]);
+	}
+	else if (shell->len > 1 && pid)
+	{
+		close(exec->fds[1]);
+		dup2(exec->fds[0], STDIN_FILENO);
+		close(exec->fds[0]);
+	}
+	if (i + 1 == shell->len)
+	{
+		dup2(exec->saved_out, 1);
+		close(exec->saved_out);
+	}
+	return (1);
+}
+
+int	perform_redir(t_shell *shell, int i)
+{
+	t_table	table;
+	t_exec	*exec;
+
+	exec = shell->executor;
+	table = shell->cmd_table[i];
+	i = -1;
+	if (!table.redirs || !table.command)
+		return (0);
+	while (table.redirs[++i])
+	{
+		if (!ft_strncmp(table.redirs[i], "<<", 2)
+			|| !ft_strncmp(table.redirs[i], "<", 1))
+		{
+			printf("perform infile\n");
+			write(table.fd[i], "ciao", 4);
+			printf("\n%i table fd\n", table.fd[i]);
+			dup2(table.fd[i], STDIN_FILENO);
+			close(table.fd[i]);
+			//printf("ciao mondo\n");
+		}
+		else if (!ft_strncmp(table.redirs[i], ">", 1)
+			|| !ft_strncmp(table.redirs[i], ">>", 2))
+		{
+			dup2(table.fd[i], STDOUT_FILENO);
+			close(table.fd[i]);
+		}
+	}
+	return (1);
+}
 
 int	is_builtin(char *str)
 {
@@ -35,4 +94,3 @@ int	is_builtin(char *str)
 		return (1);
 	return (0);
 }
-

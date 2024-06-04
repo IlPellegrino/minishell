@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 15:44:34 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/04 12:39:29 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/04 16:33:32 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,6 @@ int	fill_cmd_table(t_shell *shell, t_table *table, t_token *token, int end)
 	return (1);
 }
 
-
 int	init_cmd_table(t_shell *shell)
 {
 	t_token		*token;
@@ -120,7 +119,7 @@ int	init_cmd_table(t_shell *shell)
 	table = malloc(sizeof(t_table) * shell->len);
 	shell->cmd_table = table;
 	table->cmd = 0;
-	while(token->tokens[++i])
+	while (token->tokens[++i])
 	{
 		if (token->tokens[i] == 'P')
 		{
