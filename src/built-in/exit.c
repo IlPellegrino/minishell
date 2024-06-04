@@ -6,17 +6,17 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 11:42:41 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/03 11:28:30 by nromito          ###   ########.fr       */
+/*   Updated: 2024/06/04 16:32:23 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-unsigned int	ft_atoi_mod(const char *str)
+int	ft_atoi_mod(const char *str)
 {
-	int				i;
-	unsigned int	number;
-	unsigned int	neg;
+	int		i;
+	int		number;
+	int		neg;
 
 	neg = 1;
 	number = 0;
@@ -24,7 +24,7 @@ unsigned int	ft_atoi_mod(const char *str)
 	while (str[i] == ' ' || str[i] == '\n'
 		|| str[i] == '\t' || str[i] == '\v'
 		|| str[i] == '\f' || str[i] == '\r')
-		i ++;
+		i++;
 	if (str[i] == '-' || str[i] == '+')
 		if (str[i++] == '-')
 			neg *= -1;
@@ -45,16 +45,16 @@ int	two_args(char **exit_mat, t_shell *shell)
 	{
 		shell->error = (ft_atoi_mod(exit_mat[1]) % 256);
 		ft_putstr_fd("exit\n", STDERR_FILENO);
-		if (ft_atoi_mod(exit_mat[1]) != 256
-			&& ft_atoi_mod(exit_mat[1]) % 256 == 0)
-			ft_error(shell, EXIT, exit_mat[1]);
+		if (ft_strlen(exit_mat[1]) >= ft_strlen("9223372036854775807"))
+			if (ft_strncmp(exit_mat[1], "9223372036854775807",
+					ft_strlen("9223372036854775807")) > 0)
+				ft_error(shell, EXIT, exit_mat[1]);
 		close_shell(shell);
 	}
 	else
 	{
 		ft_putstr_fd("exit\n", STDERR_FILENO);
 		ft_error(shell, EXIT, exit_mat[1]);
-		shell->error = 2;
 		close_shell(shell);
 	}
 	return (0);
@@ -74,7 +74,6 @@ int	more_args(char **exit_mat, t_shell *shell)
 	{
 		ft_putstr_fd("exit\n", STDERR_FILENO);
 		ft_error(shell, EXIT, exit_mat[1]);
-		shell->error = 2;
 		close_shell(shell);
 	}
 	else
