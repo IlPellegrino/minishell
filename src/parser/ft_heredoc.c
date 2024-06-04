@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_heredoc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 18:04:21 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/01 10:52:19 by nromito          ###   ########.fr       */
+/*   Updated: 2024/06/04 11:50:19 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int	read_heredoc(t_shell *shell, char *eof, int fd, int flag)
 {
 	char	*line;
 	int		len;
-	//char	*temp;
 
 	while (1)
 	{
@@ -44,9 +43,10 @@ int	ft_heredoc(t_shell *shell, t_token *token, int i)
 	int	fd;
 	int	temp_stdin;
 
-	fd = open(".heredoc", O_CREAT | O_WRONLY | O_TRUNC, 0777);
+	fd = open(".heredoc", O_CREAT | O_RDWR | O_TRUNC, 0777);
 	if (fd == -1)
 		return (0);
+	printf("heredoc fd = %d\n", fd);
 	temp_stdin = dup(STDIN_FILENO);
 	dup2(STDIN_FILENO, temp_stdin);
 	if (!read_heredoc(shell, token->index[i], fd, token->flag[i]))
@@ -59,8 +59,8 @@ int	ft_heredoc(t_shell *shell, t_token *token, int i)
 			ft_error(shell, HERE_EOF, 0);
 		}
 		dup2(temp_stdin, 0);
-		close(fd);
 		return (0);
 	}
+	//printf("fd heredo = %d\n", fd);
 	return (fd);
 }

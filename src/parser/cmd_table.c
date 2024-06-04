@@ -6,94 +6,130 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 15:44:34 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/27 11:52:21 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/04 12:39:29 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-int	fill_cmd_table(t_shell *shell, int start, int pipe)
-{
-	int	found;
-
-	found = 0;
-	shell->cmd_table[shell->index].cmd = 0;
-	shell->cmd_table[shell->index].pos = pipe;
-	shell->cmd_table[shell->index].fd = -1;
-	if (find_infile(start, shell))
-		return (1);
-	else if (find_cmd(shell, start - 1, shell->tokens, found))
-		return (1);
-	else if (find_outfile(start, shell))
-		return (1);
-	return (0);
-}
-
-int	check_x(char *tokens, int start)
-{
-	while (tokens[start] == 'X')
-		start++;
-	if (!tokens[start] || tokens[start] == 'P')
-		return (0);
-	return (1);
-}
-
-int	find_token_pos(t_shell *shell, int start)
-{
-	int		i;
-	int		pipe;
-	t_token	*token;
-
-	token = shell->tokens;
-	pipe = 0;
-	i = -1;
-	while (token->tokens[++i] && pipe != start)
-		if (token->tokens[i] == 'P')
-			pipe++;
-	while (check_x(shell->tokens->tokens, i))
-	{
-		if (!fill_cmd_table(shell, i, pipe))
-			return (0);
-		shell->index++;
-	}
-	return (1);
-}
-
-int	count_tkn(char *tokens)
+int	fill_redirs(int end, t_token *token, t_table *table)
 {
 	int	i;
 	int	count;
+	int	j;
+	int	fd_pos;
 
-	count = 0;
-	i = -1;
-	printf("tokens = %s\n", tokens);
-	while (tokens[++i])
+	table->token = (t_token *)token;
+	fd_pos = 0;
+	j = 0;
+	table->redirs = 0;
+	count = count_redirects(token, end);
+	if (count)
 	{
-		if (tokens[i] != 'P' && tokens[i] != 'S')
-			count++;
+		table->redirs = ft_calloc(sizeof(char *), count + 1);
+		if (!table->redirs)
+			return (0);
+		i = -1;
+		table->fd = malloc(sizeof(int) * count);
+		j = find_infile(table, token, end, &fd_pos);
+		find_outfile(table, &fd_pos, end, j);
 	}
-	return (count);
+	return (0);
 }
+
+char	**get_args(t_token *token, int end)
+{
+	int		i;
+	int		count;
+	char	**cmd_arg;
+	int		j;
+
+	j = 0;
+	i = -1;
+	count = 0;
+	while (++i < end)
+		if (token->tokens[i] == 'C' || token->tokens[i] == 'S')
+			count++;
+	cmd_arg = ft_calloc(sizeof(char *), count + 1);
+	if (!cmd_arg)
+		return (0);
+	i = -1;
+	while (++i < end)
+	{
+		if (token->tokens[i] == 'C' || token->tokens[i] == 'S')
+		{
+			cmd_arg[j++] = ft_strdup(token->index[i]);
+			token->tokens[i] = 'X';
+		}
+	}
+	return (cmd_arg);
+}
+
+int	fill_cmd(t_shell *shell, t_token *token, t_table *table, int end)
+{
+	int		i;
+	t_cmd	*cmd;
+
+	table->command = 0;
+	cmd = NULL;
+	if (is_cmd(token, end))
+	{
+		i = -1;
+		while (++i < end)
+		{
+			if (token->tokens[i] == 'C')
+			{
+				table->command = token->index[i];
+			}
+		}
+		cmd = malloc(sizeof(t_cmd));
+		cmd->cmd_arg = 0;
+		cmd->cmd_arg = get_args(token, end);
+		cmd->pathname = get_pathname(shell, table->command);
+	}
+	table->cmd = cmd;
+	return (1);
+}
+
+int	fill_cmd_table(t_shell *shell, t_table *table, t_token *token, int end)
+{
+	int	count;
+	int	j;
+
+	j = 0;
+	count = count_redirects(token, end);
+	table->redirs = 0;
+	if (count)
+		fill_redirs(end, token, table);
+	fill_cmd(shell, token, table, end);
+	return (1);
+}
+
 
 int	init_cmd_table(t_shell *shell)
 {
 	t_token		*token;
-	char		**input_args;
+	t_table		*table;
 	int			i;
+	int			j;
 
-	shell->index = 0;
-	shell->len = 0;
-	token = shell->tokens;
-	input_args = ft_split(token->tokens, 'P');
-	shell->len = count_tkn(token->tokens);
-	shell->cmd_table = malloc(sizeof(t_table) * shell->len);
-	if (!shell->cmd_table)
-		return (0);
+	j = 0;
 	i = -1;
-	while (input_args[++i])
-		find_token_pos(shell, i);
-	shell->index = 0;
-	collect_garbage(shell, 0, input_args);
-	print_cmd_table(shell, shell->len);
+	token = shell->tokens;
+	shell->len = count_pipes(token->tokens);
+	table = malloc(sizeof(t_table) * shell->len);
+	shell->cmd_table = table;
+	table->cmd = 0;
+	while(token->tokens[++i])
+	{
+		if (token->tokens[i] == 'P')
+		{
+			token->tokens[i] = 'X';
+			fill_cmd_table(shell, &table[j++], token, i);
+		}
+	}
+	fill_cmd_table(shell, &table[j++], token, i);
+	printf("filled cmd table\n");
+	token->redirs = 0;
 	return (1);
 }

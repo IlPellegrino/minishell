@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_and_pid.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 17:46:33 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/03 18:05:54 by nromito          ###   ########.fr       */
+/*   Updated: 2024/06/04 11:49:36 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ char	*expand_pid(void)
 	int		i;
 
 	buffer = ft_calloc(sizeof(char *), 21);
-	fd = open("/proc/self/stat", O_CREAT, O_RDONLY, 0777);
+	fd = open("/proc/self/stat", O_RDONLY, 0777);
 	if (fd == -1)
 		return (perror("minishell"), NULL);
 	if (read(fd, buffer, 20) == -1)

@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:54:36 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/27 16:07:13 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/05/31 14:36:40 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ int	parse_input(t_shell *shell)
 
 int	parsing(t_shell *shell)
 {
+	shell->len = 0;
 	if (!tokenizer(shell))
 		return (0);
 	if (!parse_input(shell))

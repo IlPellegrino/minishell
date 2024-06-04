@@ -6,11 +6,27 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 18:27:50 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/27 11:53:30 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/01 10:04:19 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
+
+char	*get_pathname(t_shell *shell, char *str)
+{
+	int		i;
+	char	*pathname;
+
+	i = -1;
+	while (shell->path_env[++i])
+	{
+		pathname = ft_strjoin(shell->path_env[i], str);
+		if (!access(pathname, X_OK))
+			return (pathname);
+		free(pathname);
+	}
+	return (0);
+}
 
 int	get_path(t_shell *shell)
 {
@@ -42,13 +58,19 @@ void	print_cmd_table(t_shell *shell, int len)
 
 	i = -1;
 	printf("len %d\n", len);
-	while (++i < len)
+	while (++i < shell->len)
 	{
 		table = shell->cmd_table[i];
 		j = -1;
+		if (table.redirs)
+		{
+			printf("redirs\n");
+			for (int i = 0; i < matrix_len(table.redirs); i++)
+				printf("[%d] ", table.fd[i]);
+			printf("\n");
+			print_matrix(table.redirs);
+		}
 		printf("element = %s\n", table.command);
-		printf("pos = %d\n", table.pos);
-		printf("fd = %d\n", table.fd);
 		if (table.cmd)
 			while (table.cmd->cmd_arg[++j])
 				printf("[%d] args ---> %s\n", j, table.cmd->cmd_arg[j]);
