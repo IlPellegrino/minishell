@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 19:12:56 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/27 15:18:19 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/03 12:23:02 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ int		count_words(char *str);
 /* matrix functions */
 char	**ft_split(char const *s, char const c);
 int		matrix_len(char **mat);
+char	**ft_matrix_dup(char **matrix);
 void	free_matrix(char **mat);
 
 /* memory functions */

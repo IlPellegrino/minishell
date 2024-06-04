@@ -6,40 +6,70 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 17:46:33 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/31 10:20:10 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/04 11:49:36 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
+char	*check_name(const char *name)
+{
+	int	len;
+
+	len = -1;
+	while (name[++len])
+	{
+		if (ft_isdigit(name[0]))
+			return (0);
+		else if (name[0] == SQ || name[0] == DQ)
+			return (0);
+		else if ((!ft_isalnum(name[len]) && name[len] != US))
+			return ((char *)name);
+	}
+	return (0);
+}
+
+void	init_counters(t_exp *exp)
+{
+	exp->pos = -1;
+	exp->begin = 0;
+	exp->len = 0;
+}
+
+char	*make_expansion(t_exp *exp, char *to_expand)
+{
+	while (to_expand[++exp->pos] && to_expand[exp->pos] != '=')
+		exp->begin++;
+	if (to_expand[exp->pos] != '\0')
+		while (to_expand[++exp->pos])
+			exp->len++;
+	exp->res = ft_calloc(sizeof (char *), exp->len + 1);
+	if (!exp->res)
+		return (NULL);
+	exp->len = -1;
+	while (to_expand[++exp->begin])
+		exp->res[++exp->len] = to_expand[exp->begin];
+	return (exp->res);
+}
+
 char	*ft_getenv(const char *name, t_shell *shell)
 {
 	int		i;
-	int		be;
-	int		pos;
-	int		len;
-	char	*res;
+	t_exp	exp;
 
 	i = -1;
-	pos = -1;
-	len = 0;
-	be = 0;
 	while (shell->envp[++i])
 	{
-		if (!ft_strncmp(name, shell->envp[i], ft_strlen(name)))
+		exp.len = -1;
+		while (shell->envp[i][++exp.len] && shell->envp[i][exp.len] != '=')
+			;
+		if (check_name(name))
+			return (ft_strjoin("$", name));
+		if (exp.len == (int)ft_strlen(name))
 		{
-			while (shell->envp[i][++pos] && shell->envp[i][++pos] != '=')
-				be++;
-			if (shell->envp[i][pos] != '\0')
-				while (shell->envp[i][++pos])
-					len++;
-			res = ft_calloc(sizeof (char *), len + 1);
-			if (!res)
-				return (NULL);
-			len = -1;
-			while (shell->envp[i][++be])
-				res[++len] = shell->envp[i][be];
-			return (res);
+			init_counters(&exp);
+			if (!ft_strncmp(name, shell->envp[i], ft_strlen(name)))
+				return (make_expansion(&exp, shell->envp[i]));
 		}
 	}
 	return (NULL);

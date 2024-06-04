@@ -1,27 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   ft_matrixdup.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/12 17:24:15 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/29 18:39:22 by nromito          ###   ########.fr       */
+/*   Created: 2024/06/03 12:22:04 by nromito           #+#    #+#             */
+/*   Updated: 2024/06/03 12:23:54 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
+char	**ft_matrix_dup(char **matrix)
 {
-	unsigned int	i;
+	int		i;
+	int		size;
+	char	**dup;
 
-	i = 0;
-	while ((s1[i] != '\0' || s2[i] != '\0') && i < n)
-	{
-		if (s1[i] != s2[i])
-			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
-		++i;
-	}
-	return (0);
+	size = 0;
+	while (matrix[size])
+		size++;
+	dup = ft_calloc(sizeof(char *), size + 1);
+	i = -1;
+	while (matrix[++i])
+		dup[i] = ft_strdup(matrix[i]);
+	return (dup);
 }

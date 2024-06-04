@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:59:59 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/03 12:09:50 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/04 11:51:41 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,13 @@ delimited by end-of-file (wanted `eof')"
 # define JESUS 1
 # define COMMAND 0
 # define OPEN_ERR 1
-# define SYNTAX 2
-# define HERE_EOF 3
 # define IN_HEREDOC 1
+# define SYNTAX 2
 # define SIG_C 2
+# define HERE_EOF 3
+# define EXIT 4
+# define UNSET 5
+# define EXPORT 6
 
 extern int	g_sig_type;
 
@@ -63,18 +66,38 @@ typedef struct s_cmd
 	char	**cmd_arg;
 }			t_cmd;
 
+typedef struct s_export
+{
+	int		pos;
+	int		old_pos;
+	char	*old;
+}			t_export;
+
+
+typedef struct s_exp
+{
+	int		sq;
+	int		dq;
+	int		begin;
+	int		len;
+	int		pos;
+	char	*res;
+	char	*line;
+	char	*final_str;
+}			t_exp;
+
 typedef struct s_token
 {
-	char			**index;
-	int				*mat_ind;
-	char			*tokens;
-	int				exp;
-	char			*flag;
-	int				wrd;
-	int				start;
-	int				*redirs;
-	char			*temp_token;
-	struct t_shell	*shell;
+	char	**index;
+	int		*mat_ind;
+	char	*tokens;
+	int		exp;
+	char	*flag;
+	int		null_flag;
+	int		wrd;
+	int		start;
+	int		*redirs;
+	char	*temp_token;
 }		t_token;
 
 typedef struct s_table
@@ -124,9 +147,21 @@ void		get_signal(void);
 
 /* builtins */
 void		ft_echo(char **echo_mat);
-int			ft_cd(char **cd_mat);
+int			ft_cd(char **cd_mat, t_shell *shell);
 int			ft_pwd(void);
+int			it_exist(char *new_var, t_shell *shell);
+int			ft_exit(char **exit_mat, t_shell *shell);
+int			ft_unset(char **unset_mat, t_shell *shell);
+
+/*export only*/
 int			ft_export(char **export_mat, t_shell *shell);
+char		*create_plus_var(char *new_var, char *new_str);
+void		change_var(char *new_var, t_shell *shell);
+int			pick_old_var(char *s);
+char		*create_var(char *new_var, char *new_str);
+void		add_var(char *new_var, t_shell *shell);
+int			it_exist(char *new_var, t_shell *shell);
+char		*write_inside(char *result, char *new_var, t_export *export);
 /* lexer */
 int			check_word(t_shell *shell, t_token *token, int quote);
 void		choose_if(t_shell *shell, t_token *token, int (*i));
@@ -158,6 +193,10 @@ void		is_heredoc(t_shell *shell, t_token *token, char *input, int j);
 char		*create_new_var(t_shell *shell, char *input, int n);
 char		*ft_getenv(const char *name, t_shell *shell);
 char		*expand_pid(void);
+int			find_expansion(char *temp, int *start);
+char		*here_expand(t_shell *shell, char *str, int start);
+char		*copy_str_exp(t_shell *shell, int count, int *start, char *str);
+char		*copy_prev(char *str, int start);
 
 /* parsing */
 int			tokenizer(t_shell *shell);
@@ -167,11 +206,13 @@ char		*remove_redir(t_token *token);
 int			find_builtins(char *cmd);
 int			parse_redirs(t_shell *shell);
 int			ft_heredoc(t_shell *shell, t_token *token, int i);
-int			fill_fds(t_token *token, t_table *table);
-char		*get_cmd(t_shell *shell, char *str);
+char		*get_after(char *str, char *new_str, int start);
 
 /* expand heredoc*/
-char		*expand_heredoc(char *line);
+char		*copy_expanded(char *expanded, char *final_line, int *j);
+char		*expand_var(char *line, int *i);
+int			find_len(char *line);
+char		*expand_heredoc(t_shell *shell, char *line);
 
 /* parsing: cmd table */
 int			init_cmd_table(t_shell *shell);

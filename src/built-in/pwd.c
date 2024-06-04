@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 11:43:26 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/23 12:21:14 by nromito          ###   ########.fr       */
+/*   Updated: 2024/06/03 12:42:49 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,5 +19,5 @@ int	ft_pwd(void)
 	path = getcwd(NULL, 0);
 	printf("%s\n", path);
 	free(path);
-	return (0);
+	return (1);
 }

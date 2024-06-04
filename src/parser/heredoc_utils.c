@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 17:45:12 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/30 18:12:44 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/04 11:50:07 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,12 @@ char	*copy_prev(char *str, int start)
 	return (before);
 }
 
-char	*copy_str_exp(int count, int *start, char *str)
+char	*copy_str_exp(t_shell *shell, int count, int *start, char *str)
 {
 	char	*after_expand;
 	char	*expand;
 	int		i;
+	int 	len;
 	
 	i = -1;
 	
@@ -43,13 +44,22 @@ char	*copy_str_exp(int count, int *start, char *str)
 	while (++i < count)
 		expand[i] = str[++(*start)];
 	printf("to expand = %s\n", expand);
-	if (!ft_strncmp(expand, "$", ft_strlen(expand)))
-		expand = expand_pid();
+	len = ft_strlen(expand);
+	if (!len)
+		len++;
+	if (!ft_strncmp(expand, "$", len))
+		after_expand = expand_pid();
+	else if (!ft_strncmp(expand, "'", len))
+		after_expand = ft_strdup("'");
+	else if (!ft_strncmp(expand, "\"", len))
+		after_expand = ft_strdup("\"");
+	else if (!ft_strncmp(expand, "?", len))
+		after_expand = ft_itoa(shell->error);
 	else
-		expand = getenv(expand);
-	after_expand = expand;
+		after_expand = ft_getenv(expand, shell);
+	printf("expanded = %s\n",after_expand);
 	if (!after_expand)
-		after_expand = "";
+		after_expand = ft_strdup("");
 	free(expand);
 	return (after_expand);
 }
@@ -70,7 +80,7 @@ char	*get_after(char *str, char *new_str, int start)
 	return (after);
 }
 
-char	*here_expand(char *str, int start)
+char	*here_expand(t_shell *shell, char *str, int start)
 {
 	char	*before;
 	int		i;
@@ -85,47 +95,51 @@ char	*here_expand(char *str, int start)
 	if (!count)
 		count = 1;
 	before = copy_prev(str, start);
-	after = copy_str_exp(count, &start, str);
+	after = copy_str_exp(shell, count, &start, str);
 	temp = ft_strdup(before);
 	free(before);
 	before = ft_strjoin(temp, after);
+	free(after);
 	free(temp);
 	after = get_after(str, before, start);
 	temp = ft_strjoin(before, after);
-	free(str);
+	//free(str);
 	free(after);
 	free(before);
 	return (temp);
 }
 
-int find_expansion(char *temp)
+int find_expansion(char *temp, int *start)
 {
 	int	i;
 
 	i = -1;
-	while (temp[++i] && temp[i] != '$')
-		;
+	(void)start;
+	while (temp[++i])
+	{
+		if (temp[i] == '$' && (ft_isalnum(temp[i + 1]) || temp[i + 1] == US))
+			break ;	
+	}
+
 	return(i);
 }
 
-char	*expand_heredoc(char *line)
+char	*expand_heredoc(t_shell *shell, char *line)
 {
 	int		i;
 	char	*final_str;
-	int		j;
 	char	*temp;
 
 	final_str = 0;
 	temp = ft_strdup(line);
-	j = 0;
 	i = -1;
 	while (line[++i])
 	{
-		if (line[i] == '$' && line[i + 1] )
+		if (line[i] == '$' && line[i + 1])
 		{
 			if (final_str)
 				free(final_str);
-			final_str = here_expand(temp, find_expansion(temp));
+			final_str = here_expand(shell, temp, find_expansion(temp, 0));
 			temp = ft_strdup(final_str);
 		}
 	}

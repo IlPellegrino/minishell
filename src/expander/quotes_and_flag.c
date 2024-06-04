@@ -6,24 +6,22 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 10:22:43 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/30 21:10:16 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/04 11:49:45 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-void	is_heredoc(t_shell *shell, t_token *token, char *input, int j)
+char	assign_flag(t_token *token, int j, int i)
 {
-	if (input[0] == '$')
-		expand_value(shell, token, input, j - 1);
-	else if (j >= 1 && input[j - 1] == '$')
-		return ;
-	if (token->wrd >= 1 && token->index[token->wrd - 1][0] == '<'
-		&& token->index[token->wrd - 1][1] == '<'
-		&& token->index[token->wrd - 1][2] == '\0'
-		&& token->flag[token->wrd - 1] == '0')
-		j++;
-	expand_value(shell, token, input, j);
+	if (token->index[token->wrd][i] == '>'
+		|| token->index[token->wrd][i] == '<')
+		token->flag[token->wrd] = '1';
+	else if (j == 5)
+		token->flag[token->wrd] = '2';
+	else if (token->index[token->wrd][i] == '\0')
+		token->flag[token->wrd] = '0';
+	return (token->flag[token->wrd]);
 }
 
 char	*check_flag(t_token *token)
@@ -46,13 +44,7 @@ char	*check_flag(t_token *token)
 			break ;
 		}
 	}
-	if (token->index[token->wrd][i] == '>'
-		|| token->index[token->wrd][i] == '<')
-		token->flag[token->wrd] = '1';
-	else if (j == 5)
-		token->flag[token->wrd] = '2';
-	else if (token->index[token->wrd][i] == '\0')
-		token->flag[token->wrd] = '0';
+	token->flag[token->wrd] = assign_flag(token, j, i);
 	return (token->flag);
 }
 

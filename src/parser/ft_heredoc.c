@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 18:04:21 by ciusca            #+#    #+#             */
-/*   Updated: 2024/05/31 15:33:33 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/04 11:50:19 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,9 @@ int	read_heredoc(t_shell *shell, char *eof, int fd, int flag)
 		if (!line)
 			return (0);
 		if (ft_strchr(line, '$') && flag == '0')
-			line = expand_heredoc(line);
+		{
+			line = expand_heredoc(shell, line);
+		}
 		collect_garbage(shell, line, 0);
 		len = ft_strlen(line);
 		if (!len)

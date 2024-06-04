@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 19:59:43 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/01 16:22:47 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/04 11:52:13 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,26 @@ int	ft_error(t_shell *shell, int error_type, char *str)
 		ft_putstr_fd(str, 2);
 		ft_putendl_fd("]", 2);
 		shell->error = 127;
+	}
+	else if (error_type == EXIT)
+	{
+		ft_putstr_fd("minishell: exit: ", 2);
+		ft_putstr_fd(str, 2);
+		ft_putendl_fd(": numeric argument required", 2);
+	}
+	else if (error_type == UNSET)
+	{
+		ft_putstr_fd("minishell: unset: `", 1);
+		ft_putstr_fd(str, 1);
+		ft_putendl_fd("': not a valid identifier", 1);
+		shell->error = 1;
+	}
+	else if (error_type == EXPORT)
+	{
+		ft_putstr_fd("minishell: export: `", 1);
+		ft_putstr_fd(str, 1);
+		ft_putendl_fd("': not a valid identifier", 1);
+		shell->error = 1;
 	}
 	else if (error_type == SYNTAX)
 	{

@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 13:46:29 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/23 10:34:07 by nromito          ###   ########.fr       */
+/*   Updated: 2024/06/03 17:10:56 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,9 @@
 
 int	find_quote(t_shell *shell, int i, int quote)
 {
-	i++;
-	while (shell->input[i] != quote && shell->input[i] != '\0')
-		i++;
-	if (shell->input[i] == '\0')
-		close_shell(shell);
-	else if (shell->input[i] == quote)
+	while (shell->input[++i] != quote && shell->input[i] != '\0')
+		;
+	if (shell->input[i] == quote)
 		return (i);
 	return (0);
 }
