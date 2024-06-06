@@ -250,7 +250,7 @@ int			pipe_handler(t_shell *shell, int i, int pid);
 int			is_builtin(char *str);
 int			pipe_handler(t_shell *shell, int i, int pid);
 int			perform_redir(t_shell *shell, int i);
-int			cath_error(void);
+int			cath_error(t_shell *shell);
 
 /* utils */
 int			find_space(char *index);

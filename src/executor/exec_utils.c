@@ -91,12 +91,13 @@ int	is_builtin(char *str)
 	return (0);
 }
 
-int	cath_error(void)
+int	cath_error(t_shell *shell)
 {
 	if (g_sig_type == SIG_C)
-		return (130);
+		shell->error = 130;
 	else if (g_sig_type == 4)
-		return (131);
+		shell->error = 131;
 	else
-		return (2);
+		shell->error = 2;
+	return (0);
 }
