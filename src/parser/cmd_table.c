@@ -14,7 +14,6 @@
 
 int	fill_redirs(int end, t_token *token, t_table *table)
 {
-	int	i;
 	int	count;
 	int	j;
 	int	fd_pos;
@@ -29,7 +28,6 @@ int	fill_redirs(int end, t_token *token, t_table *table)
 		table->redirs = ft_calloc(sizeof(char *), count + 1);
 		if (!table->redirs)
 			return (0);
-		i = -1;
 		table->fd = malloc(sizeof(int) * count);
 		j = find_infile(table, token, end, &fd_pos);
 		find_outfile(table, &fd_pos, end, j);
@@ -94,9 +92,7 @@ int	fill_cmd(t_shell *shell, t_token *token, t_table *table, int end)
 int	fill_cmd_table(t_shell *shell, t_table *table, t_token *token, int end)
 {
 	int	count;
-	int	j;
 
-	j = 0;
 	count = count_redirects(token, end);
 	table->redirs = 0;
 	if (count)

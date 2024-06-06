@@ -59,6 +59,7 @@ typedef struct s_exec
 	int	saved_in;
 	int	inf_dup;
 	int	out_dup;
+	int	catch;
 }			t_exec;
 
 typedef struct s_cmd
@@ -249,6 +250,7 @@ int			pipe_handler(t_shell *shell, int i, int pid);
 int			is_builtin(char *str);
 int			pipe_handler(t_shell *shell, int i, int pid);
 int			perform_redir(t_shell *shell, int i);
+int			cath_error(void);
 
 /* utils */
 int			find_space(char *index);

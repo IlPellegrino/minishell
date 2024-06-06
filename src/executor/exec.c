@@ -43,10 +43,8 @@ int	normal_exec(t_table table, t_shell *shell)
 int	fork_exec(t_shell *shell, int i)
 {
 	t_table	*table;
-	t_exec	*exec;
 	t_cmd	*cmd;
 
-	exec = shell->executor;
 	table = shell->cmd_table;
 	cmd = table[i].cmd;
 	if (is_builtin(table[i].command))
@@ -55,8 +53,12 @@ int	fork_exec(t_shell *shell, int i)
 			return (0);
 	}
 	else if (table[i].command)
+	{
 		if (execve(cmd->pathname, cmd->cmd_arg, shell->envp) == -1)
+		{
 			return (0);
+		}
+	}
 	return (1);
 }
 
@@ -69,7 +71,8 @@ int	manage_fork(pid_t pid, t_shell *shell, int i)
 	{
 		pipe_handler(shell, i, pid);
 		perform_redir(shell, i);
-		fork_exec(shell, i);
+		if (!fork_exec(shell, i) && i + 1 == shell->len)
+			exec->catch = 0;
 		free_cmd_table(shell);
 		close_shell(shell);
 	}
@@ -98,9 +101,10 @@ int	to_fork(t_shell *shell)
 		if (pid < 0)
 		{
 			perror("fork");
-			exit(EXIT_FAILURE);
+			close_shell(shell);
 		}
-		manage_fork(pid, shell, i);
+		if (!manage_fork(pid, shell, i))
+			return (0);
 	}
 	i = -1;
 	while (++i < shell->len)
@@ -116,22 +120,21 @@ int	executor(t_shell *shell)
 	exec = malloc(sizeof(t_exec));
 	if (!exec)
 		return (0);
+	exec->catch = 1;
+ 	collect_garbage(shell, (char *)exec, 0);
 	shell->executor = exec;
 	exec->saved_out = dup(1);
 	table = shell->cmd_table;
 	exec->saved_in = dup(0);
-	g_sig_type = 1;
+	g_sig_type = 2;
 	if (shell->len == 1 && (is_builtin(table[0].command) || !table[0].command))
 	{
 		perform_redir(shell, 0);
 		normal_exec(table[0], shell);
 	}
 	else
-	{
-		if (!to_fork(shell))
-			return (0);
-	}
+		to_fork(shell);
 	dup2(exec->saved_in, 0);
 	close(exec->saved_in);
-	return (1);
+	return (exec->catch);
 }

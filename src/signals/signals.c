@@ -23,7 +23,7 @@ void	ctrl_c(int sig)
 		rl_replace_line("", 0);
 		rl_redisplay();
 	}
-	if (g_sig_type == IN_HEREDOC)
+	if (g_sig_type)
 	{
 		write(2, "\n", 1);
 		close(STDIN_FILENO);
@@ -34,11 +34,18 @@ void	ctrl_c(int sig)
 void	ctrl_quit(int sig)
 {
 	(void)sig;
-	exit (1);
+	if (g_sig_type <= 1)
+	{
+		write(2, "\b\b  \b\b", 6);
+		return ;
+	}
+	write(2, "Exit (Core Dumped)\n", 20);
+	g_sig_type = 4;
 }
+
 
 void	get_signal(void)
 {
 	signal(SIGINT, ctrl_c);
-	signal(SIGQUIT, SIG_IGN);
+	signal(SIGQUIT, ctrl_quit);
 }

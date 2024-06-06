@@ -14,10 +14,8 @@
 
 int	pipe_handler(t_shell *shell, int i, int pid)
 {
-	t_table	*table;
 	t_exec	*exec;
 
-	table = shell->cmd_table;
 	exec = shell->executor;
 	if (shell->len > 1 && !pid)
 	{
@@ -42,9 +40,7 @@ int	pipe_handler(t_shell *shell, int i, int pid)
 int	perform_redir(t_shell *shell, int i)
 {
 	t_table	table;
-	t_exec	*exec;
 
-	exec = shell->executor;
 	table = shell->cmd_table[i];
 	i = -1;
 	if (!table.redirs || !table.command)
@@ -93,4 +89,14 @@ int	is_builtin(char *str)
 	else if (!(ft_strncmp(str, "exit", cmd_len)))
 		return (1);
 	return (0);
+}
+
+int	cath_error(void)
+{
+	if (g_sig_type == SIG_C)
+		return (130);
+	else if (g_sig_type == 4)
+		return (131);
+	else
+		return (2);
 }

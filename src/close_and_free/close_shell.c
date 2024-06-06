@@ -98,7 +98,5 @@ void	close_shell(t_shell *shell)
 		free(garbage);
 		garbage = temp;
 	}
-	if (shell->executor)
-		free(shell->executor);
 	exit(shell->error);
 }
