@@ -67,11 +67,17 @@ int	manage_fork(pid_t pid, t_shell *shell, int i)
 	t_exec	*exec;
 
 	exec = shell->executor;
+	if (pid < 0)
+	{
+		perror("fork");
+		close_shell(shell);
+	}
 	if (!pid)
 	{
 		pipe_handler(shell, i, pid);
 		perform_redir(shell, i);
-		fork_exec(shell, i);
+		if (!fork_exec(shell, i))
+			shell->error = 2;
 		free_cmd_table(shell);
 		close_shell(shell);
 	}
@@ -98,19 +104,16 @@ int	to_fork(t_shell *shell)
 	{
 		pipe(exec->fds);
 		pid = fork();
-		if (pid < 0)
-		{
-			perror("fork");
-			close_shell(shell);
-		}
+		if (i + 1 == shell->len)
+			exec->last_pid = pid;
 		manage_fork(pid, shell, i);
 	}
 	i = -1;
 	while (++i < shell->len)
 	{
-		wait(&status);
-		if (WEXITSTATUS(status) && i + 1 == shell->len)
-			return (cath_error(shell));
+		pid = wait(&status);
+		if (pid == exec->last_pid)
+			shell->error = WEXITSTATUS(status);
 	}
 	return (1);
 }
@@ -136,10 +139,11 @@ int	executor(t_shell *shell)
 		normal_exec(table[0], shell);
 	}
 	else
-		if (!to_fork(shell))
-			exec->catch = 0;
+		to_fork(shell);
 	dup2(exec->saved_in, 0);
 	close(exec->saved_in);
-	printf("return value %d\n", exec->catch);
-	return (exec->catch);
+	//exec->catch = cath_error(shell);
+	if (shell->error > 0)
+		return (0);
+	return (1);
 }

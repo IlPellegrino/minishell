@@ -43,7 +43,7 @@ delimited by end-of-file (wanted `eof')"
 # define OPEN_ERR 1
 # define IN_HEREDOC 1
 # define SYNTAX 2
-# define SIG_C 2
+# define SIG_C 3
 # define HERE_EOF 3
 # define EXIT 4
 # define UNSET 5
@@ -55,6 +55,7 @@ extern int	g_sig_type;
 typedef struct s_exec
 {
 	int	fds[2];
+	int	last_pid;
 	int	saved_out;
 	int	saved_in;
 	int	inf_dup;
