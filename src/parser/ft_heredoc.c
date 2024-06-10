@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 18:04:21 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/04 17:23:48 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/04 17:45:03 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,10 @@ int	read_heredoc(t_shell *shell, char *eof, int fd, int flag)
 		len = ft_strlen(line);
 		if (!len)
 			len = 1;
-		if (!ft_strncmp(line, eof, len))
+		if (!ft_strncmp(line, eof, len + 1))
 			return (1);
 		write (fd, line, ft_strlen(line));
+		write(fd, "\n", 1);
 	}
 	return (0);
 }
@@ -60,9 +61,9 @@ int	ft_heredoc(t_shell *shell, t_token *token, int i)
 		dup2(temp_stdin, 0);
 		close(temp_stdin);
 		close(fd);
-		return (0);
+		return (fd);
 	}
 	printf("heredoc fd = %d\n", fd);
-	//write(fd, "ciao", 4);
+	write(fd, "ciao", 4);
 	return (fd);
 }
