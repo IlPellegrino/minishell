@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 18:27:50 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/04 14:07:00 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/10 17:39:32 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,16 @@ char	*get_pathname(t_shell *shell, char *str)
 	i = -1;
 	while (shell->path_env[++i])
 	{
-		pathname = ft_strjoin(shell->path_env[i], str);
+		if (ft_strchr(str, '/'))
+			pathname = ft_strdup(str);
+		else
+			pathname = ft_strjoin(shell->path_env[i], str);
 		if (!access(pathname, X_OK))
 			return (pathname);
 		free(pathname);
 	}
+	if (!access(str, X_OK))
+		return (ft_strdup(str));
 	return (0);
 }
 
@@ -35,10 +40,11 @@ int	get_path(t_shell *shell)
 	int		i;
 
 	i = -1;
-	path = getenv("PATH");
+	path = ft_getenv("PATH", shell);
 	shell->path_env = ft_split(path, ':');
 	if (!shell->path_env)
 		return (0);
+	free(path);
 	while (shell->path_env[++i])
 	{
 		temp = ft_strdup(shell->path_env[i]);

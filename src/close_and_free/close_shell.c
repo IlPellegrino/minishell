@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 10:32:57 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/04 15:06:55 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/10 17:15:57 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	close_shell(t_shell *shell)
 		free(garbage);
 		garbage = temp;
 	}
-	if (shell->executor)
-		free(shell->executor);
+	if (shell->cmd_table)
+		free_cmd_table(shell);
 	exit(shell->error);
 }

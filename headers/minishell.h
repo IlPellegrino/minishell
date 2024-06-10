@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:59:59 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/04 14:44:33 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/10 19:25:04 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@
 # include <errno.h>
 
 # define HEREDOC "\033[1;33m> \033[0m"
-# define RED_ARROW "\033[1;31m-> "
-# define GREEN_ARROW "\033[1;32m-> "
+# define RED_ARROW "\e[1;91m🔸\033[0m "
+# define GREEN_ARROW "\e[1;92m🔹\033[0m "
 # define MINISHELL "\e[1;96mminishell\033[0m$ "
 # define EOF_ERROR "minishell: warning: here-document\
 delimited by end-of-file (wanted `eof')"
@@ -43,7 +43,7 @@ delimited by end-of-file (wanted `eof')"
 # define OPEN_ERR 1
 # define IN_HEREDOC 1
 # define SYNTAX 2
-# define SIG_C 2
+# define SIG_C 3
 # define HERE_EOF 3
 # define EXIT 4
 # define UNSET 5
@@ -55,10 +55,12 @@ extern int	g_sig_type;
 typedef struct s_exec
 {
 	int	fds[2];
+	int	last_pid;
 	int	saved_out;
 	int	saved_in;
 	int	inf_dup;
 	int	out_dup;
+	int	catch;
 }			t_exec;
 
 typedef struct s_cmd
@@ -249,6 +251,7 @@ int			pipe_handler(t_shell *shell, int i, int pid);
 int			is_builtin(char *str);
 int			pipe_handler(t_shell *shell, int i, int pid);
 int			perform_redir(t_shell *shell, int i);
+int			cath_error(t_shell *shell);
 
 /* utils */
 int			find_space(char *index);

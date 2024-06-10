@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 18:59:18 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/04 17:29:48 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/10 17:38:06 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,8 @@
 
 int	pipe_handler(t_shell *shell, int i, int pid)
 {
-	t_table	*table;
 	t_exec	*exec;
 
-	table = shell->cmd_table;
 	exec = shell->executor;
 	if (shell->len > 1 && !pid)
 	{
@@ -42,9 +40,7 @@ int	pipe_handler(t_shell *shell, int i, int pid)
 int	perform_redir(t_shell *shell, int i)
 {
 	t_table	table;
-	t_exec	*exec;
 
-	exec = shell->executor;
 	table = shell->cmd_table[i];
 	i = -1;
 	if (!table.redirs || !table.command)
@@ -59,7 +55,6 @@ int	perform_redir(t_shell *shell, int i)
 			printf("\n%i table fd\n", table.fd[i]);
 			dup2(table.fd[i], STDIN_FILENO);
 			close(table.fd[i]);
-			//printf("ciao mondo\n");
 		}
 		else if (!ft_strncmp(table.redirs[i], ">", 1)
 			|| !ft_strncmp(table.redirs[i], ">>", 2))
@@ -92,5 +87,17 @@ int	is_builtin(char *str)
 		return (1);
 	else if (!(ft_strncmp(str, "exit", cmd_len)))
 		return (1);
+	return (0);
+}
+
+int	cath_error(t_shell *shell)
+{
+	printf("sig type %d\n", g_sig_type);
+	if (g_sig_type == SIG_C)
+		shell->error = 130;
+	else if (g_sig_type == 4)
+		shell->error = 131;
+	else
+		shell->error = 2;
 	return (0);
 }

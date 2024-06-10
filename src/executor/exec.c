@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:52:14 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/04 15:13:08 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/10 19:04:39 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,8 @@ int	normal_exec(t_table table, t_shell *shell)
 int	fork_exec(t_shell *shell, int i)
 {
 	t_table	*table;
-	t_exec	*exec;
 	t_cmd	*cmd;
 
-	exec = shell->executor;
 	table = shell->cmd_table;
 	cmd = table[i].cmd;
 	if (is_builtin(table[i].command))
@@ -55,8 +53,12 @@ int	fork_exec(t_shell *shell, int i)
 			return (0);
 	}
 	else if (table[i].command)
+	{
 		if (execve(cmd->pathname, cmd->cmd_arg, shell->envp) == -1)
+		{
 			return (0);
+		}
+	}
 	return (1);
 }
 
@@ -65,11 +67,17 @@ int	manage_fork(pid_t pid, t_shell *shell, int i)
 	t_exec	*exec;
 
 	exec = shell->executor;
+	if (pid < 0)
+	{
+		perror("fork");
+		close_shell(shell);
+	}
 	if (!pid)
 	{
 		pipe_handler(shell, i, pid);
 		perform_redir(shell, i);
-		fork_exec(shell, i);
+		if (!fork_exec(shell, i))
+			shell->error = 2;
 		free_cmd_table(shell);
 		close_shell(shell);
 	}
@@ -88,6 +96,7 @@ int	to_fork(t_shell *shell)
 	int		i;
 	pid_t	pid;
 	t_exec	*exec;
+	int		status;
 
 	exec = shell->executor;
 	i = -1;
@@ -95,16 +104,17 @@ int	to_fork(t_shell *shell)
 	{
 		pipe(exec->fds);
 		pid = fork();
-		if (pid < 0)
-		{
-			perror("fork");
-			exit(EXIT_FAILURE);
-		}
+		if (i + 1 == shell->len)
+			exec->last_pid = pid;
 		manage_fork(pid, shell, i);
 	}
 	i = -1;
 	while (++i < shell->len)
-		wait(0);
+	{
+		pid = wait(&status);
+		if (pid == exec->last_pid)
+			shell->error = WEXITSTATUS(status);
+	}
 	return (1);
 }
 
@@ -116,22 +126,23 @@ int	executor(t_shell *shell)
 	exec = malloc(sizeof(t_exec));
 	if (!exec)
 		return (0);
+	shell->error = 0;
+	collect_garbage(shell, (char *) exec, 0);
 	shell->executor = exec;
 	exec->saved_out = dup(1);
 	table = shell->cmd_table;
 	exec->saved_in = dup(0);
-	g_sig_type = 1;
+	g_sig_type = 2;
 	if (shell->len == 1 && (is_builtin(table[0].command) || !table[0].command))
 	{
 		perform_redir(shell, 0);
 		normal_exec(table[0], shell);
 	}
 	else
-	{
-		if (!to_fork(shell))
-			return (0);
-	}
+		to_fork(shell);
 	dup2(exec->saved_in, 0);
 	close(exec->saved_in);
-	return (1);
+	if (g_sig_type == SIG_C)
+		shell->error = 130;
+	return (shell->error == 0);
 }

@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:52:55 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/04 15:01:35 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/10 11:47:08 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ int	find_cmd_path(t_shell *shell, char *cmd, int pos)
 		if (access_p(shell->cmd_name, X_OK) == 0)
 			return (1);
 	}
+	if (!access(cmd, X_OK))
+		return (1);
 	return (0);
 }
 
@@ -70,7 +72,6 @@ int	lexer(t_shell *shell)
 	token->flag = ft_calloc(sizeof(char *), words + 1);
 	collect_garbage(shell, token->flag, 0);
 	checker(shell, token, words);
-	printf("flag %s\n", token->flag);
 	return (1);
 }
 
