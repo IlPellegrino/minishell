@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 18:59:18 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/07 21:04:59 by nromito          ###   ########.fr       */
+/*   Updated: 2024/06/11 12:38:29 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ int	perform_redir(t_shell *shell, int i)
 			//write(table.fd[i], "ciao", 4);
 			dup2(table.fd[i], STDIN_FILENO);
 			close(table.fd[i]);
-			//printf("ciao mondo\n");
 		}
 		else if (!ft_strncmp(table.redirs[i], ">", 1)
 			|| !ft_strncmp(table.redirs[i], ">>", 2))
@@ -91,6 +90,7 @@ int	is_builtin(char *str)
 
 int	cath_error(t_shell *shell)
 {
+	printf("sig type %d\n", g_sig_type);
 	if (g_sig_type == SIG_C)
 		shell->error = 130;
 	else if (g_sig_type == 4)

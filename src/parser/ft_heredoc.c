@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 18:04:21 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/07 11:59:29 by nromito          ###   ########.fr       */
+/*   Updated: 2024/06/11 12:38:35 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,12 @@
 char	*heredoc_name(t_shell *shell)
 {
 	static int	n;
-	char 		*here_name;
+	char		*here_name;
 	char		*num;
 
 	num = ft_itoa(n);
+	if (!num)
+		return (0);
 	here_name = ft_strjoin(".heredoc", num);
 	free(num);
 	collect_garbage(shell, here_name, 0);

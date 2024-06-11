@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:52:55 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/09 12:54:12 by nromito          ###   ########.fr       */
+/*   Updated: 2024/06/11 12:38:42 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ int	find_cmd_path(t_shell *shell, char *cmd, int pos)
 		if (access_p(shell->cmd_name, X_OK) == 0)
 			return (1);
 	}
+	if (!access(cmd, X_OK))
+		return (1);
 	return (0);
 }
 
@@ -72,7 +74,6 @@ int	lexer(t_shell *shell)
 		return (0);
 	collect_garbage(shell, token->flag, 0);
 	checker(shell, token, words);
-	printf("flag %s\n", token->flag);
 	return (1);
 }
 
