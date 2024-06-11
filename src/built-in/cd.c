@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 11:42:12 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/11 15:58:27 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/11 16:46:57 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ int	ft_cd(char **cd_mat, t_shell *shell)
 			if (change_dir(move, folder))
 				return (shell->error = 0, 1);
 		closedir(folder);
-		return (perror("minishell"), 0);
+		return (ft_error(shell, CD_DIR, move));
 	}
 	free (move);
-	return (ft_putstr_fd("minishell: too many arguments\n", 2), 0);
+	return (ft_error(shell, CD_ARGS, 0), 0);
 }
