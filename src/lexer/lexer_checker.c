@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 13:46:29 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/03 17:10:56 by nromito          ###   ########.fr       */
+/*   Updated: 2024/06/09 12:22:01 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	find_quote(t_shell *shell, int i, int quote)
 {
-	while (shell->input[++i] != quote && shell->input[i] != '\0')
+	while (shell->input[++i] && shell->input[i] != quote)
 		;
 	if (shell->input[i] == quote)
 		return (i);
@@ -25,6 +25,7 @@ int	check_word(t_shell *shell, t_token *token, int quote)
 {
 	if (shell->input[++token->start] == quote
 		&& (shell->input[token->start + 1] == SPACE
+			|| shell->input[token->start + 1] == TAB
 			|| shell->input[token->start + 1] == '\0'
 			|| shell->input[token->start + 1] == PIPE))
 		return (1);
@@ -74,16 +75,19 @@ void	choose_if(t_shell *shell, t_token *token, int (*i))
 {
 	if ((*i) != 0 && shell->input[(*i)] == PIPE
 		&& shell->input[(*i) - 1] != SPACE
+		&& shell->input[(*i) - 1] != TAB
 		&& shell->input[(*i) - 1] != '>'
 		&& (*i) != 0 && shell->input[(*i) - 1] != '<')
 		create_word(shell, token, &(*i));
 	else if ((*i) != 0 && shell->input[(*i)] == '<'
 		&& shell->input[(*i) - 1] != SPACE
+		&& shell->input[(*i) - 1] != TAB
 		&& shell->input[(*i) - 1] != '>'
 		&& shell->input[(*i) - 1] != PIPE)
 		create_word(shell, token, &(*i));
 	else if ((*i) != 0 && shell->input[(*i)] == '>'
 		&& shell->input[(*i) - 1] != SPACE
+		&& shell->input[(*i) - 1] != TAB
 		&& shell->input[(*i) - 1] != PIPE
 		&& shell->input[(*i) - 1] != '<')
 		create_word(shell, token, &(*i));

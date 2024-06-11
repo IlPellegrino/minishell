@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 11:42:12 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/03 13:05:07 by nromito          ###   ########.fr       */
+/*   Updated: 2024/06/07 20:38:29 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ int	ft_cd(char **cd_mat, t_shell *shell)
 		move = getenv("HOME");
 	else if (cd_mat[1])
 		move = ft_strdup(cd_mat[1]);
-	shell->error = 1;
 	if (matrix_len(cd_mat) < 3)
 	{
 		folder = opendir(".");
@@ -47,8 +46,10 @@ int	ft_cd(char **cd_mat, t_shell *shell)
 				return (free(move), 1);
 		free (move);
 		closedir(folder);
+		shell->error = 1;
 		return (perror("minishell"), 0);
 	}
 	free (move);
+	shell->error = 1;
 	return (ft_putstr_fd("minishell: too many arguments\n", 2), 0);
 }

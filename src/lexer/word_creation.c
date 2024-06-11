@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 13:45:16 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/03 18:06:53 by nromito          ###   ########.fr       */
+/*   Updated: 2024/06/09 12:24:53 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	write_word(t_shell *shell, t_token *token, int r, int i)
 			copy_in_quotes(shell, token, &r, DQ);
 		else if (shell->input[token->start] == SQ)
 			copy_in_quotes(shell, token, &r, SQ);
-		else if (shell->input[token->start] != '\0')
+		else if (shell->input[token->start])
 			token->index[token->wrd][r++] = shell->input[token->start];
 	}
 }
@@ -95,7 +95,7 @@ void	copy_in_quotes(t_shell *shell, t_token *token, int (*r), int quote)
 		if (check_word(shell, token, DQ))
 			return ;
 		token->index[token->wrd][(*r)++] = shell->input[token->start - 1];
-		while (shell->input[token->start] != DQ)
+		while (shell->input[token->start] && shell->input[token->start] != DQ)
 			token->index[token->wrd][(*r)++] = shell->input[token->start++];
 		token->index[token->wrd][(*r)++] = shell->input[token->start];
 	}
@@ -104,7 +104,7 @@ void	copy_in_quotes(t_shell *shell, t_token *token, int (*r), int quote)
 		if (check_word(shell, token, SQ))
 			return ;
 		token->index[token->wrd][(*r)++] = shell->input[token->start - 1];
-		while (shell->input[token->start] != SQ)
+		while (shell->input[token->start] && shell->input[token->start] != SQ)
 			token->index[token->wrd][(*r)++] = shell->input[token->start++];
 		token->index[token->wrd][(*r)++] = shell->input[token->start];
 	}

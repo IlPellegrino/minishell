@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:59:59 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/04 14:44:33 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/11 10:59:52 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,7 @@ void		get_signal(void);
 
 /* builtins */
 int			ft_env(char **env_mat, t_shell *shell);
-void		ft_echo(char **echo_mat);
+int			ft_echo(char **echo_mat);
 int			ft_cd(char **cd_mat, t_shell *shell);
 int			ft_pwd(void);
 int			it_exist(char *new_var, t_shell *shell);
@@ -163,6 +163,7 @@ int			pick_old_var(char *s);
 char		*create_var(char *new_var, char *new_str);
 void		add_var(char *new_var, t_shell *shell);
 int			it_exist(char *new_var, t_shell *shell);
+int			count_len(char *str);
 char		*write_inside(char *result, char *new_var, t_export *export);
 /* lexer */
 int			check_word(t_shell *shell, t_token *token, int quote);
@@ -254,6 +255,7 @@ int			cath_error(t_shell *shell);
 
 /* utils */
 int			find_space(char *index);
+int			allocate_envp(t_shell *shell);
 int			find_cmd_path(t_shell *shell, char *cmd, int pos);
 void		print_matrix(char **mat);
 int			init_structs(t_shell *shell, int argc, char **argv, char **envp);

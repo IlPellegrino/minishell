@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:52:14 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/04 15:13:08 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/07 20:44:07 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	normal_exec(t_table table, t_shell *shell)
 		return (0);
 	cmd_len = ft_strlen(str);
 	if (!(ft_strncmp(str, "echo", cmd_len)))
-		ft_echo(table.cmd->cmd_arg);
+		fail = ft_echo(table.cmd->cmd_arg);
 	else if (!(ft_strncmp(str, "cd", cmd_len)))
 		fail = ft_cd(table.cmd->cmd_arg, shell);
 	else if (!(ft_strncmp(str, "pwd", cmd_len)))
@@ -55,9 +55,7 @@ int	fork_exec(t_shell *shell, int i)
 	else if (table[i].command)
 	{
 		if (execve(cmd->pathname, cmd->cmd_arg, shell->envp) == -1)
-		{
 			return (0);
-		}
 	}
 	return (1);
 }
@@ -71,7 +69,8 @@ int	manage_fork(pid_t pid, t_shell *shell, int i)
 	{
 		pipe_handler(shell, i, pid);
 		perform_redir(shell, i);
-		fork_exec(shell, i);
+		if (!fork_exec(shell, i))
+			return (0);
 		free_cmd_table(shell);
 		close_shell(shell);
 	}
@@ -103,7 +102,8 @@ int	to_fork(t_shell *shell)
 			perror("fork");
 			close_shell(shell);
 		}
-		manage_fork(pid, shell, i);
+		if (!manage_fork(pid, shell, i))
+			return (0);
 	}
 	i = -1;
 	while (++i < shell->len)
@@ -133,13 +133,13 @@ int	executor(t_shell *shell)
 	if (shell->len == 1 && (is_builtin(table[0].command) || !table[0].command))
 	{
 		perform_redir(shell, 0);
-		normal_exec(table[0], shell);
+		if (!normal_exec(table[0], shell))
+			exec->catch = 0;
 	}
 	else
 		if (!to_fork(shell))
 			exec->catch = 0;
 	dup2(exec->saved_in, 0);
 	close(exec->saved_in);
-	printf("return value %d\n", exec->catch);
 	return (exec->catch);
 }

@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 11:40:46 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/03 20:12:50 by nromito          ###   ########.fr       */
+/*   Updated: 2024/06/11 12:18:11 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	ft_addtoenv(char *new_var, t_shell *shell)
 			;
 		shell->envp[i] = create_var(new_var, shell->envp[i]);
 		collect_garbage(shell, shell->envp[i], 0);
-		shell->envp[++i] = 0;
+		shell->envp[++i] = NULL;
 	}
 	return (0);
 }
@@ -43,6 +43,7 @@ int	join_env(char *new_var, t_shell *shell)
 			;
 		shell->envp[i] = create_plus_var(new_var, shell->envp[i]);
 		collect_garbage(shell, shell->envp[i], 0);
+		shell->envp[++i] = NULL;
 	}
 	return (0);
 }
@@ -99,10 +100,27 @@ int	check_export(char *to_check, t_shell *shell)
 	return (flag);
 }
 
+char	**check_args(t_shell *shell, char **export_mat)
+{
+	int		i;
+	int		words;
+	char	**result;
+
+	i = 0;
+	words = 0;
+	while (export_mat[++i])
+		if (!it_exist(export_mat[i], shell))
+			words++;
+	words += 1;
+	result = ft_calloc(sizeof (char **), matrix_len(shell->envp) + words);
+	return (result);
+}
+
 int	ft_export(char **export_mat, t_shell *shell)
 {
-	int	i;
-	int	flag;
+	int		i;
+	int		flag;
+	// char	**env_copy;
 
 	if (export_mat[0])
 	{
@@ -111,6 +129,7 @@ int	ft_export(char **export_mat, t_shell *shell)
 		else
 		{
 			i = 0;
+			// env_copy = check_args(shell, export_mat);
 			while (export_mat[++i])
 			{
 				flag = check_export(export_mat[i], shell);
