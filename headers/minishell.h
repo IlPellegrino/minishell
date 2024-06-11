@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:59:59 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/11 12:35:44 by nromito          ###   ########.fr       */
+/*   Updated: 2024/06/11 15:57:55 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@
 # include <errno.h>
 
 # define HEREDOC "\033[1;33m> \033[0m"
-# define RED_ARROW "\e[1;91m🔸\033[0m "
-# define GREEN_ARROW "\e[1;92m🔹\033[0m "
+# define RED_ARROW "\e[1;91m➔\033[0m "
+# define GREEN_ARROW "\e[1;92m➔\033[0m "
 # define MINISHELL "\e[1;96mminishell\033[0m$ "
 # define EOF_ERROR "minishell: warning: here-document\
 delimited by end-of-file (wanted `eof')"
@@ -49,7 +49,9 @@ delimited by end-of-file (wanted `eof')"
 # define UNSET 5
 # define EXPORT 6
 # define ENV 7
-
+# define CD_DIR 8
+# define CD_ARGS 9
+# define CORE_DUMPED 4
 extern int	g_sig_type;
 
 typedef struct s_exec
@@ -213,6 +215,7 @@ int			ft_heredoc(t_shell *shell, t_token *token, int i);
 char		*get_after(char *str, char *new_str, int start);
 
 /* expand heredoc*/
+int			delete_heredoc(void);
 char		*copy_expanded(char *expanded, char *final_line, int *j);
 char		*expand_var(char *line, int *i);
 int			find_len(char *line);

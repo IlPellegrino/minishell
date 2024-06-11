@@ -3,14 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 18:59:18 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/11 12:38:29 by nromito          ###   ########.fr       */
+/*   Updated: 2024/06/11 15:58:48 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
+
+int	delete_heredoc(void)
+{
+	int		n;
+	char	*str;
+	char	*heredoc;
+	char	*number;
+
+	n = 0;
+	str = ft_strdup(".heredoc");
+	number = ft_itoa(n++);
+	heredoc = ft_strjoin(str, number);
+	while (unlink(heredoc) != -1)
+	{
+		free(number);
+		free(heredoc);
+		number = ft_itoa(n++);
+		heredoc = ft_strjoin(str, number);
+	}
+	free(number);
+	free(str);
+	free(heredoc);
+	return (1);
+}
 
 int	pipe_handler(t_shell *shell, int i, int pid)
 {
@@ -50,7 +74,6 @@ int	perform_redir(t_shell *shell, int i)
 		if (!ft_strncmp(table.redirs[i], "<<", 2)
 			|| !ft_strncmp(table.redirs[i], "<", 1))
 		{
-			//write(table.fd[i], "ciao", 4);
 			dup2(table.fd[i], STDIN_FILENO);
 			close(table.fd[i]);
 		}

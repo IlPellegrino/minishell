@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:26:12 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/11 15:38:20 by nromito          ###   ########.fr       */
+/*   Updated: 2024/06/11 16:02:05 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ int	main(int argc, char **argv, char **envp)
 			free(shell.input);
 			if (shell.cmd_table)
 				free_cmd_table(&shell);
+			delete_heredoc();
 		}
 	}
 }
