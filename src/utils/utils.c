@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 19:59:43 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/11 12:38:47 by nromito          ###   ########.fr       */
+/*   Updated: 2024/06/11 15:24:51 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@ int	init_structs(t_shell *shell, int argc, char **argv, char **envp)
 	(void)argv;
 	shell->error = 0;
 	shell->len = 0;
-	shell->envp = envp;
+	shell->envp = ft_matrix_dup(envp);
+	if (!shell->envp)
+		return (0);
 	token = malloc(sizeof(t_token));
 	shell->tokens = token;
 	garbage = malloc(sizeof(t_garbage));
