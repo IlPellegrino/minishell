@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 11:40:46 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/11 12:18:11 by nromito          ###   ########.fr       */
+/*   Updated: 2024/06/11 15:44:14 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ int	ft_addtoenv(char *new_var, t_shell *shell)
 		while (shell->envp[++i])
 			;
 		shell->envp[i] = create_var(new_var, shell->envp[i]);
-		collect_garbage(shell, shell->envp[i], 0);
 		shell->envp[++i] = NULL;
 	}
 	return (0);
@@ -42,7 +41,6 @@ int	join_env(char *new_var, t_shell *shell)
 		while (shell->envp[++i])
 			;
 		shell->envp[i] = create_plus_var(new_var, shell->envp[i]);
-		collect_garbage(shell, shell->envp[i], 0);
 		shell->envp[++i] = NULL;
 	}
 	return (0);
@@ -112,7 +110,19 @@ char	**check_args(t_shell *shell, char **export_mat)
 		if (!it_exist(export_mat[i], shell))
 			words++;
 	words += 1;
+	if (words == 1)
+		return (shell->envp);
 	result = ft_calloc(sizeof (char **), matrix_len(shell->envp) + words);
+	if (!result)
+		return (0);
+	i = -1;
+	while (shell->envp[++i])
+	{
+		result[i] = ft_strdup(shell->envp[i]);
+		if (!result[i])
+			return (0);
+	}
+	result[i] = NULL;
 	return (result);
 }
 
@@ -120,28 +130,25 @@ int	ft_export(char **export_mat, t_shell *shell)
 {
 	int		i;
 	int		flag;
-	// char	**env_copy;
 
 	if (export_mat[0])
 	{
 		if (matrix_len(export_mat) < 2)
 			return (one_arg(shell), 1);
-		else
+		i = 0;
+		shell->envp = check_args(shell, export_mat);
+		collect_garbage(shell, 0, shell->envp);
+		while (export_mat[++i])
 		{
-			i = 0;
-			// env_copy = check_args(shell, export_mat);
-			while (export_mat[++i])
-			{
-				flag = check_export(export_mat[i], shell);
-				if (flag == 0)
-					return (0);
-				else if (flag == 1)
-					join_env(export_mat[i], shell);
-				else if (flag == 2)
-					ft_addtoenv(export_mat[i], shell);
-			}
-			return (1);
+			flag = check_export(export_mat[i], shell);
+			if (flag == 0)
+				return (0);
+			else if (flag == 1)
+				join_env(export_mat[i], shell);
+			else if (flag == 2)
+				ft_addtoenv(export_mat[i], shell);
 		}
+		return (1);
 	}
 	return (0);
 }

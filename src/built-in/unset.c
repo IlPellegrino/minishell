@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 11:41:30 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/11 16:24:58 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/11 16:31:09 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,38 +50,6 @@ char	*dup_env(char *to_check, char *to_delete, int len, int len2)
 			return (0);
 	}
 	return (result);
-}
-
-char	**swap_str(char **matrix)
-{
-	int		i;
-	int		j;
-	int		count;
-	char	*tmp;
-
-	i = -1;
-	while (++i <= matrix_len(matrix))
-	{
-		if (matrix[i + 1] == NULL && i + 1 < matrix_len(matrix))
-		{
-			j = i;
-			count = 0;
-			while (j < matrix_len(matrix))
-			{
-				if (matrix[j + 1] == NULL)
-					++count;
-				j++;
-			}
-			while (count-- > 0)
-			{
-				tmp = matrix[i + 1];
-				matrix[i + 1] = matrix[i + 2];
-				matrix[i + 2] = tmp;
-				i++;
-			}
-		}
-	}
-	return (matrix);
 }
 
 char	**create_matrix(char *to_delete, t_shell *shell)

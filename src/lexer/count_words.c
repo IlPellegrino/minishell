@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 13:40:12 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/21 13:42:52 by nromito          ###   ########.fr       */
+/*   Updated: 2024/06/11 15:51:12 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ int	check_quotes(t_shell *shell, int *i, int *words)
 
 int	pipe_checker(t_shell *shell, int i, int *words)
 {
-	if (shell->input[i + 1] != SPACE && shell->input[i - 1] != SPACE)
+	if (shell->input[i + 1] != SPACE && shell->input[i - 1] != SPACE
+		&& shell->input[i + 1] != TAB && shell->input[i - 1] != TAB)
 		(*words)++;
 	return (++i);
 }
@@ -49,7 +50,7 @@ int	check_space(t_shell *shell, int words, int (*i))
 	if (shell->input[(*i) - 1] != PIPE && shell->input[(*i) - 1] != '<'
 		&& shell->input[(*i) - 1] != '>')
 		words++;
-	while (shell->input[++(*i)] == SPACE)
+	while (shell->input[++(*i)] == SPACE || shell->input[*i] == TAB)
 		;
 	return (words);
 }
@@ -75,7 +76,7 @@ int	count_wrds(t_shell *shell)
 
 	words = 0;
 	i = 0;
-	while (shell->input[i] == SPACE)
+	while (shell->input[i] == SPACE || shell->input[i] == TAB)
 		i++;
 	while (shell->input[i] != '\0')
 	{
@@ -84,7 +85,7 @@ int	count_wrds(t_shell *shell)
 			if (!check_quotes(shell, &i, &words))
 				return (0);
 		}
-		else if (shell->input[i] == SPACE)
+		else if (shell->input[i] == SPACE || shell->input[i] == TAB)
 			words = check_space(shell, words, &i);
 		else if (shell->input[i] == '>' || shell->input[i] == '<'
 			|| shell->input[i] == PIPE)
