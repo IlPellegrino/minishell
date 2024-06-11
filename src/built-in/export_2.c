@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 18:09:04 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/11 10:31:35 by nromito          ###   ########.fr       */
+/*   Updated: 2024/06/11 16:25:58 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ int	it_exist(char *new_var, t_shell *shell)
 	{
 		if (!ft_strncmp(new_var, shell->envp[i], len))
 		{
-			printf("envp = %s\n", shell->envp[i]);
 			len1 = count_len(shell->envp[i]);
 			if (len == len1)
 				return (1);

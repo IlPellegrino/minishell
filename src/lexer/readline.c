@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   readline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:52:55 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/11 12:38:42 by nromito          ###   ########.fr       */
+/*   Updated: 2024/06/11 16:27:04 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,6 @@ void	checker(t_shell *shell, t_token *token, int words)
 			i++;
 	}
 	token->index[token->wrd] = NULL;
-	print_matrix(token->index);
 }
 
 void	setup_index(t_shell *shell, t_token *token, int *i)

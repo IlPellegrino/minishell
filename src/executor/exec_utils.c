@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 18:59:18 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/11 15:58:48 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/11 16:26:31 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,6 @@ int	is_builtin(char *str)
 
 int	cath_error(t_shell *shell)
 {
-	printf("sig type %d\n", g_sig_type);
 	if (g_sig_type == SIG_C)
 		shell->error = 130;
 	else if (g_sig_type == 4)
