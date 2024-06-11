@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 20:10:38 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/03 20:13:09 by nromito          ###   ########.fr       */
+/*   Updated: 2024/06/11 10:31:56 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,16 @@ void	add_var(char *new_var, t_shell *shell)
 		;
 	while (shell->envp[++i])
 	{
-		if (!ft_strncmp(shell->envp[i], new_var, len))
+		if (len == count_len(shell->envp[i]))
 		{
-			shell->envp[i] = create_plus_var(new_var, shell->envp[i]);
-			collect_garbage(shell, shell->envp[i], 0);
+			if (!ft_strncmp(shell->envp[i], new_var, len))
+			{
+				shell->envp[i] = create_plus_var(new_var, shell->envp[i]);
+				collect_garbage(shell, shell->envp[i], 0);
+			}
 		}
 	}
+	shell->envp[i] = NULL;
 }
 
 int	pick_old_var(char *s)

@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 11:41:30 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/04 12:15:21 by nromito          ###   ########.fr       */
+/*   Updated: 2024/06/11 10:41:55 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ char	*dup_env(char *to_check, char *to_delete, int len, int len2)
 			if (!result)
 				return (0);
 		}
+		
 	}
 	else
 	{
@@ -49,7 +50,40 @@ char	*dup_env(char *to_check, char *to_delete, int len, int len2)
 		if (!result)
 			return (0);
 	}
+	printf("matrix BEFORE = %s\n", result);
 	return (result);
+}
+
+char	**swap_str(char **matrix)
+{
+	int		i;
+	int		j;
+	int		count;
+	char	*tmp;
+
+	i = -1;
+	while (++i <= matrix_len(matrix))
+	{
+		if (matrix[i + 1] == NULL && i + 1 < matrix_len(matrix))
+		{
+			j = i;
+			count = 0;
+			while (j < matrix_len(matrix))
+			{
+				if (matrix[j + 1] == NULL)
+					++count;
+				j++;
+			}
+			while (count-- > 0)
+			{
+				tmp = matrix[i + 1];
+				matrix[i + 1] = matrix[i + 2];
+				matrix[i + 2] = tmp;
+				i++;
+			}
+		}
+	}
+	return (matrix);
 }
 
 char	**create_matrix(char *to_delete, t_shell *shell)
@@ -63,6 +97,8 @@ char	**create_matrix(char *to_delete, t_shell *shell)
 	i = -1;
 	j = -1;
 	matrix = ft_calloc(sizeof (char **), matrix_len(shell->envp) + 1);
+	if (!matrix)
+		return (0);
 	while (shell->envp[++i])
 	{
 		len2 = -1;
@@ -72,6 +108,8 @@ char	**create_matrix(char *to_delete, t_shell *shell)
 		while (shell->envp[i][++len2] && shell->envp[i][len2] != '=')
 			;
 		matrix[++j] = dup_env(shell->envp[i], to_delete, len, len2);
+		if (matrix[j] == NULL && j <= matrix_len(shell->envp))
+			j--;
 	}
 	return (matrix);
 }

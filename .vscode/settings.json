@@ -58,6 +58,7 @@
   "C_Cpp_Runner.msvcSecureNoWarnings": false,
   "files.associations": {
     "cmath": "c",
-    "minishell.h": "c"
+    "minishell.h": "c",
+    "readline.h": "c"
   }
 }

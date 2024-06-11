@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes_and_flag.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 10:22:43 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/04 11:49:45 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/09 12:29:06 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,8 @@ char	*remove_quotes(t_shell *shell, t_token *token, int i)
 
 	j = 0;
 	temp = ft_calloc(sizeof(char *), i + 1);
+	if (!temp)
+		return (0);
 	i = -1;
 	while (token->index[token->wrd][++i])
 	{

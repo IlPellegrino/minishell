@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:52:14 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/11 15:54:13 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/11 15:58:40 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	normal_exec(t_table table, t_shell *shell)
 		return (0);
 	cmd_len = ft_strlen(str);
 	if (!(ft_strncmp(str, "echo", cmd_len)))
-		ft_echo(table.cmd->cmd_arg);
+		fail = ft_echo(table.cmd->cmd_arg);
 	else if (!(ft_strncmp(str, "cd", cmd_len)))
 		fail = ft_cd(table.cmd->cmd_arg, shell);
 	else if (!(ft_strncmp(str, "pwd", cmd_len)))
@@ -132,7 +132,8 @@ int	executor(t_shell *shell)
 	if (shell->len == 1 && (is_builtin(table[0].command) || !table[0].command))
 	{
 		perform_redir(shell, 0);
-		normal_exec(table[0], shell);
+		if (!normal_exec(table[0], shell))
+			exec->catch = 0;
 	}
 	else
 		to_fork(shell);

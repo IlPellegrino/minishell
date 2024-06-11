@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   readline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:52:55 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/10 11:47:08 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/11 12:38:42 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ int	lexer(t_shell *shell)
 		return (0);
 	collect_garbage(shell, 0, token->index);
 	token->flag = ft_calloc(sizeof(char *), words + 1);
+	if (!token->flag)
+		return (0);
 	collect_garbage(shell, token->flag, 0);
 	checker(shell, token, words);
 	return (1);
@@ -83,7 +85,7 @@ void	checker(t_shell *shell, t_token *token, int words)
 	k = 0;
 	i = 0;
 	token->wrd = 0;
-	while (shell->input[i] == 32)
+	while (shell->input[i] == SPACE || shell->input[i] == TAB)
 		i++;
 	token->start = i - 1;
 	while (token->wrd < words)
@@ -92,7 +94,7 @@ void	checker(t_shell *shell, t_token *token, int words)
 			i = quotes_reader(shell, i, &k);
 		else if ((shell->input[i] == SPACE) || (shell->input[i] == '\0')
 			|| (shell->input[i] == PIPE) || (shell->input[i] == '>')
-			|| (shell->input[i] == '<'))
+			|| (shell->input[i] == '<') || shell->input[i] == TAB)
 			setup_index(shell, token, &i);
 		else
 			i++;
@@ -115,9 +117,10 @@ void	setup_index(t_shell *shell, t_token *token, int *i)
 		create_major(shell, token, &(*i));
 	if (shell->input[(*i)] == PIPE)
 		create_pipe(shell, token, &(*i));
-	if (shell->input[(*i)] == SPACE)
-		while (shell->input[(*i)] == SPACE && shell->input[(*i)] != '\0')
+	if (shell->input[(*i)] == SPACE || shell->input[*i] == TAB)
+		while (shell->input[(*i)] &&
+			(shell->input[(*i)] == SPACE || shell->input[*i] == TAB))
 			(*i)++;
-	if (shell->input[(*i)] != '\0')
+	if (shell->input[(*i)])
 		token->start = (*i) - 1;
 }
