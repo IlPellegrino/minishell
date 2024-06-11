@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:52:14 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/10 19:04:39 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/11 15:54:13 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,7 @@ int	fork_exec(t_shell *shell, int i)
 	else if (table[i].command)
 	{
 		if (execve(cmd->pathname, cmd->cmd_arg, shell->envp) == -1)
-		{
 			return (0);
-		}
 	}
 	return (1);
 }
@@ -124,8 +122,6 @@ int	executor(t_shell *shell)
 	t_exec	*exec;
 
 	exec = malloc(sizeof(t_exec));
-	if (!exec)
-		return (0);
 	shell->error = 0;
 	collect_garbage(shell, (char *) exec, 0);
 	shell->executor = exec;
@@ -144,5 +140,7 @@ int	executor(t_shell *shell)
 	close(exec->saved_in);
 	if (g_sig_type == SIG_C)
 		shell->error = 130;
+	else if (g_sig_type == CORE_DUMPED)
+		shell->error = 131;
 	return (shell->error == 0);
 }

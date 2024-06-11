@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:26:12 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/10 19:07:44 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/11 15:10:39 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ int	main(int argc, char **argv, char **envp)
 			free(shell.input);
 			if (shell.cmd_table)
 				free_cmd_table(&shell);
+			delete_heredoc();
 		}
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 19:59:43 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/10 19:06:10 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/11 15:48:08 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,10 @@ int	check_exit_status(int error_type)
 		error = 2;
 	else if (error_type == OPEN_ERR)
 		error = 1;
+	else if (error_type == CD_DIR)
+		error = 1;
+	else if (error_type == CD_ARGS)
+		error = 1;
 	return (error);
 }
 
@@ -80,7 +84,7 @@ void	print_err(char *str, char *var, char *str2)
 int	ft_error(t_shell *shell, int error_type, char *str)
 {
 	if (error_type == COMMAND)
-		print_err("minishell: command not found: [", str, "]");
+		print_err("", str, ": command not found");
 	else if (error_type == ENV)
 		print_err("env: `", str, "': No such file or directory");
 	else if (error_type == EXIT)
@@ -95,6 +99,10 @@ int	ft_error(t_shell *shell, int error_type, char *str)
 		print_err("minishell: ", str, ": No such file or directory");
 	else if (error_type == HERE_EOF)
 		ft_putendl_fd(EOF_ERROR, 2);
+	else if (error_type == CD_DIR)
+		print_err("minishell: cd: ", str, ": No such file or directory");
+	else if (error_type == CD_ARGS)
+		ft_putendl_fd("minishell: cd: too many arguments", 2);
 	shell->error = check_exit_status(error_type);
 	return (0);
 }

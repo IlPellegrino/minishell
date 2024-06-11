@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:54:36 by nromito           #+#    #+#             */
-/*   Updated: 2024/05/31 14:36:40 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/11 15:46:55 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int	parse_input(t_shell *shell)
 			if (token->tokens[i + 1] == 'P')
 				return (ft_error(shell, SYNTAX, token->index[i + 1]));
 			else if (!token->tokens[i + 1])
-				return (ft_error(shell, SYNTAX, "\\n"));
+				return (ft_error(shell, SYNTAX, "newline"));
 			else if (is_redir(token->tokens[i + 1]))
 				return (ft_error(shell, SYNTAX, token->index[i + 1]));
 		}
