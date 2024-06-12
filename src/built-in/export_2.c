@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 18:09:04 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/12 12:45:10 by nromito          ###   ########.fr       */
+/*   Updated: 2024/06/12 15:29:03 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,17 @@ int	check_export(char *to_check, t_shell *shell)
 
 	flag = 2;
 	pos = -1;
+	if (!to_check[0])
+		return (ft_error(shell, EXPORT, to_check), 0);
 	while (to_check[++pos])
 	{
 		if (to_check[pos] == '+' && to_check[pos + 1] == '=')
 			flag = 1;
 		else if ((!ft_isalnum(to_check[pos]) && to_check[pos] != US
-			&& to_check[pos] != '=') || (to_check[pos] == '+' && to_check[pos + 1] != '=')
-			|| (ft_isdigit(to_check[0]) || to_check[0] == '+'
-				|| to_check[0] == '='))
+			&& to_check[pos] != '=') || (to_check[pos] == '+'
+			&& to_check[pos + 1] != '=')
+			|| ft_isdigit(to_check[0]) || to_check[0] == '+'
+				|| to_check[0] == '=')
 		{
 			ft_error(shell, EXPORT, to_check);
 			flag = 0;

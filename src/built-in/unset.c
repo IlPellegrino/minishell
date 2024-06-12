@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 11:41:30 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/11 16:31:09 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/12 15:40:45 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ char	**create_matrix(char *to_delete, t_shell *shell)
 		len2 = -1;
 		len = calculate_len(to_delete, shell);
 		if (!len)
-			return (0);
+			return (collect_garbage(shell, 0, matrix), NULL);
 		while (shell->envp[i][++len2] && shell->envp[i][len2] != '=')
 			;
 		matrix[++j] = dup_env(shell->envp[i], to_delete, len, len2);
