@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:59:59 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/12 10:28:46 by nromito          ###   ########.fr       */
+/*   Updated: 2024/06/12 11:47:31 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ delimited by end-of-file (wanted `eof')"
 # define CD_DIR 8
 # define CD_ARGS 9
 # define CORE_DUMPED 4
+
 extern int	g_sig_type;
 
 typedef struct s_exec
@@ -167,6 +168,7 @@ char		*create_var(char *new_var);
 void		add_var(char *new_var, t_shell *shell);
 int			it_exist(char *new_var, t_shell *shell);
 int			count_len(char *str);
+int			check_export(char *to_check, t_shell *shell);
 char		*write_inside(char *result, char *new_var, t_export *export);
 /* lexer */
 int			check_word(t_shell *shell, t_token *token, int quote);
