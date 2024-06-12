@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:52:55 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/11 17:00:19 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/11 17:52:30 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,8 +120,8 @@ void	setup_index(t_shell *shell, t_token *token, int *i)
 	if (shell->input[(*i)] == PIPE)
 		create_pipe(shell, token, &(*i));
 	if (shell->input[(*i)] == SPACE || shell->input[*i] == TAB)
-		while (shell->input[(*i)] &&
-			(shell->input[(*i)] == SPACE || shell->input[*i] == TAB))
+		while (shell->input[(*i)]
+			&& (shell->input[(*i)] == SPACE || shell->input[*i] == TAB))
 			(*i)++;
 	if (shell->input[(*i)])
 		token->start = (*i) - 1;
