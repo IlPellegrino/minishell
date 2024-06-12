@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 18:09:04 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/11 10:31:35 by nromito          ###   ########.fr       */
+/*   Updated: 2024/06/12 10:31:22 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ int	it_exist(char *new_var, t_shell *shell)
 	{
 		if (!ft_strncmp(new_var, shell->envp[i], len))
 		{
-			printf("envp = %s\n", shell->envp[i]);
 			len1 = count_len(shell->envp[i]);
 			if (len == len1)
 				return (1);
@@ -48,10 +47,11 @@ int	it_exist(char *new_var, t_shell *shell)
 	return (0);
 }
 
-char	*create_var(char *new_var, char *new_str)
+char	*create_var(char *new_var)
 {
-	int	j;
-	int	pos;
+	int		j;
+	int		pos;
+	char	*new_str;
 
 	pos = -1;
 	j = -1;
@@ -80,8 +80,9 @@ void	change_var(char *new_var, t_shell *shell)
 		{
 			if (len == count_len(shell->envp[i]))
 			{
-				shell->envp[i] = create_var(new_var, shell->envp[i]);
-				collect_garbage(shell, shell->envp[i], 0);
+				free(shell->envp[i]);
+				shell->envp[i] = create_var(new_var);
+				// collect_garbage(shell, shell->envp[i], 0);
 			}
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 20:10:38 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/11 10:31:56 by nromito          ###   ########.fr       */
+/*   Updated: 2024/06/12 10:53:16 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,23 @@ char	*create_plus_var(char *new_var, char *new_str)
 
 	export.pos = -1;
 	export.old_pos = -1;
-	export.old = new_str;
+	export.old = NULL;
+	if (new_str)
+		export.old = ft_strdup(new_str);
+	if (!export.old)
+		return (0);
 	len = pick_old_var(new_str);
+	if (new_str)
+		free (new_str);
 	new_str = ft_calloc(sizeof (char *), ft_strlen(new_var) + len + 1);
+	if (!new_str)
+		return (0);
 	while (new_var[++export.old_pos] && new_var[export.old_pos] != '+')
 		new_str[++export.pos] = new_var[export.old_pos];
 	if (new_var[export.old_pos++] == '+')
 		new_str = write_inside(new_str, new_var, &export);
+	if (!new_str)
+		return (0);
 	return (new_str);
 }
 
@@ -43,10 +53,7 @@ void	add_var(char *new_var, t_shell *shell)
 		if (len == count_len(shell->envp[i]))
 		{
 			if (!ft_strncmp(shell->envp[i], new_var, len))
-			{
 				shell->envp[i] = create_plus_var(new_var, shell->envp[i]);
-				collect_garbage(shell, shell->envp[i], 0);
-			}
 		}
 	}
 	shell->envp[i] = NULL;
@@ -85,5 +92,6 @@ char	*write_inside(char *result, char *new_var, t_export *export)
 	}
 	while (new_var[++export->old_pos])
 		result[++export->pos] = new_var[export->old_pos];
+	free (export->old);
 	return (result);
 }
