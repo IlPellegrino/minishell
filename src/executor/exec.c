@@ -6,13 +6,13 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:52:14 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/12 12:07:15 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/12 17:05:23 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-int	normal_exec(t_table table, t_shell *shell)
+int	normal_exec(t_table table, t_shell *shell, pid_t pid)
 {
 	int		cmd_len;
 	char	*str;
@@ -36,7 +36,7 @@ int	normal_exec(t_table table, t_shell *shell)
 	else if (!(ft_strncmp(str, "env", cmd_len)))
 		fail = ft_env(table.cmd->cmd_arg, shell);
 	else if (!(ft_strncmp(str, "exit", cmd_len)))
-		fail = ft_exit(table.cmd->cmd_arg, shell);
+		fail = ft_exit(table.cmd->cmd_arg, shell, pid);
 	return (fail);
 }
 
@@ -49,7 +49,7 @@ int	fork_exec(t_shell *shell, int i)
 	cmd = table[i].cmd;
 	if (is_builtin(table[i].command))
 	{
-		if (!normal_exec(table[i], shell))
+		if (!normal_exec(table[i], shell, 1))
 			return (0);
 	}
 	else if (table[i].command)
@@ -132,7 +132,7 @@ int	executor(t_shell *shell)
 	if (shell->len == 1 && (is_builtin(table[0].command) || !table[0].command))
 	{
 		perform_redir(shell, 0);
-		normal_exec(table[0], shell);
+		normal_exec(table[0], shell, 0);
 	}
 	else
 		to_fork(shell);

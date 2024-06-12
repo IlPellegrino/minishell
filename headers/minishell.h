@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:59:59 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/12 12:10:06 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/12 17:03:23 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int			ft_echo(char **echo_mat);
 int			ft_cd(char **cd_mat, t_shell *shell);
 int			ft_pwd(void);
 int			it_exist(char *new_var, t_shell *shell);
-int			ft_exit(char **exit_mat, t_shell *shell);
+int			ft_exit(char **exit_mat, t_shell *shell, pid_t pid);
 int			ft_unset(char **unset_mat, t_shell *shell);
 
 /*export only*/
