@@ -6,7 +6,7 @@
 #    By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/07 17:01:15 by ciusca            #+#    #+#              #
-#    Updated: 2024/06/04 14:33:14 by ciusca           ###   ########.fr        #
+#    Updated: 2024/06/11 18:56:33 by ciusca           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,9 +42,9 @@ SRCS = $(addprefix src/, $(MAIN) $(CLOSING) $(SIGNAL) ${BUILT_IN} $(PROTECTED_FU
 
 OBJS = ${SRCS:.c=.o}
 
-SUPRRESSION = @valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=ignore_readline.supp -s ./minishell
+SUPRRESSION = @valgrind --leak-check=full --show-leak-kinds=all --suppressions=ignore_readline.supp -s ./minishell
 
-COMPILE = cc -Wall -Wextra -Werror -g 
+COMPILE = cc -Wall -Wextra -Werror -g -fno-omit-frame-pointer
 
 RED = "\033[1;31m"
 GREEN = "\033[1;32m"

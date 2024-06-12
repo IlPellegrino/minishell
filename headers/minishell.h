@@ -3,143 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:59:59 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/12 11:47:31 by nromito          ###   ########.fr       */
+/*   Updated: 2024/06/12 12:10:06 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "../libft/libft.h"
-# include <stdio.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include <dirent.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include <fcntl.h>
-# include <signal.h>
-# include <sys/wait.h>
-# include <stdbool.h>
-# include <sys/types.h>
-# include <signal.h>
-# include <errno.h>
-
-# define HEREDOC "\033[1;33m> \033[0m"
-# define RED_ARROW "\e[1;91m➔\033[0m "
-# define GREEN_ARROW "\e[1;92m➔\033[0m "
-# define MINISHELL "\e[1;96mminishell\033[0m$ "
-# define EOF_ERROR "minishell: warning: here-document\
-delimited by end-of-file (wanted `eof')"
-# define DQ 34
-# define SQ 39
-# define US 95
-# define PIPE 124
-# define JESUS 1
-# define COMMAND 0
-# define OPEN_ERR 1
-# define IN_HEREDOC 1
-# define SYNTAX 2
-# define SIG_C 3
-# define HERE_EOF 3
-# define EXIT 4
-# define UNSET 5
-# define EXPORT 6
-# define ENV 7
-# define CD_DIR 8
-# define CD_ARGS 9
-# define CORE_DUMPED 4
+# include "defines.h"
+# include "structs.h"
+# include "includes.h"
 
 extern int	g_sig_type;
-
-typedef struct s_exec
-{
-	int	fds[2];
-	int	last_pid;
-	int	saved_out;
-	int	saved_in;
-	int	inf_dup;
-	int	out_dup;
-	int	catch;
-}			t_exec;
-
-typedef struct s_cmd
-{
-	char	*pathname;
-	char	**cmd_arg;
-}			t_cmd;
-
-typedef struct s_export
-{
-	int		pos;
-	int		old_pos;
-	char	*old;
-}			t_export;
-
-typedef struct s_exp
-{
-	int		sq;
-	int		dq;
-	int		begin;
-	int		len;
-	int		pos;
-	char	*res;
-	char	*line;
-	char	*final_str;
-}			t_exp;
-
-typedef struct s_token
-{
-	char	**index;
-	int		*mat_ind;
-	char	*tokens;
-	int		exp;
-	char	*flag;
-	int		null_flag;
-	int		wrd;
-	int		start;
-	int		*redirs;
-	char	*temp_token;
-}		t_token;
-
-typedef struct s_table
-{
-	char			*command;
-	char			**redirs;
-	int				*fd;
-	t_cmd			*cmd;
-	struct s_token	*token;
-}			t_table;
-
-typedef struct s_garbage
-{
-	char				*arg;
-	char				**mat;
-	struct s_garbage	*next;
-}			t_garbage;
-
-typedef struct s_shell
-{
-	char		*path;
-	char		**envp;
-	char		**path_env;
-	char		*new_input;
-	char		*input;
-	int			error;
-	int			index;
-	char		*cmd_name;
-	int			sig_recived;
-	int			n_pipes;
-	int			len;
-	char		*arrow;
-	t_token		*tokens;
-	t_garbage	*collector;
-	t_table		*cmd_table;
-	t_exec		*executor;
-}			t_shell;
 
 /* close shell */
 void		close_shell(t_shell *shell);
@@ -257,7 +135,7 @@ int			pipe_handler(t_shell *shell, int i, int pid);
 int			is_builtin(char *str);
 int			pipe_handler(t_shell *shell, int i, int pid);
 int			perform_redir(t_shell *shell, int i);
-int			cath_error(t_shell *shell);
+void		reset_io(t_exec *exec);
 
 /* utils */
 int			find_space(char *index);

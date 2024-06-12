@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 18:59:18 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/11 16:26:31 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/12 12:08:22 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,13 +111,10 @@ int	is_builtin(char *str)
 	return (0);
 }
 
-int	cath_error(t_shell *shell)
+void	reset_io(t_exec *exec)
 {
-	if (g_sig_type == SIG_C)
-		shell->error = 130;
-	else if (g_sig_type == 4)
-		shell->error = 131;
-	else
-		shell->error = 2;
-	return (0);
+	dup2(exec->saved_in, 0);
+	close(exec->saved_in);
+	dup2(exec->saved_out, 1);
+	close(exec->saved_out);
 }

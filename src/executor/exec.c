@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:52:14 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/11 16:51:09 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/12 12:07:15 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,8 +136,7 @@ int	executor(t_shell *shell)
 	}
 	else
 		to_fork(shell);
-	dup2(exec->saved_in, 0);
-	close(exec->saved_in);
+	reset_io(exec);
 	if (g_sig_type == SIG_C)
 		shell->error = 130;
 	else if (g_sig_type == CORE_DUMPED)

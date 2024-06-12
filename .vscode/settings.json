@@ -59,6 +59,13 @@
   "files.associations": {
     "cmath": "c",
     "minishell.h": "c",
-    "readline.h": "c"
+    "readline.h": "c",
+    "signal.h": "c",
+    "types.h": "c",
+    "defines.h": "c",
+    "structs.h": "c",
+    "includes.h": "c",
+    "stdbool.h": "c",
+    "unistd.h": "c"
   }
 }
