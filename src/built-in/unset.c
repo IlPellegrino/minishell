@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 11:41:30 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/11 15:00:09 by nromito          ###   ########.fr       */
+/*   Updated: 2024/06/11 16:31:09 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ char	*dup_env(char *to_check, char *to_delete, int len, int len2)
 			if (!result)
 				return (0);
 		}
-		
 	}
 	else
 	{
@@ -50,7 +49,6 @@ char	*dup_env(char *to_check, char *to_delete, int len, int len2)
 		if (!result)
 			return (0);
 	}
-	printf("matrix BEFORE = %s\n", result);
 	return (result);
 }
 

@@ -1,8 +1,0 @@
-headers
-ignore_readline.supp
-libft
-Makefile
-minishell
-out
-README.md
-src

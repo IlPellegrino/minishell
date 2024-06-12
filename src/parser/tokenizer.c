@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 13:59:01 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/10 17:39:22 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/11 16:26:51 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ int	tokenizer(t_shell *shell)
 	while (token->index[++i])
 		if (!set_token(shell, token, &i, &command))
 			return (0);
-	printf("tokens = %s\n", token->tokens);
 	command = 0;
 	return (1);
 }

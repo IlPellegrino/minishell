@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   readline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:52:55 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/11 12:38:42 by nromito          ###   ########.fr       */
+/*   Updated: 2024/06/11 17:00:19 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,19 @@
 
 int	find_builtins(char *cmd)
 {
-	int	len;
-
-	len = ft_strlen(cmd);
-	if (!ft_strncmp(cmd, "exit", len))
+	if (!ft_strncmp(cmd, "exit", 5))
 		return (1);
-	else if (!ft_strncmp(cmd, "unset", len))
+	else if (!ft_strncmp(cmd, "unset", 6))
 		return (1);
-	else if (!ft_strncmp(cmd, "export", len))
+	else if (!ft_strncmp(cmd, "export", 7))
 		return (1);
-	else if (!ft_strncmp(cmd, "cd", len))
+	else if (!ft_strncmp(cmd, "cd", 3))
+		return (1);
+	else if (!ft_strncmp(cmd, "env", 4))
+		return (1);
+	else if (!ft_strncmp(cmd, "echo", 5))
+		return (1);
+	else if (!ft_strncmp(cmd, "pwd", 4))
 		return (1);
 	return (0);
 }
@@ -100,7 +103,6 @@ void	checker(t_shell *shell, t_token *token, int words)
 			i++;
 	}
 	token->index[token->wrd] = NULL;
-	print_matrix(token->index);
 }
 
 void	setup_index(t_shell *shell, t_token *token, int *i)

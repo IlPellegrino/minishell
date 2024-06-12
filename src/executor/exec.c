@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:52:14 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/11 15:58:40 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/11 16:51:09 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,8 +132,7 @@ int	executor(t_shell *shell)
 	if (shell->len == 1 && (is_builtin(table[0].command) || !table[0].command))
 	{
 		perform_redir(shell, 0);
-		if (!normal_exec(table[0], shell))
-			exec->catch = 0;
+		normal_exec(table[0], shell);
 	}
 	else
 		to_fork(shell);

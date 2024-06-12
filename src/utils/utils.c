@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 19:59:43 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/11 16:02:16 by nromito          ###   ########.fr       */
+/*   Updated: 2024/06/11 16:52:21 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ int	check_exit_status(int error_type)
 	else if (error_type == EXPORT)
 		error = 1;
 	else if (error_type == SYNTAX)
+		error = 2;
+	else if (error_type == EXIT)
 		error = 2;
 	else if (error_type == OPEN_ERR)
 		error = 1;

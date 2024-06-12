@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 11:42:41 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/04 16:32:23 by nromito          ###   ########.fr       */
+/*   Updated: 2024/06/11 16:53:08 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ int	more_args(char **exit_mat, t_shell *shell)
 	{
 		ft_putstr_fd("exit\n", STDERR_FILENO);
 		ft_error(shell, EXIT, exit_mat[1]);
+		shell->error = 2;
 		close_shell(shell);
 	}
 	else
