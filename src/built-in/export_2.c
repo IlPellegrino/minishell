@@ -3,14 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   export_2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 18:09:04 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/11 16:25:58 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/12 11:48:25 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
+
+int	check_export(char *to_check, t_shell *shell)
+{
+	int	flag;
+	int	pos;
+
+	flag = 2;
+	pos = -1;
+	while (to_check[++pos])
+	{
+		if (to_check[pos] == '+' && to_check[pos + 1] == '=')
+			flag = 1;
+		else if ((!ft_isalpha(to_check[pos]) && to_check[pos] != US)
+			&& (ft_isdigit(to_check[0]) || to_check[0] == '+'
+				|| to_check[0] == '='))
+		{
+			ft_error(shell, EXPORT, to_check);
+			flag = 0;
+			return (flag);
+		}
+		else if (to_check[pos] == '=')
+			break ;
+	}
+	return (flag);
+}
 
 int	count_len(char *str)
 {
@@ -47,10 +72,11 @@ int	it_exist(char *new_var, t_shell *shell)
 	return (0);
 }
 
-char	*create_var(char *new_var, char *new_str)
+char	*create_var(char *new_var)
 {
-	int	j;
-	int	pos;
+	int		j;
+	int		pos;
+	char	*new_str;
 
 	pos = -1;
 	j = -1;
@@ -79,8 +105,8 @@ void	change_var(char *new_var, t_shell *shell)
 		{
 			if (len == count_len(shell->envp[i]))
 			{
-				shell->envp[i] = create_var(new_var, shell->envp[i]);
-				collect_garbage(shell, shell->envp[i], 0);
+				free(shell->envp[i]);
+				shell->envp[i] = create_var(new_var);
 			}
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:59:59 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/12 12:09:14 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/12 12:10:06 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,11 @@ int			ft_export(char **export_mat, t_shell *shell);
 char		*create_plus_var(char *new_var, char *new_str);
 void		change_var(char *new_var, t_shell *shell);
 int			pick_old_var(char *s);
-char		*create_var(char *new_var, char *new_str);
+char		*create_var(char *new_var);
 void		add_var(char *new_var, t_shell *shell);
 int			it_exist(char *new_var, t_shell *shell);
 int			count_len(char *str);
+int			check_export(char *to_check, t_shell *shell);
 char		*write_inside(char *result, char *new_var, t_export *export);
 /* lexer */
 int			check_word(t_shell *shell, t_token *token, int quote);

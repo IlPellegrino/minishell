@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:26:12 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/11 17:54:18 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/12 12:09:52 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ int	main(int argc, char **argv, char **envp)
 	{
 		saved_in = dup(STDIN_FILENO);
 		g_sig_type = 0;
-		shell.len = 0;
 		get_signal();
 		set_arrow(&shell);
 		shell.input = ft_readline(MINISHELL);

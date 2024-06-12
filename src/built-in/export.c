@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 11:40:46 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/11 15:44:14 by nromito          ###   ########.fr       */
+/*   Updated: 2024/06/12 11:48:03 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ int	ft_addtoenv(char *new_var, t_shell *shell)
 	{
 		while (shell->envp[++i])
 			;
-		shell->envp[i] = create_var(new_var, shell->envp[i]);
+		free(shell->envp[i]);
+		shell->envp[i] = create_var(new_var);
 		shell->envp[++i] = NULL;
 	}
 	return (0);
@@ -73,31 +74,6 @@ void	one_arg(t_shell *shell)
 	}
 }
 
-int	check_export(char *to_check, t_shell *shell)
-{
-	int	flag;
-	int	pos;
-
-	flag = 2;
-	pos = -1;
-	while (to_check[++pos])
-	{
-		if (to_check[pos] == '+' && to_check[pos + 1] == '=')
-			flag = 1;
-		else if ((!ft_isalpha(to_check[pos]) && to_check[pos] != US)
-			&& (ft_isdigit(to_check[0]) || to_check[0] == '+'
-				|| to_check[0] == '='))
-		{
-			ft_error(shell, EXPORT, to_check);
-			flag = 0;
-			return (flag);
-		}
-		else if (to_check[pos] == '=')
-			break ;
-	}
-	return (flag);
-}
-
 char	**check_args(t_shell *shell, char **export_mat)
 {
 	int		i;
@@ -113,6 +89,7 @@ char	**check_args(t_shell *shell, char **export_mat)
 	if (words == 1)
 		return (shell->envp);
 	result = ft_calloc(sizeof (char **), matrix_len(shell->envp) + words);
+	collect_garbage(shell, 0, result);
 	if (!result)
 		return (0);
 	i = -1;
@@ -137,7 +114,6 @@ int	ft_export(char **export_mat, t_shell *shell)
 			return (one_arg(shell), 1);
 		i = 0;
 		shell->envp = check_args(shell, export_mat);
-		collect_garbage(shell, 0, shell->envp);
 		while (export_mat[++i])
 		{
 			flag = check_export(export_mat[i], shell);
