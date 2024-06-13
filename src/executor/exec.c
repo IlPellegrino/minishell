@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:52:14 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/12 17:05:23 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/13 19:37:24 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,12 +116,22 @@ int	to_fork(t_shell *shell)
 	return (1);
 }
 
+void	sig_handle(t_shell *shell)
+{
+	if (g_sig_type == SIG_C)
+		shell->error = 130;
+	else if (g_sig_type == CORE_DUMPED)
+		shell->error = 131;
+}
+
 int	executor(t_shell *shell)
 {
 	t_table	*table;
 	t_exec	*exec;
 
 	exec = malloc(sizeof(t_exec));
+	if (!exec)
+		return (0);
 	shell->error = 0;
 	collect_garbage(shell, (char *) exec, 0);
 	shell->executor = exec;
@@ -129,6 +139,8 @@ int	executor(t_shell *shell)
 	table = shell->cmd_table;
 	exec->saved_in = dup(0);
 	g_sig_type = 2;
+	if (!validate_cmd(shell, table))
+		return (0);
 	if (shell->len == 1 && (is_builtin(table[0].command) || !table[0].command))
 	{
 		perform_redir(shell, 0);
@@ -137,9 +149,6 @@ int	executor(t_shell *shell)
 	else
 		to_fork(shell);
 	reset_io(exec);
-	if (g_sig_type == SIG_C)
-		shell->error = 130;
-	else if (g_sig_type == CORE_DUMPED)
-		shell->error = 131;
+	sig_handle(shell);
 	return (shell->error == 0);
 }

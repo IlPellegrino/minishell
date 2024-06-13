@@ -6,7 +6,7 @@
 #    By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/07 17:01:15 by ciusca            #+#    #+#              #
-#    Updated: 2024/06/11 18:56:33 by ciusca           ###   ########.fr        #
+#    Updated: 2024/06/13 19:29:26 by ciusca           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,9 +20,9 @@ HEADERS = headers/minishell.h
 PROTECTED_FUNC_SRC = protected_functions.c protected_functions2.c
 CLOSING_SRC = close_shell.c
 BUILT_IN_SRC = echo.c cd.c pwd.c export.c export_2.c export_3.c env.c exit.c unset.c
-EXECUTOR_SRC = exec.c exec_utils.c
+EXECUTOR_SRC = validate_cmd.c check_valid.c exec.c exec_utils.c
 EXPANDER_SRC = env_and_pid.c exp.c quotes_and_flag.c
-PARSER_SRC = fill_fds.c find_utils.c heredoc_utils.c heredoc_utils2.c parse_redirs.c ft_heredoc.c parsing_utils.c parsing.c tokenizer.c cmd_table.c
+PARSER_SRC =  fill_fds.c find_utils.c heredoc_utils.c heredoc_utils2.c parse_redirs.c ft_heredoc.c parsing_utils.c parsing.c tokenizer.c cmd_table.c
 LEXER_SRC = readline.c lexer_checker.c word_creation.c count_words.c
 UTILS_SRC = utils.c utils2.c
 SIGNAL_SRC = signals.c
@@ -73,9 +73,13 @@ ${NAME}: ${OBJS} ${HEADERS}
 sup: all
 		$(SUPRRESSION)
 clean:
-		@rm -rf $(OBJS)
-		@make -C $(LIBFT_PATH) clean
-		@echo $(GREEN)"Successfully cleaned!" $(NONE)
+	@if [ ! -z "$(OBJS)" ] && [ -f $(firstword $(OBJS)) ]; then \
+		rm -rf $(OBJS); \
+		make -C $(LIBFT_PATH) clean; \
+		echo $(GREEN)"Successfully cleaned!" $(NONE); \
+	else \
+		echo "No object files to clean."; \
+	fi
 
 fclean: clean
 		@rm -rf $(NAME)

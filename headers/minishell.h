@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:59:59 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/12 17:03:23 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/13 19:37:10 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include "includes.h"
 
 extern int	g_sig_type;
+
 
 /* close shell */
 void		close_shell(t_shell *shell);
@@ -136,7 +137,11 @@ int			is_builtin(char *str);
 int			pipe_handler(t_shell *shell, int i, int pid);
 int			perform_redir(t_shell *shell, int i);
 void		reset_io(t_exec *exec);
-
+int 		not_file(char *str);
+int			not_binary(char *str);
+int			is_folder(t_shell *shell, char *str);
+int			no_permission(char *str);
+int			validate_cmd(t_shell *shell, t_table *table);
 /* utils */
 int			find_space(char *index);
 int			allocate_envp(t_shell *shell);
