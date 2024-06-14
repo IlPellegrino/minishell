@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 15:40:51 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/13 19:36:49 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/14 17:02:26 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,47 +14,54 @@
 #include <sys/stat.h>
 #include <dirent.h>
 
+int	compare_folder(t_shell *shell, struct dirent *curr, char *str)
+{
+	int	fd;
+
+	fd = open(curr->d_name, __O_DIRECTORY);
+	if (fd == -1 && str[0] != '.')
+		return (ft_error(shell, NOT_FOLDER, str), 1);
+	else if (str[0] != '.' && fd)
+	{
+		close(fd);
+		return (ft_error(shell, FOLDER, str), 1);
+	}
+	close(fd);
+	return (0);
+}
+
 int	is_folder(t_shell *shell, char *str)
 {
 	DIR				*folder;
 	struct dirent	*curr;
-	int				fd;
+	char			*new_str;
 
 	folder = opendir(".");
 	if (!folder)
 		return (0);
 	curr = readdir(folder);
+	if (str[0] == '.')
+		new_str = ft_strdup(str + 2);
+	else
+		new_str = ft_strdup(str);
+	collect_garbage(shell, new_str, 0);
 	while (curr)
 	{
-		if (!ft_strncmp(str, curr->d_name, ft_strlen(curr->d_name) + 1))
+		if (!ft_strncmp(new_str, curr->d_name, ft_strlen(new_str) - 1))
 		{
-			fd = open(curr->d_name, __O_DIRECTORY);
-			if (fd == -1)
-				return (ft_error(shell, 0, str));
-			else
-			{
-				close(fd);
-				return (free(curr), ft_error(shell, 0, str));
-			}
+			if (!compare_folder(shell, curr, str))
+				return (closedir(folder), 0);
+			return (closedir(folder), 1);
 		}
 		curr = readdir(folder);
 	}
-	return (0);
+	closedir(folder);
+	return (ft_error(shell, NO_FILE, str), 1);
 }
 
 int	no_permission(char *str)
 {
-	return (access(str, X_OK));
-}
-
-int not_file(char *str)
-{
-	return (str[0] != '.');
-}
-
-
-int	not_binary(char *str)
-{
-	(void)str;
-	return (0);
+	if (access(str, X_OK) == 0)
+		return (0);
+	return (1);
 }

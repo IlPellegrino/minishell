@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 18:27:50 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/13 19:31:21 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/14 16:57:54 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,8 @@ char	*get_pathname(t_shell *shell, char *str)
 			return (pathname);
 		free(pathname);
 	}
-	if (!access(str, X_OK))
+	if (ft_strchr(str, '/') && !access(str, X_OK))
 		return (ft_strdup(str));
-	printf("ciao\n");
 	return (0);
 }
 

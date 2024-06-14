@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 15:42:43 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/04 14:19:22 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/14 17:01:56 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,12 @@ void	free_matrix(char **mat)
 		free(mat[i]);
 	free(mat);
 	mat = NULL;
+}
+
+void	sig_handle(t_shell *shell)
+{
+	if (g_sig_type == SIG_C)
+		shell->error = 130;
+	else if (g_sig_type == CORE_DUMPED)
+		shell->error = 131;
 }

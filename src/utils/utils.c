@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 19:59:43 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/12 12:37:41 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/14 16:59:58 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,42 +41,31 @@ int	init_structs(t_shell *shell, int argc, char **argv, char **envp)
 	return (1);
 }
 
-void	print_matrix(char **mat)
+int	check_exit_status(t_shell *shell, int error_type)
 {
-	int	i;
-
-	i = 0;
-	while (mat[i])
-	{
-		printf("[%s]\n", mat[i]);
-		i++;
-	}
-}
-
-int	check_exit_status(int error_type)
-{
-	int	error;
-
-	error = 0;
-	if (error_type == COMMAND)
-		error = 127;
-	else if (error_type == ENV)
-		error = 127;
+	if (error_type == ENV || error_type == NO_FILE
+		|| error_type == COMMAND)
+		shell->error = 127;
 	else if (error_type == UNSET)
-		error = 1;
+		shell->error = 1;
 	else if (error_type == EXPORT)
-		error = 1;
+		shell->error = 1;
 	else if (error_type == SYNTAX)
-		error = 2;
+		shell->error = 2;
 	else if (error_type == EXIT)
-		error = 2;
+		shell->error = 2;
 	else if (error_type == OPEN_ERR)
-		error = 1;
+		shell->error = 1;
 	else if (error_type == CD_DIR)
-		error = 1;
+		shell->error = 1;
 	else if (error_type == CD_ARGS)
-		error = 1;
-	return (error);
+		shell->error = 1;
+	else if (error_type == BINARY)
+		shell->error = 2;
+	else if (error_type == FOLDER || error_type == NOT_FOLDER
+		|| error_type == NO_PERMISSION)
+		shell->error = 126;
+	return (0);
 }
 
 void	print_err(char *str, char *var, char *str2)
@@ -84,6 +73,19 @@ void	print_err(char *str, char *var, char *str2)
 	ft_putstr_fd(str, 2);
 	ft_putstr_fd(var, 2);
 	ft_putendl_fd(str2, 2);
+}
+
+int	ft_error2(int error_type, char *str)
+{
+	if (error_type == FOLDER)
+		print_err("minishell: ", str, ": Is a directory");
+	else if (error_type == NOT_FOLDER)
+		print_err("minishell: ", str, ": Not a directory");
+	else if (error_type == NO_FILE)
+		print_err("minishell: ", str, ": No such file or directory");
+	else if (error_type == NO_PERMISSION)
+		print_err("minishell: ", str, ": Permission denied");
+	return (1);
 }
 
 int	ft_error(t_shell *shell, int error_type, char *str)
@@ -108,6 +110,9 @@ int	ft_error(t_shell *shell, int error_type, char *str)
 		print_err("minishell: cd: ", str, ": No such file or directory");
 	else if (error_type == CD_ARGS)
 		ft_putendl_fd("minishell: cd: too many arguments", 2);
-	shell->error = check_exit_status(error_type);
-	return (0);
+	else if (error_type == BINARY)
+		ft_putendl_fd("cannot execute non binary files", 2);
+	else
+		ft_error2(error_type, str);
+	return (check_exit_status(shell, error_type));
 }

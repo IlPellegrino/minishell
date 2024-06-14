@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 11:42:41 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/12 17:05:56 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/14 17:04:03 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	two_args(char **exit_mat, t_shell *shell, pid_t pid)
 			ft_putstr_fd("exit\n", STDERR_FILENO);
 		if (ft_strlen(exit_mat[1]) >= ft_strlen("9223372036854775807"))
 			if (ft_strncmp(exit_mat[1], "9223372036854775807",
-					ft_strlen("9223372036854775807")) > 0)		
+					ft_strlen("9223372036854775807")) > 0)
 				ft_error(shell, EXIT, exit_mat[1]);
 		close_shell(shell);
 	}

@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 15:44:34 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/13 13:15:19 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/14 17:02:36 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	fill_cmd(t_shell *shell, t_token *token, t_table *table, int end)
 			if (token->tokens[i] != 'X')
 			{
 				table->command = token->index[i];
-				break;
+				break ;
 			}
 		}
 		cmd = malloc(sizeof(t_cmd));

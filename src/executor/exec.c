@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:52:14 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/13 19:37:24 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/14 17:01:40 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,10 @@ int	fork_exec(t_shell *shell, int i)
 	else if (table[i].command)
 	{
 		if (execve(cmd->pathname, cmd->cmd_arg, shell->envp) == -1)
+		{
+			perror("minishell");
 			return (0);
+		}
 	}
 	return (1);
 }
@@ -75,7 +78,7 @@ int	manage_fork(pid_t pid, t_shell *shell, int i)
 		pipe_handler(shell, i, pid);
 		perform_redir(shell, i);
 		if (!fork_exec(shell, i))
-			shell->error = 2;
+			shell->error = errno;
 		free_cmd_table(shell);
 		close_shell(shell);
 	}
@@ -114,14 +117,6 @@ int	to_fork(t_shell *shell)
 			shell->error = WEXITSTATUS(status);
 	}
 	return (1);
-}
-
-void	sig_handle(t_shell *shell)
-{
-	if (g_sig_type == SIG_C)
-		shell->error = 130;
-	else if (g_sig_type == CORE_DUMPED)
-		shell->error = 131;
 }
 
 int	executor(t_shell *shell)

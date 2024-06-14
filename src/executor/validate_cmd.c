@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 17:14:34 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/13 19:43:50 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/14 17:00:59 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,40 +16,35 @@
 
 int	check_valid(t_shell *shell, char *str)
 {
-	int	last;
+	int		last;
 
 	last = ft_strlen(str) -1;
-	printf("str = %s\n", str);
 	if (!ft_strchr(str, '/'))
-	{
 		return (ft_error(shell, COMMAND, str));
-	}
-	else if (is_folder(shell, str) && str[last] == '/' && str[0] != '.')
-		return (ft_error(shell, -1, str));
-	else if (not_file(str))
-		return (ft_error(shell, -1, str));
+	else if (is_folder(shell, str))
+		return (0);
 	else if (no_permission(str))
-		return (ft_error(shell, SYNTAX, str));
-	//else if (not_binary(str))
-	//	return (ft_error(shell, 0, str));
+		return (ft_error(shell, NO_PERMISSION, str));
 	return (1);
 }
 
 int	validate_cmd(t_shell *shell, t_table *table)
 {
-	int	i;
-	int	is_cmd;
+	int		i;
+	int		last;
+	char	*pathname;
 
-	is_cmd = 0;
 	i = -1;
+	last = 0;
 	while (++i < shell->len)
 	{
-		if (!get_pathname(shell, table[i].command))
-			is_cmd = 1;
-		printf("is cmd = %d\n", is_cmd);
-		if (!check_valid(shell, table[i].command) && !is_cmd)
-			return (0);
-		is_cmd = 0;
+		pathname = table[i].cmd->pathname;
+		if (pathname)
+			last = ft_strlen(pathname) - 1;
+		if ((!pathname || pathname[last] == '/')
+			&& !is_builtin(table[i].command))
+			if (!check_valid(shell, table[i].command))
+				return (0);
 	}
-	return (shell->error == 0);
+	return (1);
 }
