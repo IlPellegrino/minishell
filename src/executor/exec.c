@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:52:14 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/17 11:35:51 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/17 17:15:49 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ int	manage_fork(pid_t pid, t_shell *shell, int i)
 		if (!fork_exec(shell, i))
 			shell->error = errno;
 		free_cmd_table(shell);
+		reset_io(exec);
 		close_shell(shell);
 	}
 	else
