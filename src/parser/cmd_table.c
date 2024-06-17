@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 15:44:34 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/10 11:10:42 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/14 17:02:36 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ char	**get_args(t_token *token, int end)
 	i = -1;
 	while (++i < end)
 	{
-		if (token->tokens[i] == 'C' || token->tokens[i] == 'S')
+		if (token->tokens[i] != 'X')
 		{
 			cmd_arg[j++] = ft_strdup(token->index[i]);
 			token->tokens[i] = 'X';
@@ -75,9 +75,10 @@ int	fill_cmd(t_shell *shell, t_token *token, t_table *table, int end)
 		i = -1;
 		while (++i < end)
 		{
-			if (token->tokens[i] == 'C')
+			if (token->tokens[i] != 'X')
 			{
 				table->command = token->index[i];
+				break ;
 			}
 		}
 		cmd = malloc(sizeof(t_cmd));

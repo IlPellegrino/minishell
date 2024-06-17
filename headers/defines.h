@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 12:08:42 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/12 15:03:48 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/14 14:49:08 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,11 @@ delimited by end-of-file (wanted `eof')"
 # define ENV 7
 # define CD_DIR 8
 # define CD_ARGS 9
+# define BINARY 10
+# define FOLDER 11
+# define NOT_FOLDER 12
+# define NO_PERMISSION 13
+# define NO_FILE 14
 # define CORE_DUMPED 4
 
 #endif

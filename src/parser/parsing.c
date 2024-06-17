@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:54:36 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/11 15:46:55 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/14 17:02:59 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ int	split_pipes(t_shell *shell)
 	found = 0;
 	token = shell->tokens;
 	temp_token = ft_strdup(token->tokens);
-	i = -1;
 	temp_token = set_x(temp_token);
 	i = -1;
 	while (temp_token[++i])
@@ -68,10 +67,7 @@ int	split_pipes(t_shell *shell)
 		if (temp_token[i] == 'P')
 			found = 0;
 		if (temp_token[i] == 'S' && !found)
-		{
-			free(temp_token);
-			return (ft_error(shell, COMMAND, token->index[i]));
-		}
+			return (free(temp_token), ft_error(shell, 0, token->index[i]));
 	}
 	free(temp_token);
 	return (1);
@@ -102,7 +98,7 @@ int	parse_input(t_shell *shell)
 	}
 	if (!parse_redirs(shell))
 		return (0);
-	return (split_pipes(shell));
+	return (1);
 }
 
 int	parsing(t_shell *shell)
@@ -114,5 +110,6 @@ int	parsing(t_shell *shell)
 		return (0);
 	if (!init_cmd_table(shell))
 		return (0);
+	printf("hello\n");
 	return (1);
 }

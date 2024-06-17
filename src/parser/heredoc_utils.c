@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 17:45:12 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/04 14:54:09 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/14 17:17:46 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,23 +61,10 @@ char	*get_after(char *str, char *new_str, int start)
 		len = 1;
 	after = ft_calloc(sizeof(char *), len + 1);
 	i = -1;
+	printf("start = %d -- str = %s\n", start, str);
 	while (str[++start])
 		after[++i] = str[start];
 	return (after);
-}
-
-int	find_expansion(char *temp, int *start)
-{
-	int	i;
-
-	i = -1;
-	(void)start;
-	while (temp[++i])
-	{
-		if (temp[i] == '$' && (ft_isalnum(temp[i + 1]) || temp[i + 1] == US))
-			break ;
-	}
-	return (i);
 }
 
 char	*expand_heredoc(t_shell *shell, char *line)
@@ -87,20 +74,19 @@ char	*expand_heredoc(t_shell *shell, char *line)
 	char	*temp;
 
 	final_str = 0;
-	temp = ft_strdup(line);
 	i = -1;
 	while (line[++i])
 	{
-		if (line[i] == '$' && line[i + 1])
+		if (line[i] == '$' && line[i + 1] && (ft_isalnum(line[i + 1]) || line[i + 1] == '$'))
 		{
-			if (final_str)
-				free(final_str);
-			final_str = here_expand(shell, temp, find_expansion(temp, 0));
+			temp = ft_strdup(line);
+			free(line);
+			line = here_expand(shell, temp, i);
 			free(temp);
-			temp = ft_strdup(final_str);
+			i = -1;
 		}
 	}
-	free(temp);
+	final_str = ft_strdup(line);
 	free(line);
 	return (final_str);
 }
