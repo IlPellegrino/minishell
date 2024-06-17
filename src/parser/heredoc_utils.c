@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 17:45:12 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/14 17:17:46 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/14 17:29:53 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ char	*get_after(char *str, char *new_str, int start)
 		len = 1;
 	after = ft_calloc(sizeof(char *), len + 1);
 	i = -1;
-	printf("start = %d -- str = %s\n", start, str);
 	while (str[++start])
 		after[++i] = str[start];
 	return (after);
@@ -77,7 +76,8 @@ char	*expand_heredoc(t_shell *shell, char *line)
 	i = -1;
 	while (line[++i])
 	{
-		if (line[i] == '$' && line[i + 1] && (ft_isalnum(line[i + 1]) || line[i + 1] == '$'))
+		if (line[i] == '$' && line[i + 1]
+			&& (ft_isalnum(line[i + 1]) || line[i + 1] == '$'))
 		{
 			temp = ft_strdup(line);
 			free(line);

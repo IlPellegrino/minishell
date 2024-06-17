@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 18:59:18 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/12 12:08:22 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/14 17:40:14 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ int	pipe_handler(t_shell *shell, int i, int pid)
 {
 	t_exec	*exec;
 
+	if (shell->len == 1)
+		return (0);
 	exec = shell->executor;
 	if (shell->len > 1 && !pid)
 	{

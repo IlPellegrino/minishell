@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 10:32:57 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/10 17:15:57 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/17 10:36:17 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,9 @@ void	close_shell(t_shell *shell)
 {
 	t_garbage	*garbage;
 	t_garbage	*temp;
+	t_exec		*exec;
 
+	exec = shell->executor;
 	garbage = shell->collector;
 	temp = garbage->next;
 	free(shell->tokens);
@@ -100,5 +102,6 @@ void	close_shell(t_shell *shell)
 	}
 	if (shell->cmd_table)
 		free_cmd_table(shell);
+	reset_io(shell->executor);
 	exit(shell->error);
 }
