@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 11:42:41 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/14 17:04:03 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/17 11:29:02 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,10 @@ int	more_args(char **exit_mat, t_shell *shell, pid_t pid)
 
 int	ft_exit(char **exit_mat, t_shell *shell, pid_t pid)
 {
+	t_exec	*exec;
+
+	exec = shell->executor;
+	reset_io(exec);
 	if (matrix_len(exit_mat) < 2)
 	{
 		if (!pid)

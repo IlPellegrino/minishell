@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:59:59 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/14 17:04:08 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/17 11:41:33 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,5 +147,6 @@ int			find_cmd_path(t_shell *shell, char *cmd, int pos);
 void		print_matrix(char **mat);
 int			init_structs(t_shell *shell, int argc, char **argv, char **envp);
 void		sig_handle(t_shell *shell);
+void		close_redirs(int *red, int len);
 
 #endif

@@ -6,7 +6,7 @@
 #    By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/07 17:01:15 by ciusca            #+#    #+#              #
-#    Updated: 2024/06/14 17:31:14 by ciusca           ###   ########.fr        #
+#    Updated: 2024/06/17 11:33:21 by ciusca           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,7 +71,7 @@ ${NAME}: ${OBJS} ${HEADERS}
 		@echo $(WHITE)  "                                                               " $(NONE)
 
 sup: all
-		$(SUPRRESSION)
+	$(SUPRRESSION)
 clean:
 	@if [ ! -z "$(OBJS)" ] && [ -f $(firstword $(OBJS)) ]; then \
 		rm -rf $(OBJS); \

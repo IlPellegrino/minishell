@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:52:14 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/17 10:43:39 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/17 11:35:51 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ int	manage_fork(pid_t pid, t_shell *shell, int i)
 	else
 	{
 		pipe_handler(shell, i, pid);
-		//close(exec->fds[1]);
 		if (i > 0)
 			close(exec->fds[0]);
 	}
@@ -125,18 +124,18 @@ int	executor(t_shell *shell)
 	t_table	*table;
 	t_exec	*exec;
 
+	table = shell->cmd_table;
 	shell->executor = malloc(sizeof(t_exec));
 	if (!shell->executor)
 		return (0);
-	shell->error = 0;
 	collect_garbage(shell, (char *) shell->executor, 0);
-	exec = shell->executor;
-	exec->saved_out = dup(1);
-	table = shell->cmd_table;
-	exec->saved_in = dup(0);
-	g_sig_type = 2;
 	if (!validate_cmd(shell, table))
 		return (0);
+	shell->error = 0;
+	exec = shell->executor;
+	exec->saved_out = dup(1);
+	exec->saved_in = dup(0);
+	g_sig_type = 2;
 	if (shell->len == 1 && (is_builtin(table[0].command) || !table[0].command))
 	{
 		perform_redir(shell, 0);

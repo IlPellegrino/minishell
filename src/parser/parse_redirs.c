@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 12:34:56 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/11 16:26:46 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/17 11:43:27 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,10 @@ int	open_files(t_shell *shell, t_token *token, int i)
 		fd = token->redirs[i];
 	shell->error = errno;
 	if (fd < 0)
+	{
+		close_redirs(token->redirs, ft_strlen(token->tokens));
 		return (ft_error(shell, OPEN_ERR, token->index[i]));
+	}
 	token->redirs[i] = fd;
 	return (1);
 }
@@ -79,9 +82,13 @@ int	count_redirs(char *tokens)
 int	parse_redirs(t_shell *shell)
 {
 	t_token	*token;
+	int		i;
 
+	i = -1;
 	token = shell->tokens;
 	token->redirs = malloc(sizeof(int) * ft_strlen(token->tokens));
+	while (++i < (int)ft_strlen(token->tokens))
+		token->redirs[i] = -1;
 	collect_garbage(shell, (char *)token->redirs, 0);
 	if (!parse_heredoc(shell, token))
 	{
