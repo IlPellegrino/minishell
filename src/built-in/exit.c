@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 11:42:41 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/17 11:00:46 by nromito          ###   ########.fr       */
+/*   Updated: 2024/06/18 11:48:17 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ int	two_args(char **exit_mat, t_shell *shell, pid_t pid)
 
 	i = -1;
 	while (exit_mat[1][++i])
-		if (!ft_isdigit(exit_mat[1][i]) && exit_mat[1][0] != '-')
+		if (!ft_isdigit(exit_mat[1][i]) && exit_mat[1][0] != '-'
+			&& exit_mat[1][0] != '+')
 			break ;
 	if (!exit_mat[1][i])
 	{
