@@ -6,13 +6,22 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 17:14:34 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/14 17:00:59 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/17 16:00:04 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
-#include <sys/stat.h>
-#include <dirent.h>
+
+void	close_table_redirs(t_shell *shell)
+{
+	t_table *table;
+	int		i;
+
+	table = shell->cmd_table;
+	i = -1;
+	while (++i < shell->len)
+		close_redirs(table[i].fd, matrix_len(table[i].redirs));
+}
 
 int	check_valid(t_shell *shell, char *str)
 {
@@ -44,7 +53,10 @@ int	validate_cmd(t_shell *shell, t_table *table)
 		if ((!pathname || pathname[last] == '/')
 			&& !is_builtin(table[i].command))
 			if (!check_valid(shell, table[i].command))
+			{
+				close_table_redirs(shell);
 				return (0);
+			}
 	}
 	return (1);
 }

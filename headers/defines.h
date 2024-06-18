@@ -6,13 +6,14 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 12:08:42 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/14 14:49:08 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/17 17:31:34 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DEFINES_H
 # define DEFINES_H
 
+# define JESUS 1
 # define HEREDOC "\033[1;33m> \033[0m"
 # define RED_ARROW "\e[1;91m➔\033[0m "
 # define GREEN_ARROW "\e[1;92m➔\033[0m "
@@ -23,7 +24,7 @@ delimited by end-of-file (wanted `eof')"
 # define SQ 39
 # define US 95
 # define PIPE 124
-# define JESUS 1
+# define JESU
 # define COMMAND 0
 # define OPEN_ERR 1
 # define IN_HEREDOC 1
@@ -41,6 +42,7 @@ delimited by end-of-file (wanted `eof')"
 # define NOT_FOLDER 12
 # define NO_PERMISSION 13
 # define NO_FILE 14
+# define CD_UNSET 15
 # define CORE_DUMPED 4
 
 #endif

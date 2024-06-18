@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 18:27:50 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/14 16:57:54 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/17 16:00:13 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ char	*get_pathname(t_shell *shell, char *str)
 	char	*pathname;
 
 	i = -1;
+	if (str && !str[0])
+		return (0);
 	while (shell->path_env[++i])
 	{
 		if (ft_strchr(str, '/'))

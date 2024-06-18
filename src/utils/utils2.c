@@ -6,11 +6,23 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 15:42:43 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/14 17:01:56 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/17 15:51:31 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
+
+void	close_redirs(int *red, int len)
+{
+	int	i;
+
+	i = -1;
+	if (!len)
+		return ;
+	while (++i < len)
+		if (red[i] > 2)
+			close(red[i]);
+}
 
 int	find_space(char *index)
 {

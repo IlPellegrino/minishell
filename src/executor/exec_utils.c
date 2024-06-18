@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 18:59:18 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/12 12:08:22 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/17 15:59:33 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ int	pipe_handler(t_shell *shell, int i, int pid)
 {
 	t_exec	*exec;
 
+	if (shell->len == 1)
+		return (0);
 	exec = shell->executor;
 	if (shell->len > 1 && !pid)
 	{
@@ -91,9 +93,9 @@ int	is_builtin(char *str)
 {
 	int		cmd_len;
 
-	if (!str)
-		return (0);
 	cmd_len = ft_strlen(str);
+	if (!cmd_len)
+		return (0);
 	if (!(ft_strncmp(str, "echo", cmd_len)))
 		return (1);
 	else if (!(ft_strncmp(str, "cd", cmd_len)))

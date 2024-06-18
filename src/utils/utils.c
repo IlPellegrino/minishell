@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 19:59:43 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/14 16:59:58 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/17 17:36:31 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	check_exit_status(t_shell *shell, int error_type)
 	if (error_type == ENV || error_type == NO_FILE
 		|| error_type == COMMAND)
 		shell->error = 127;
-	else if (error_type == UNSET)
+	else if (error_type == UNSET || error_type == CD_UNSET)
 		shell->error = 1;
 	else if (error_type == EXPORT)
 		shell->error = 1;
@@ -85,6 +85,8 @@ int	ft_error2(int error_type, char *str)
 		print_err("minishell: ", str, ": No such file or directory");
 	else if (error_type == NO_PERMISSION)
 		print_err("minishell: ", str, ": Permission denied");
+	else if (error_type == CD_UNSET)
+		print_err("minishell: cd: ", str, " not set");
 	return (1);
 }
 
@@ -101,7 +103,7 @@ int	ft_error(t_shell *shell, int error_type, char *str)
 	else if (error_type == EXPORT)
 		print_err("minishell: export: `", str, "': not a valid identifier");
 	else if (error_type == SYNTAX)
-		print_err("minishell: syntax error near unexpected token '", str, "'");
+		print_err("minishell: syntax error near unexpected token `", str, "'");
 	else if (error_type == OPEN_ERR)
 		print_err("minishell: ", str, ": No such file or directory");
 	else if (error_type == HERE_EOF)

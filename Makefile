@@ -6,7 +6,7 @@
 #    By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/07 17:01:15 by ciusca            #+#    #+#              #
-#    Updated: 2024/06/14 14:15:08 by ciusca           ###   ########.fr        #
+#    Updated: 2024/06/17 11:33:21 by ciusca           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,7 +42,7 @@ SRCS = $(addprefix src/, $(MAIN) $(CLOSING) $(SIGNAL) ${BUILT_IN} $(PROTECTED_FU
 
 OBJS = ${SRCS:.c=.o}
 
-SUPRRESSION = @valgrind --leak-check=full --show-leak-kinds=all --suppressions=ignore_readline.supp -s ./minishell
+SUPRRESSION = @valgrind --track-fds=yes --leak-check=full --show-leak-kinds=all --suppressions=ignore_readline.supp -s ./minishell
 
 COMPILE = cc -Wall -Wextra -Werror -g -fno-omit-frame-pointer
 
@@ -71,7 +71,7 @@ ${NAME}: ${OBJS} ${HEADERS}
 		@echo $(WHITE)  "                                                               " $(NONE)
 
 sup: all
-		$(SUPRRESSION)
+	$(SUPRRESSION)
 clean:
 	@if [ ! -z "$(OBJS)" ] && [ -f $(firstword $(OBJS)) ]; then \
 		rm -rf $(OBJS); \

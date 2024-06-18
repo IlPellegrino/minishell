@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 12:08:53 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/12 12:08:54 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/17 11:54:39 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,6 @@
 # include <sys/types.h>
 # include <signal.h>
 # include <errno.h>
+# include <sys/stat.h>
 
 #endif
