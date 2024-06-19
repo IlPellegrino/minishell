@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:52:14 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/17 17:15:49 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/19 10:37:37 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,19 +23,19 @@ int	normal_exec(t_table table, t_shell *shell, pid_t pid)
 	if (!str)
 		return (0);
 	cmd_len = ft_strlen(str);
-	if (!(ft_strncmp(str, "echo", cmd_len)))
+	if (!(ft_strncmp(str, "echo", cmd_len + 1)))
 		fail = ft_echo(table.cmd->cmd_arg);
-	else if (!(ft_strncmp(str, "cd", cmd_len)))
+	else if (!(ft_strncmp(str, "cd", cmd_len + 1)))
 		fail = ft_cd(table.cmd->cmd_arg, shell);
-	else if (!(ft_strncmp(str, "pwd", cmd_len)))
+	else if (!(ft_strncmp(str, "pwd", cmd_len + 1)))
 		fail = ft_pwd();
-	else if (!(ft_strncmp(str, "export", cmd_len)))
+	else if (!(ft_strncmp(str, "export", cmd_len + 1)))
 		fail = ft_export(table.cmd->cmd_arg, shell);
-	else if (!(ft_strncmp(str, "unset", cmd_len)))
+	else if (!(ft_strncmp(str, "unset", cmd_len + 1)))
 		fail = ft_unset(table.cmd->cmd_arg, shell);
-	else if (!(ft_strncmp(str, "env", cmd_len)))
+	else if (!(ft_strncmp(str, "env", cmd_len + 1)))
 		fail = ft_env(table.cmd->cmd_arg, shell);
-	else if (!(ft_strncmp(str, "exit", cmd_len)))
+	else if (!(ft_strncmp(str, "exit", cmd_len + 1)))
 		fail = ft_exit(table.cmd->cmd_arg, shell, pid);
 	return (fail);
 }
