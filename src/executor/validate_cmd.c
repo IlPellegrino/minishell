@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 17:14:34 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/20 13:36:26 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/20 19:31:40 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ int	check_valid(t_shell *shell, char *str)
 		return (0);
 	else if (no_permission(str))
 		return (ft_error(shell, NO_PERMISSION, str));
+	else if (not_binary(shell, str))
+		return (0);
 	return (1);
 }
 
@@ -50,7 +52,7 @@ int	validate_cmd(t_shell *shell, t_table table)
 	pathname = table.cmd->pathname;
 	if (pathname)
 		last = ft_strlen(pathname) - 1;
-	if ((!pathname || pathname[last] == '/')
+	if ((!pathname || pathname[last] == '/' || table.command[0] == '.')
 		&& !is_builtin(table.command))
 	{
 		if (!check_valid(shell, table.command))

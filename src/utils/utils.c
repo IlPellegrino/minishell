@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 19:59:43 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/17 17:36:31 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/20 19:30:57 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ int	ft_error(t_shell *shell, int error_type, char *str)
 	else if (error_type == CD_ARGS)
 		ft_putendl_fd("minishell: cd: too many arguments", 2);
 	else if (error_type == BINARY)
-		ft_putendl_fd("cannot execute non binary files", 2);
+		print_err("minishell:", str, " Cannot execute non binary files");
 	else
 		ft_error2(error_type, str);
 	return (check_exit_status(shell, error_type));

@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:59:59 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/20 17:57:13 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/20 19:25:12 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ int			is_builtin(char *str);
 int			pipe_handler(t_shell *shell, int i, int pid);
 int			perform_redir(t_shell *shell, int i);
 void		reset_io(t_exec *exec);
-int			not_binary(char *str);
+int			not_binary(t_shell *shell, char *str);
 int			is_folder(t_shell *shell, char *str);
 int			no_permission(char *str);
 int			validate_cmd(t_shell *shell, t_table table);
