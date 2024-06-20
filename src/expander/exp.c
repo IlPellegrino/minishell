@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:52:38 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/04 11:49:41 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/20 10:57:13 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	to_expand(int i, char *line)
 {
-	if (line[i + 1] == SQ
-		|| line[i + 1] == DQ
+	if ((line[i + 1] == SQ && line[i + 2])
+		|| (line[i + 1] == DQ && line[i + 2])
 		|| ft_isalnum(line[i + 1])
 		|| line[i + 1] == US
 		|| line[i + 1] == '$'
@@ -33,7 +33,7 @@ void	quotes_handler(char line_pos, t_exp *exp)
 	else if (line_pos == DQ && exp->dq)
 	{
 		exp->dq = 0;
-		exp->sq = 0;
+		//exp->sq = 0;
 	}
 	else if (line_pos == DQ)
 		exp->dq = 1;

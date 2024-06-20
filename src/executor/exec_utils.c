@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 18:59:18 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/17 15:59:33 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/19 10:56:53 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,19 +96,19 @@ int	is_builtin(char *str)
 	cmd_len = ft_strlen(str);
 	if (!cmd_len)
 		return (0);
-	if (!(ft_strncmp(str, "echo", cmd_len)))
+	if (!(ft_strncmp(str, "echo", cmd_len + 1)))
 		return (1);
-	else if (!(ft_strncmp(str, "cd", cmd_len)))
+	else if (!(ft_strncmp(str, "cd", cmd_len + 1)))
 		return (1);
-	else if (!(ft_strncmp(str, "pwd", cmd_len)))
+	else if (!(ft_strncmp(str, "pwd", cmd_len + 1)))
 		return (1);
-	else if (!(ft_strncmp(str, "export", cmd_len)))
+	else if (!(ft_strncmp(str, "export", cmd_len + 1)))
 		return (1);
-	else if (!(ft_strncmp(str, "unset", cmd_len)))
+	else if (!(ft_strncmp(str, "unset", cmd_len + 1)))
 		return (1);
-	else if (!(ft_strncmp(str, "env", cmd_len)))
+	else if (!(ft_strncmp(str, "env", cmd_len + 1)))
 		return (1);
-	else if (!(ft_strncmp(str, "exit", cmd_len)))
+	else if (!(ft_strncmp(str, "exit", cmd_len + 1)))
 		return (1);
 	return (0);
 }
