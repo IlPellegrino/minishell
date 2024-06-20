@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:52:14 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/17 17:15:49 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/18 16:02:51 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,12 @@ int	manage_fork(pid_t pid, t_shell *shell, int i)
 	if (!pid)
 	{
 		pipe_handler(shell, i, pid);
+		if (!parse_redirs(shell, shell->cmd_table[i]) || !validate_cmd(shell, shell->cmd_table[i]))
+		{
+			//close(exec->fds[0]);
+			reset_io(exec);
+			close_shell(shell);
+		}
 		perform_redir(shell, i);
 		if (!fork_exec(shell, i))
 			shell->error = errno;
@@ -130,8 +136,6 @@ int	executor(t_shell *shell)
 	if (!shell->executor)
 		return (0);
 	collect_garbage(shell, (char *) shell->executor, 0);
-	if (!validate_cmd(shell, table))
-		return (0);
 	shell->error = 0;
 	exec = shell->executor;
 	exec->saved_out = dup(1);
@@ -139,6 +143,12 @@ int	executor(t_shell *shell)
 	g_sig_type = 2;
 	if (shell->len == 1 && (is_builtin(table[0].command) || !table[0].command))
 	{
+		
+		if (!parse_redirs(shell, table[0]) || !validate_cmd(shell, table[0]))
+		{
+			reset_io(exec);
+			return (0);
+		}
 		perform_redir(shell, 0);
 		normal_exec(table[0], shell, 0);
 	}

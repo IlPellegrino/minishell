@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:59:59 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/17 11:41:33 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/18 14:55:56 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int			get_path(t_shell *shell);
 int			parsing(t_shell *shell);
 char		*remove_redir(t_token *token);
 int			find_builtins(char *cmd);
-int			parse_redirs(t_shell *shell);
+int			find_redirs(t_shell *shell);
 int			ft_heredoc(t_shell *shell, t_token *token, int i);
 char		*get_after(char *str, char *new_str, int start);
 
@@ -139,7 +139,8 @@ void		reset_io(t_exec *exec);
 int			not_binary(char *str);
 int			is_folder(t_shell *shell, char *str);
 int			no_permission(char *str);
-int			validate_cmd(t_shell *shell, t_table *table);
+int			validate_cmd(t_shell *shell, t_table table);
+int			parse_redirs(t_shell *shell, t_table table);
 /* utils */
 int			find_space(char *index);
 int			allocate_envp(t_shell *shell);

@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 12:34:56 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/17 11:43:27 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/18 15:12:20 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,12 @@ int	parse_heredoc(t_shell *shell, t_token *token)
 		if (token->tokens[i] == 'H')
 		{
 			token->redirs[i + 1] = ft_heredoc(shell, token, i + 1);
-			if (!token->redirs[i + 1])
-				return (0);
 		}
 	}
 	return (1);
 }
 
-int	open_files(t_shell *shell, t_token *token, int i)
+int	open_files(t_token *token, int i)
 {
 	int	fd;
 
@@ -42,17 +40,11 @@ int	open_files(t_shell *shell, t_token *token, int i)
 		fd = open(token->index[i], O_CREAT | O_WRONLY | O_TRUNC, 0777);
 	else if (token->tokens[i - 1] == 'H')
 		fd = token->redirs[i];
-	shell->error = errno;
-	if (fd < 0)
-	{
-		close_redirs(token->redirs, ft_strlen(token->tokens));
-		return (ft_error(shell, OPEN_ERR, token->index[i]));
-	}
 	token->redirs[i] = fd;
 	return (1);
 }
 
-int	open_redirs(t_shell *shell, t_token *token)
+int	open_redirs(t_token *token)
 {
 	int	i;
 
@@ -60,7 +52,7 @@ int	open_redirs(t_shell *shell, t_token *token)
 	while (token->tokens[++i])
 	{
 		if (is_redir(token->tokens[i]))
-			if (!open_files(shell, token, i + 1))
+			if (!open_files(token, i + 1))
 				return (0);
 	}
 	return (1);
@@ -79,7 +71,7 @@ int	count_redirs(char *tokens)
 	return (count);
 }
 
-int	parse_redirs(t_shell *shell)
+int	find_redirs(t_shell *shell)
 {
 	t_token	*token;
 	int		i;
@@ -94,7 +86,7 @@ int	parse_redirs(t_shell *shell)
 	{
 		return (0);
 	}
-	if (!open_redirs(shell, token))
+	if (!open_redirs(token))
 	{
 		return (0);
 	}

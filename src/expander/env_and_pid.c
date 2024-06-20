@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 17:46:33 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/04 16:04:42 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/18 16:54:32 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ char	*make_expansion(t_exp *exp, char *to_expand)
 	if (!exp->res)
 		return (NULL);
 	exp->len = -1;
+	if (!to_expand[exp->begin])
+		exp->begin--;
 	while (to_expand[++exp->begin])
 		exp->res[++exp->len] = to_expand[exp->begin];
 	return (exp->res);
@@ -60,9 +62,9 @@ char	*ft_getenv(const char *name, t_shell *shell)
 	i = -1;
 	while (shell->envp[++i])
 	{
-		exp.len = -1;
-		while (shell->envp[i][++exp.len] && shell->envp[i][exp.len] != '=')
-			;
+		exp.len = 0;
+		while (shell->envp[i][exp.len] && shell->envp[i][exp.len] != '=')
+			exp.len++;
 		if (check_name(name))
 			return (ft_strjoin("$", name));
 		if (exp.len == (int)ft_strlen(name))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 11:42:41 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/18 11:49:27 by nromito          ###   ########.fr       */
+/*   Updated: 2024/06/18 16:05:10 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	two_args(char **exit_mat, t_shell *shell, pid_t pid)
 	{
 		shell->error = (ft_atoi_mod(exit_mat[1]) % 256);
 		if (!pid)
-			ft_putstr_fd("exit\n", STDERR_FILENO);
+			;//ft_putstr_fd("exit\n", STDERR_FILENO);
 		if (ft_strlen(exit_mat[1]) >= ft_strlen("9223372036854775807"))
 			if (ft_atoi_mod(exit_mat[1]) == 0 && exit_mat[1][0] != '0'
 				&& ft_strlen(exit_mat[1]) != 1)
@@ -60,7 +60,7 @@ int	two_args(char **exit_mat, t_shell *shell, pid_t pid)
 	else
 	{
 		if (!pid)
-			ft_putstr_fd("exit\n", STDERR_FILENO);
+			;//ft_putstr_fd("exit\n", STDERR_FILENO);
 		ft_error(shell, EXIT, exit_mat[1]);
 		close_shell(shell);
 	}
@@ -80,7 +80,7 @@ int	more_args(char **exit_mat, t_shell *shell, pid_t pid)
 	if (first == 1)
 	{
 		if (!pid)
-			ft_putstr_fd("exit\n", STDERR_FILENO);
+			;//ft_putstr_fd("exit\n", STDERR_FILENO);
 		ft_error(shell, EXIT, exit_mat[1]);
 		shell->error = 2;
 		close_shell(shell);
@@ -102,7 +102,7 @@ int	ft_exit(char **exit_mat, t_shell *shell, pid_t pid)
 	if (matrix_len(exit_mat) < 2)
 	{
 		if (!pid)
-			ft_putstr_fd("exit\n", STDERR_FILENO);
+			;//ft_putstr_fd("exit\n", STDERR_FILENO);
 		close_shell(shell);
 	}
 	else if (matrix_len(exit_mat) < 3)

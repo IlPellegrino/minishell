@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 17:14:34 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/17 16:00:04 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/18 15:09:14 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	check_valid(t_shell *shell, char *str)
 	return (1);
 }
 
-int	validate_cmd(t_shell *shell, t_table *table)
+int	validate_cmd(t_shell *shell, t_table table)
 {
 	int		i;
 	int		last;
@@ -45,18 +45,19 @@ int	validate_cmd(t_shell *shell, t_table *table)
 
 	i = -1;
 	last = 0;
-	while (++i < shell->len)
+	if (!table.cmd)
+		return (0);
+	pathname = table.cmd->pathname;
+	if (pathname)
+		last = ft_strlen(pathname) - 1;
+	if ((!pathname || pathname[last] == '/')
+		&& !is_builtin(table.command))
 	{
-		pathname = table[i].cmd->pathname;
-		if (pathname)
-			last = ft_strlen(pathname) - 1;
-		if ((!pathname || pathname[last] == '/')
-			&& !is_builtin(table[i].command))
-			if (!check_valid(shell, table[i].command))
-			{
-				close_table_redirs(shell);
-				return (0);
-			}
+		if (!check_valid(shell, table.command))
+		{
+			close_table_redirs(shell);
+			return (0);
+		}
 	}
 	return (1);
 }
