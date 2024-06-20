@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 12:08:46 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/12 12:08:47 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/20 13:40:42 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ typedef struct s_table
 	char			*command;
 	char			**redirs;
 	int				*fd;
+	int				*quotes;
 	t_cmd			*cmd;
 	struct s_token	*token;
 }			t_table;

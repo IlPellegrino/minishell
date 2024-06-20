@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_checker.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 13:46:29 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/09 12:22:01 by nromito          ###   ########.fr       */
+/*   Updated: 2024/06/20 14:00:15 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ void	create_word(t_shell *shell, t_token *token, int (*i))
 	if (!token->index[token->wrd])
 		return ;
 	write_word(shell, token, r, (*i));
-	token->flag = check_flag(token);
 	expand_values(shell, token);
+	token->flag = check_flag(token);
 	token->index[token->wrd] = remove_quotes(shell, token, count_quotes(token));
 	token->wrd++;
 }

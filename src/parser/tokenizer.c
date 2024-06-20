@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 13:59:01 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/11 16:26:51 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/20 14:01:07 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,13 @@ int	set_token(t_shell *shell, t_token *token, int *i, int *command)
 		return (ft_error(shell, SYNTAX, token->index[*i]));
 	else if (token->index[*i][0] == '|' && token->flag[*i] == '0')
 	{
+		//printf("flag = %c\n", token->flag[*i]);
 		*command = 0;
 		token->tokens[*i] = 'P';
 	}
 	else
 		token->tokens[*i] = 'S';
+	//printf("tokens = %s\n", token->tokens);
 	return (1);
 }
 

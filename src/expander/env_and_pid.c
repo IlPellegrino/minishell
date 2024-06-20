@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 17:46:33 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/18 16:54:32 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/20 14:01:34 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,9 @@ char	*make_expansion(t_exp *exp, char *to_expand)
 		exp->begin--;
 	while (to_expand[++exp->begin])
 		exp->res[++exp->len] = to_expand[exp->begin];
+	if (is_token(exp->res))
+		exp->res = make_quotes(exp->res);
+	//printf("exp->res %s\n", exp->res);
 	return (exp->res);
 }
 

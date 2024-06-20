@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:59:59 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/18 14:55:56 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/20 13:54:15 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ int			find_expansion(char *temp, int *start);
 char		*here_expand(t_shell *shell, char *str, int start);
 char		*copy_str_exp(t_shell *shell, int count, int *start, char *str);
 char		*copy_prev(char *str, int start);
+char		*make_quotes(char *str);
+int			is_token(char *str);
 
 /* parsing */
 int			tokenizer(t_shell *shell);
