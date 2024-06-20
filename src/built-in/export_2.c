@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 18:09:04 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/14 17:03:45 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/20 15:16:23 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,8 @@ int	check_export(char *to_check, t_shell *shell)
 	{
 		if (to_check[pos] == '+' && to_check[pos + 1] == '=')
 			flag = 1;
-		else if ((!ft_isalnum(to_check[pos]) && to_check[pos] != US
-				&& to_check[pos] != '=') || (to_check[pos] == '+'
-				&& to_check[pos + 1] != '=')
-			|| ft_isdigit(to_check[0]) || to_check[0] == '+'
-			|| to_check[0] == '=')
-		{
-			ft_error(shell, EXPORT, to_check);
-			flag = 0;
-			return (flag);
-		}
+		else if (!is_valid(to_check, pos))
+			return (ft_error(shell, EXPORT, to_check), 0);
 		else if (to_check[pos] == '=')
 			break ;
 	}

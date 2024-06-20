@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 11:42:41 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/18 11:49:27 by nromito          ###   ########.fr       */
+/*   Updated: 2024/06/20 15:24:13 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,18 @@ long long	ft_atoi_mod(const char *str)
 	return (number * neg);
 }
 
+void	first_case(t_shell *shell, char **exit_mat, pid_t pid)
+{
+	shell->error = (ft_atoi_mod(exit_mat[1]) % 256);
+	if (!pid)
+		ft_putstr_fd("exit\n", STDERR_FILENO);
+	if (ft_strlen(exit_mat[1]) >= ft_strlen("9223372036854775807"))
+		if (ft_atoi_mod(exit_mat[1]) == 0 && exit_mat[1][0] != '0'
+			&& ft_strlen(exit_mat[1]) != 1)
+			ft_error(shell, EXIT, exit_mat[1]);
+	close_shell(shell);
+}
+
 int	two_args(char **exit_mat, t_shell *shell, pid_t pid)
 {
 	int	i;
@@ -47,16 +59,7 @@ int	two_args(char **exit_mat, t_shell *shell, pid_t pid)
 			&& exit_mat[1][0] != '+')
 			break ;
 	if (!exit_mat[1][i])
-	{
-		shell->error = (ft_atoi_mod(exit_mat[1]) % 256);
-		if (!pid)
-			ft_putstr_fd("exit\n", STDERR_FILENO);
-		if (ft_strlen(exit_mat[1]) >= ft_strlen("9223372036854775807"))
-			if (ft_atoi_mod(exit_mat[1]) == 0 && exit_mat[1][0] != '0'
-				&& ft_strlen(exit_mat[1]) != 1)
-				ft_error(shell, EXIT, exit_mat[1]);
-		close_shell(shell);
-	}
+		first_case(shell, exit_mat, pid);
 	else
 	{
 		if (!pid)

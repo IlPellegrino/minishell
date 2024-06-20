@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 20:10:38 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/12 10:53:16 by nromito          ###   ########.fr       */
+/*   Updated: 2024/06/20 15:15:51 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,4 +94,21 @@ char	*write_inside(char *result, char *new_var, t_export *export)
 		result[++export->pos] = new_var[export->old_pos];
 	free (export->old);
 	return (result);
+}
+
+int	is_valid(char *to_check, int pos)
+{
+	int	ret;
+
+	ret = 1;
+	if (!ft_isalnum(to_check[pos]) && to_check[pos] != US
+		&& to_check[pos] != '=')
+		ret = 0;
+	else if (to_check[pos] == '+' && to_check[pos + 1] != '=')
+		ret = 0;
+	else if (ft_isdigit(to_check[0]))
+		ret = 0;
+	else if (to_check[0] == '+' || to_check[0] == '=')
+		ret = 0;
+	return (ret);
 }

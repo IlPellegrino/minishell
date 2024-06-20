@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:52:38 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/20 11:53:06 by nromito          ###   ########.fr       */
+/*   Updated: 2024/06/20 15:26:46 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ void	expand_values(t_shell *shell, t_token *token)
 	t_exp	exp;
 
 	init_exp(token, &exp);
-	printf("line = %s\n", exp.line);
 	if (!ft_strchr(exp.line, '$'))
 		return ;
 	else if (token->wrd > 0 && !ft_strncmp(token->index[token->wrd - 1], "<<", 3))

@@ -6,26 +6,36 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 11:41:30 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/17 10:20:05 by nromito          ###   ########.fr       */
+/*   Updated: 2024/06/20 15:08:25 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
+
+int	is_not_valid(char *to_delete, int len)
+{
+	int	valid;
+
+	valid = 0;
+	if (!ft_isalnum(to_delete[len]) && to_delete[len] != US)
+		valid = 1;
+	else if (to_delete[len] == '+' || to_delete[len] == '=')
+		valid = 1;
+	else if (ft_isdigit(to_delete[0]))
+		valid = 1;
+	return (valid);
+}
 
 int	calculate_len(char *to_delete, t_shell *shell)
 {
 	int	len;
 
 	len = -1;
+	if (!to_delete[0])
+		return (ft_error(shell, UNSET, to_delete), 0);
 	while (to_delete[++len])
-	{
-		if ((!ft_isalpha(to_delete[len]) && to_delete[len] != US)
-			&& ft_isdigit(to_delete[0]))
-		{
-			ft_error(shell, UNSET, to_delete);
-			return (0);
-		}
-	}
+		if (is_not_valid(to_delete, len))
+			return (ft_error(shell, UNSET, to_delete), 0);
 	return (len);
 }
 
