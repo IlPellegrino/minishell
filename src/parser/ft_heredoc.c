@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 18:04:21 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/20 12:03:03 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/20 17:39:47 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int	read_heredoc(t_shell *shell, char *eof, int fd, int flag)
 	char	*line;
 	int		len;
 	
+	//printf("flag = %c\n", flag);
 	while (1)
 	{
 		g_sig_type = IN_HEREDOC;

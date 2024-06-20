@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:52:38 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/20 12:03:36 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/20 17:43:09 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,19 @@ void	quotes_handler(char line_pos, t_exp *exp)
 		exp->dq = 1;
 }
 
-void	init_exp(t_token *token, t_exp *exp)
+int	init_exp(t_token *token, t_exp *exp)
 {
+	//printf("exp->line %s\n", exp->line);
 	exp->sq = 0;
 	exp->dq = 0;
 	exp->line = token->index[token->wrd];
 	exp->final_str = 0;
+	if (!ft_strchr(exp->line, '$'))
+		return (1);
+	else if (token->wrd > 0
+		&& !ft_strncmp(token->index[token->wrd - 1], "<<", 3))
+		return (1);
+	return (0);
 }
 
 void	re_init(t_exp *exp, int *i)
@@ -58,10 +65,7 @@ void	expand_values(t_shell *shell, t_token *token)
 	int		i;
 	t_exp	exp;
 
-	init_exp(token, &exp);
-	if (!ft_strchr(exp.line, '$'))
-		return ;
-	else if (token->wrd > 0 && !ft_strncmp(token->index[token->wrd - 1], "<<", 3))
+	if (init_exp(token, &exp))
 		return ;
 	i = -1;
 	while (exp.line[++i])

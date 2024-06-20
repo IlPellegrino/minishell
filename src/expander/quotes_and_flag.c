@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 10:22:43 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/20 14:01:02 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/20 18:05:15 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,8 @@ char	*remove_quotes(t_shell *shell, t_token *token, int i)
 				temp[j++] = token->index[token->wrd][i];
 		else if (token->index[token->wrd][i])
 			temp[j++] = token->index[token->wrd][i];
+		if (!token->index[token->wrd][i])
+			break ;
 	}
 	//printf("temp = %s\n", temp);
 	collect_garbage(shell, token->index[token->wrd], 0);

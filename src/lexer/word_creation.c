@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   word_creation.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 13:45:16 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/09 12:24:53 by nromito          ###   ########.fr       */
+/*   Updated: 2024/06/20 17:57:24 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void	copy_in_quotes(t_shell *shell, t_token *token, int (*r), int quote)
 {
 	if (quote == DQ)
 	{
-		if (check_word(shell, token, DQ))
+		if (check_word(shell, token, DQ, r))
 			return ;
 		token->index[token->wrd][(*r)++] = shell->input[token->start - 1];
 		while (shell->input[token->start] && shell->input[token->start] != DQ)
@@ -101,7 +101,7 @@ void	copy_in_quotes(t_shell *shell, t_token *token, int (*r), int quote)
 	}
 	else if (quote == SQ)
 	{
-		if (check_word(shell, token, SQ))
+		if (check_word(shell, token, SQ, r))
 			return ;
 		token->index[token->wrd][(*r)++] = shell->input[token->start - 1];
 		while (shell->input[token->start] && shell->input[token->start] != SQ)

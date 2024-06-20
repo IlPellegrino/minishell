@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:59:59 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/20 13:54:15 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/20 17:57:13 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int			ft_exit(char **exit_mat, t_shell *shell, pid_t pid);
 int			ft_unset(char **unset_mat, t_shell *shell);
 
 /*export only*/
+int			is_valid(char *to_check, int pos);
 int			ft_export(char **export_mat, t_shell *shell);
 char		*create_plus_var(char *new_var, char *new_str);
 void		change_var(char *new_var, t_shell *shell);
@@ -49,7 +50,7 @@ int			count_len(char *str);
 int			check_export(char *to_check, t_shell *shell);
 char		*write_inside(char *result, char *new_var, t_export *export);
 /* lexer */
-int			check_word(t_shell *shell, t_token *token, int quote);
+int			check_word(t_shell *shell, t_token *token, int quote, int *r);
 void		choose_if(t_shell *shell, t_token *token, int (*i));
 void		checker(t_shell *shell, t_token *token, int words);
 void		setup_index(t_shell *shell, t_token *token, int *i);

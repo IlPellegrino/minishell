@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 11:42:12 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/17 16:20:55 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/20 15:26:18 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	change_dir(char *cd_arg, DIR *folder, t_shell *shell)
 {
 	DIR		*dest;	
-	char 	**oldpwd;
+	char	**oldpwd;
 	char	*cwd;
 
 	oldpwd = ft_calloc(sizeof(char *), 3);

@@ -6,13 +6,13 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 11:42:41 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/18 16:05:10 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/20 16:30:31 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-long long	ft_atoi_mod(const char *str)
+long long	ft_atoi_mod(int flag, const char *str)
 {
 	int			i;
 	long long	number;
@@ -28,13 +28,37 @@ long long	ft_atoi_mod(const char *str)
 	if (str[i] == '-' || str[i] == '+')
 		if (str[i++] == '-')
 			neg *= -1;
+	if (str[i] == '-' || str[i] == '+')
+		return (-1);
 	while (str[i] <= '9' && str[i] >= '0')
 	{
 		number = number * 10 + (str[i++] - 48);
-		if ((number < 0 && neg == 1) || (number > 0 && neg == -1))
-			return (0);
 	}
-	return (number * neg);
+	number *= neg;
+	if (flag && ((number < 0 && neg == 1) || (number > 0 && neg == -1)))
+		return (0);
+	return (number);
+}
+
+void	first_case(t_shell *shell, char **exit_mat, pid_t pid)
+{
+	if (!exit_mat[1][0])
+	{
+		ft_error(shell, EXIT, exit_mat[1]);
+		close_shell(shell);
+	}
+	shell->error = (ft_atoi_mod(0, exit_mat[1]) % 256);
+	if (shell->error == -1 && ft_strncmp(exit_mat[1], "-1", 3))
+	{
+		ft_error(shell, EXIT, exit_mat[1]);
+		close_shell(shell);
+	}
+	if (!pid)
+		//ft_putstr_fd("exit\n", STDERR_FILENO);
+	if ((ft_atoi_mod(1, exit_mat[1]) == 0 && exit_mat[1][0] != '0'
+		&& ft_strlen(exit_mat[1]) != 1))
+		ft_error(shell, EXIT, exit_mat[1]);
+	close_shell(shell);
 }
 
 int	two_args(char **exit_mat, t_shell *shell, pid_t pid)
@@ -47,16 +71,7 @@ int	two_args(char **exit_mat, t_shell *shell, pid_t pid)
 			&& exit_mat[1][0] != '+')
 			break ;
 	if (!exit_mat[1][i])
-	{
-		shell->error = (ft_atoi_mod(exit_mat[1]) % 256);
-		if (!pid)
-			;//ft_putstr_fd("exit\n", STDERR_FILENO);
-		if (ft_strlen(exit_mat[1]) >= ft_strlen("9223372036854775807"))
-			if (ft_atoi_mod(exit_mat[1]) == 0 && exit_mat[1][0] != '0'
-				&& ft_strlen(exit_mat[1]) != 1)
-				ft_error(shell, EXIT, exit_mat[1]);
-		close_shell(shell);
-	}
+		first_case(shell, exit_mat, pid);
 	else
 	{
 		if (!pid)
@@ -88,7 +103,7 @@ int	more_args(char **exit_mat, t_shell *shell, pid_t pid)
 	else
 	{
 		shell->error = 1;
-		printf("minishell: exit: too many arguments\n");
+		ft_putstr_fd("minishell: exit: too many arguments\n", 2);
 	}
 	return (0);
 }
