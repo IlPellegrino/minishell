@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_checker.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 13:46:29 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/20 18:03:45 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/21 14:43:49 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,8 @@ int	check_word(t_shell *shell, t_token *token, int quote, int *r)
 		token->index[token->wrd][(*r)++] = shell->input[token->start];
 		token->index[token->wrd][(*r)++] = shell->input[token->start + 1];
 		token->index[token->wrd][(*r)] = 0;
-		
 		return (1);
 	}
-	
 	if (shell->input[++token->start] == quote
 		&& (shell->input[token->start + 1] == SPACE
 			|| shell->input[token->start + 1] == TAB

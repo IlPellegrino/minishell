@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 19:12:56 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/03 12:23:02 by nromito          ###   ########.fr       */
+/*   Updated: 2024/06/21 15:36:24 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct s_list
 
 /* string functions */
 int		ft_atoi(const char *str);
+char	*ft_btrim(const char *str, const char *to_remove);
 char	*ft_strtrim(const char *s1, const char *set);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strjoin(const char *s1, const char *s2);
