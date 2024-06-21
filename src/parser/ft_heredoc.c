@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 18:04:21 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/20 17:39:47 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/21 17:49:51 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,27 +30,36 @@ char	*heredoc_name(t_shell *shell)
 
 int	read_heredoc(t_shell *shell, char *eof, int fd, int flag)
 {
-	char	*line;
+	char	*input;
 	int		len;
 	
 	//printf("flag = %c\n", flag);
 	while (1)
 	{
 		g_sig_type = IN_HEREDOC;
-		line = ft_readline(HEREDOC);
-		if (!line)
+		if (isatty(fileno(stdin)))
+			input = readline(HEREDOC);
+		else
+		{
+		char *line;
+			line = get_next_line(fileno(stdin));
+			input = ft_strtrim(line, "\n");
+			free(line);
+		}
+		if (!input)
 			return (0);
-		len = ft_strlen(line);
+		rl_on_new_line();
+		len = ft_strlen(input);
 		if (!len)
 			len = 1;
-		if (!ft_strncmp(line, eof, len + 1))
+		collect_garbage(shell, input, 0);
+		if (!ft_strncmp(input, eof, len + 1))
 			return (1);
-		if (ft_strchr(line, '$') && flag == '0')
+		if (ft_strchr(input, '$') && flag == '0')
 		{
-			line = expand_heredoc(shell, line);
+			input = expand_heredoc(shell, input);
 		}
-		collect_garbage(shell, line, 0);
-		write (fd, line, ft_strlen(line));
+		write (fd, input, ft_strlen(input));
 		write(fd, "\n", 1);
 	}
 	return (0);

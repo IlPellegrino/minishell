@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validate_cmd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 17:14:34 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/21 14:36:54 by nromito          ###   ########.fr       */
+/*   Updated: 2024/06/21 17:30:48 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,9 @@ void	close_table_redirs(t_shell *shell)
 
 int	check_valid(t_shell *shell, char *str)
 {
+	int		last;
+	
+	last = ft_strlen(str) -1;
 	if (!ft_strchr(str, '/'))
 		return (ft_error(shell, COMMAND, str));
 	else if (is_folder(shell, str))
@@ -42,6 +45,8 @@ int	validate_cmd(t_shell *shell, t_table table)
 	char	*pathname;
 
 	last = 0;
+	if (table.command && !*table.command && table.quotes == 0)
+		return (0);
 	if (!table.cmd)
 		return (0);
 	pathname = table.cmd->pathname;

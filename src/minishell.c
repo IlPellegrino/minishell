@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:26:12 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/20 17:39:49 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/21 18:45:07 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,13 +72,13 @@ int	main(int argc, char **argv, char **envp)
 		shell.input = ft_readline(MINISHELL);
 		if (!shell.input)
 			handle_close(&shell, saved_in);
+		collect_garbage(&shell, shell.input, 0);
 		close(saved_in);
 		get_path(&shell);
 		if (shell.input)
 		{
 			if (lexer(&shell) && parsing(&shell) && executor(&shell))
 				shell.error = 0;
-			free(shell.input);
 			if (shell.cmd_table)
 				free_cmd_table(&shell);
 			delete_heredoc();

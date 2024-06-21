@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 15:44:34 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/18 15:47:53 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/21 17:22:54 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	fill_redirs(int end, t_token *token, t_table *table)
 	int	j;
 	int	fd_pos;
 
+	table->quotes = 0;
 	table->token = (t_token *)token;
 	fd_pos = 0;
 	j = 0;
@@ -69,7 +70,8 @@ int	fill_cmd(t_shell *shell, t_token *token, t_table *table, int end)
 	t_cmd	*cmd;
 
 	table->command = 0;
-	cmd = NULL;
+	table->quotes = 0;
+	cmd = NULL;	
 	if (is_cmd(token, end))
 	{
 		i = -1;
@@ -78,6 +80,7 @@ int	fill_cmd(t_shell *shell, t_token *token, t_table *table, int end)
 			if (token->tokens[i] != 'X')
 			{
 				table->command = token->index[i];
+				table->quotes = token->flag[i] - '0';
 				break ;
 			}
 		}

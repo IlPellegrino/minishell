@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:59:59 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/20 19:25:12 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/20 20:14:24 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ char		*make_quotes(char *str);
 int			is_token(char *str);
 
 /* parsing */
+int			to_lex(t_shell *shell);
 int			tokenizer(t_shell *shell);
 int			get_path(t_shell *shell);
 int			parsing(t_shell *shell);
