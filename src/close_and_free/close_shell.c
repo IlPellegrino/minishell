@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 10:32:57 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/17 11:28:29 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/21 15:07:03 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ void	close_shell(t_shell *shell)
 	garbage = temp;
 	while (garbage)
 	{
+		//printf("garbage->arg = %s\n", garbage->arg);
 		if (garbage->arg)
 			free(garbage->arg);
 		if (garbage->mat)

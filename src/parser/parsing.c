@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:54:36 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/18 14:47:49 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/21 11:27:43 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,10 @@ int	parse_input(t_shell *shell)
 int	parsing(t_shell *shell)
 {
 	shell->len = 0;
+	if (to_lex(shell))
+		lexer(shell);
+	/*for (int i = 0; shell->tokens->index[i]; i++)
+		printf("index = %s\n", shell->tokens->index[i]);*/
 	if (!tokenizer(shell))
 		return (0);
 	if (!parse_input(shell))

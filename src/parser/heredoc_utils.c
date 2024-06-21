@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 17:45:12 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/20 11:06:41 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/21 15:13:02 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ char	*expand_heredoc(t_shell *shell, char *line)
 	char	*final_str;
 	char	*temp;
 
-	final_str = 0;
 	i = -1;
 	while (line[++i])
 	{
@@ -80,7 +79,6 @@ char	*expand_heredoc(t_shell *shell, char *line)
 			&& (ft_isalnum(line[i + 1]) || line[i + 1] == '$'))
 		{
 			temp = ft_strdup(line);
-			free(line);
 			line = here_expand(shell, temp, i);
 			free(temp);
 			i = -1;
@@ -88,5 +86,6 @@ char	*expand_heredoc(t_shell *shell, char *line)
 	}
 	final_str = ft_strdup(line);
 	free(line);
+	collect_garbage(shell, final_str, 0);
 	return (final_str);
 }

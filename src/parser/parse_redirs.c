@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 12:34:56 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/20 16:42:58 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/21 15:17:19 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ int	parse_heredoc(t_shell *shell, t_token *token)
 		if (token->tokens[i] == 'H')
 		{
 			token->redirs[i + 1] = ft_heredoc(shell, token, i + 1);
+			if (!token->redirs[i + 1])
+				return (0);
 		}
 	}
 	return (1);

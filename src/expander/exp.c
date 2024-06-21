@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:52:38 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/20 17:43:09 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/20 20:20:08 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,5 +85,6 @@ void	expand_values(t_shell *shell, t_token *token)
 	if (!exp.final_str)
 		exp.final_str = ft_strdup(exp.line);
 	free(exp.line);
+	//printf("expanded = %s\n", exp.final_str);
 	token->index[token->wrd] = exp.final_str;
 }

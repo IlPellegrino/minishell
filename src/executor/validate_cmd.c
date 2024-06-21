@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 17:14:34 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/20 19:31:40 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/21 10:20:36 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	close_table_redirs(t_shell *shell)
 int	check_valid(t_shell *shell, char *str)
 {
 	int		last;
-
+	
 	last = ft_strlen(str) -1;
 	if (!ft_strchr(str, '/'))
 		return (ft_error(shell, COMMAND, str));
