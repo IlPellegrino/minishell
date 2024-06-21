@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 17:46:33 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/21 15:40:47 by nromito          ###   ########.fr       */
+/*   Updated: 2024/06/21 17:14:07 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ char	*make_expansion(t_exp *exp, char *to_expand)
 {
 	char	*tmp;
 
-	to_expand = ft_strtrim(to_expand, " ");
 	while (to_expand[++exp->pos] && to_expand[exp->pos] != '=')
 		exp->begin++;
 	if (to_expand[exp->pos] != '\0')
@@ -59,6 +58,7 @@ char	*make_expansion(t_exp *exp, char *to_expand)
 	tmp = ft_btrim(exp->res, " ");
 	free(exp->res);
 	exp->res = ft_strdup(tmp);
+	free(tmp);
 	return (exp->res);
 }
 
