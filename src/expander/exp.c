@@ -6,16 +6,16 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:52:38 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/20 20:20:08 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/21 18:39:32 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-int	to_expand(int i, char *line)
+int	to_expand(int i, char *line, int dq, int sq)
 {
-	if ((line[i + 1] == SQ && line[i + 2])
-		|| (line[i + 1] == DQ && line[i + 2])
+	if ((line[i + 1] == SQ && line[i + 2] && !sq)
+		|| (line[i + 1] == DQ && line[i + 2] && !dq)
 		|| ft_isalnum(line[i + 1])
 		|| line[i + 1] == US
 		|| line[i + 1] == '$'
@@ -72,7 +72,7 @@ void	expand_values(t_shell *shell, t_token *token)
 	{
 		quotes_handler(exp.line[i], &exp);
 		if (exp.line[i] == '$' && exp.line[i + 1]
-			&& !exp.sq && to_expand(i, exp.line))
+			&& !exp.sq && to_expand(i, exp.line, exp.dq, exp.sq))
 		{
 			if (exp.final_str)
 				free(exp.final_str);

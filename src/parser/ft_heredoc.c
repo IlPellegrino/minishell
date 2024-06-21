@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 18:04:21 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/21 15:32:19 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/21 17:49:51 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	read_heredoc(t_shell *shell, char *eof, int fd, int flag)
 	{
 		g_sig_type = IN_HEREDOC;
 		if (isatty(fileno(stdin)))
-			input = readline(">");
+			input = readline(HEREDOC);
 		else
 		{
 		char *line;

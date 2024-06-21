@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 12:08:42 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/21 11:20:05 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/21 17:19:07 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,7 @@
 # define HEREDOC "\033[1;33m> \033[0m"
 # define RED_ARROW "\e[1;91m➔\033[0m "
 # define GREEN_ARROW "\e[1;92m➔\033[0m "
-# define MINISHELL "minishell "
-//# define MINISHELL "\e[1;96mminishell\033[0m$ "
+# define MINISHELL "\e[1;96mminishell\033[0m$ "
 # define EOF_ERROR "minishell: warning: here-document\
 delimited by end-of-file (wanted `eof')"
 # define DQ 34
