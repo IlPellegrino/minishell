@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 10:52:14 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/18 16:07:49 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/21 14:56:54 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ char	*ft_strtrim(const char *s1, const char *set)
 	char	*newstr;
 	size_t	i;
 
-	i = 0;
 	if (!s1)
 		return (0);
 	while (*s1 != '\0' && ft_cinstr(set, *s1))

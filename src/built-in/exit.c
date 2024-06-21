@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 11:42:41 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/20 16:30:31 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/21 14:35:43 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	two_args(char **exit_mat, t_shell *shell, pid_t pid)
 	else
 	{
 		if (!pid)
-			;//ft_putstr_fd("exit\n", STDERR_FILENO);
+			ft_putstr_fd("exit\n", STDERR_FILENO);
 		ft_error(shell, EXIT, exit_mat[1]);
 		close_shell(shell);
 	}
@@ -95,7 +95,7 @@ int	more_args(char **exit_mat, t_shell *shell, pid_t pid)
 	if (first == 1)
 	{
 		if (!pid)
-			;//ft_putstr_fd("exit\n", STDERR_FILENO);
+			ft_putstr_fd("exit\n", STDERR_FILENO);
 		ft_error(shell, EXIT, exit_mat[1]);
 		shell->error = 2;
 		close_shell(shell);
@@ -117,7 +117,7 @@ int	ft_exit(char **exit_mat, t_shell *shell, pid_t pid)
 	if (matrix_len(exit_mat) < 2)
 	{
 		if (!pid)
-			;//ft_putstr_fd("exit\n", STDERR_FILENO);
+			ft_putstr_fd("exit\n", STDERR_FILENO);
 		close_shell(shell);
 	}
 	else if (matrix_len(exit_mat) < 3)

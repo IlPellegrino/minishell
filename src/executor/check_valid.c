@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 15:40:51 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/20 19:32:56 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/21 17:09:34 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,16 +78,14 @@ int	not_binary(t_shell *shell, char *str)
 	if (stat(str, &path_stat) != 0)
 		return (1);
 	if (!S_ISREG(path_stat.st_mode) || !(path_stat.st_mode & S_IXUSR))
-		return (0);
+		return (1);
 	fd = open(str, O_RDONLY);
 	if (fd < 1)
 		return (1);
 	bytes_read = read(fd, buffer, 4);
 	close(fd);
 	if (bytes_read < 4)
-	{
 		return (1);
-	}
 	if (buffer[0] == 0x7f && buffer[1] == 'E'
 		&& buffer[2] == 'L' && buffer[3] == 'F')
 		return (0);

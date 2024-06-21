@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 17:14:34 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/21 10:20:36 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/21 17:06:55 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,9 @@ int	check_valid(t_shell *shell, char *str)
 
 int	validate_cmd(t_shell *shell, t_table table)
 {
-	int		i;
 	int		last;
 	char	*pathname;
 
-	i = -1;
 	last = 0;
 	if (!table.cmd)
 		return (0);
