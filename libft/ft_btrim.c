@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 15:16:18 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/21 15:42:27 by nromito          ###   ########.fr       */
+/*   Updated: 2024/06/21 18:55:40 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,12 @@ char	*ft_btrim(const char *str, const char *to_remove)
 		return (NULL);
 	while (str[++i])
 	{
+		if (str[i] == to_remove[0])
+			newstr[++j] = str[i++];
 		while (str[i] && str[i] == to_remove[0])
 			i++;
 		while (str[i] && str[i] != to_remove[0])
 			newstr[++j] = str[i++];
-		if (str[i])
-			newstr[++j] = str[i];
 	}
 	return (newstr);
 }
