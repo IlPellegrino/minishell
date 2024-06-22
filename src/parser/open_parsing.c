@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 15:16:59 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/22 19:58:19 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/22 20:05:02 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,15 +67,16 @@ int	is_open(char *str)
 	i = -1;
 	while (str[++i])
 	{
-		if (str[i] == DQ && !sq)
-			dq = 1;
-		else if (str[i] == DQ && dq)
+		if (str[i] == DQ && dq)
 			dq = 0;
-		else if (str[i] == SQ && !dq)
-			sq = 1;
+		else if (str[i] == DQ && !sq)
+			dq = 1;
 		else if (str[i] == SQ && sq)
 			sq = 0;
+		else if (str[i] == SQ && !dq)
+			sq = 1;
 	}
+	printf("dq = %d -- sq = %d\n", dq, sq);
 	if (sq)
 		return (SQ);
 	else if (dq)
@@ -114,7 +115,10 @@ int	open_quote(t_shell *shell)
 	saved_in = dup(0);
 	quote = is_open(shell->input);
 	if (!quote)
+	{
+		dup2(saved_in, 0);
 		return (0);
+	}
 	prompt = init_open_quote(shell, quote);
 	if (!get_open_quote(shell, prompt, quote))
 	{
