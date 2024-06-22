@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 15:16:59 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/22 20:05:02 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/22 20:06:02 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ int	is_open(char *str)
 		else if (str[i] == SQ && !dq)
 			sq = 1;
 	}
-	printf("dq = %d -- sq = %d\n", dq, sq);
 	if (sq)
 		return (SQ);
 	else if (dq)
