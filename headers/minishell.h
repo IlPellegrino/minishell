@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ciusca <ciusca@student.42firenze.it>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:59:59 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/22 19:16:43 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/22 22:40:22 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,8 +156,8 @@ int			init_structs(t_shell *shell, int argc, char **argv, char **envp);
 void		sig_handle(t_shell *shell);
 void		close_redirs(int *red, int len);
 char		*get_prompt(int quote);
-char		*init_open_quote(t_shell *shell, int quote);
-char		*read_open_quote(t_shell *shell, char *prompt);
+char		*init_open_quote(t_shell *shell);
+char		*read_open_quote(t_shell *shell);
 char		*append_input(t_shell *shell, char *after_quote);
 void		append_newline(t_shell *shell, char *final_input);
 char		*quote_string(int quote);

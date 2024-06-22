@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ciusca <ciusca@student.42firenze.it>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:26:12 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/22 19:19:06 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/22 23:04:51 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,12 @@
 
 int	g_sig_type;
 
-void	set_arrow(t_shell *shell)
+void	set_prompt(t_shell *shell)
 {
 	if (!shell->error)
-		shell->arrow = GREEN_ARROW;
+		shell->prompt = MINISHELL;
 	else
-		shell->arrow = RED_ARROW;
-	printf("%s", shell->arrow);
+		shell->prompt = RED_MINISHELL;
 }
 
 char	*ft_readline(char *str)
@@ -65,8 +64,8 @@ int	main(int argc, char **argv, char **envp)
 		saved_in = dup(STDIN_FILENO);
 		g_sig_type = 0;
 		get_signal();
-		//set_arrow(&shell);
-		shell.input = ft_readline(MINISHELL);
+		set_prompt(&shell);
+		shell.input = ft_readline(shell.prompt);
 		open_quote(&shell);
 		if (!shell.input)
 			handle_close(&shell, saved_in);
@@ -79,5 +78,6 @@ int	main(int argc, char **argv, char **envp)
 				shell.error = 0;
 			delete_heredoc();
 		}
+		//appen_history(shell); // <-- to do;
 	}
 }

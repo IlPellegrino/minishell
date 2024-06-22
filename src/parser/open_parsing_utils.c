@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   open_parsing_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ciusca <ciusca@student.42firenze.it>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 18:48:21 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/22 19:16:24 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/22 22:53:49 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,11 @@ void	append_newline(t_shell *shell, char *final_input)
 	free(temp);
 }
 
-char	*read_open_quote(t_shell *shell, char *prompt)
+char	*read_open_quote(t_shell *shell)
 {
 	char	*after_quote;
 
-	after_quote = readline(prompt);
+	after_quote = readline("open quote "GREEN"-> "RESET);
 	if (!after_quote)
 		return (0);
 	rl_on_new_line();
@@ -52,7 +52,7 @@ char	*read_open_quote(t_shell *shell, char *prompt)
 	return (after_quote);
 }
 
-char	*init_open_quote(t_shell *shell, int quote)
+char	*init_open_quote(t_shell *shell)
 {
 	char	*temp;
 	char	*prompt;
@@ -61,7 +61,7 @@ char	*init_open_quote(t_shell *shell, int quote)
 	free(shell->input);
 	shell->input = ft_strjoin(temp, "\n");
 	free(temp);
-	prompt = get_prompt(quote);
+	prompt = ft_strdup("open quote "GREEN"-> "RESET);
 	collect_garbage(shell, prompt, 0);
 	return (prompt);
 }

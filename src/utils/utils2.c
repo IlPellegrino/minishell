@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ciusca <ciusca@student.42firenze.it>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 15:42:43 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/22 18:46:01 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/22 22:35:05 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,4 @@ void	sig_handle(t_shell *shell)
 		shell->error = 130;
 	else if (g_sig_type == CORE_DUMPED)
 		shell->error = 131;
-}
-
-char	*get_prompt(int quote)
-{
-	char	*str;
-	
-	str = ft_strdup("-> ' <- ");
-	str[3] = quote;
-	return (str);
 }

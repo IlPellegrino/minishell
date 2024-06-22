@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ciusca <ciusca@student.42firenze.it>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 19:59:43 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/22 19:36:22 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/22 22:48:57 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ int	init_structs(t_shell *shell, int argc, char **argv, char **envp)
 	shell->len = 0;
 	shell->collector = garbage;
 	shell->cmd_table = 0;
-	shell->arrow = ft_calloc(sizeof(char *), ft_strlen(GREEN_ARROW) + 1);
-	collect_garbage(shell, shell->arrow, 0);
-	shell->arrow = GREEN_ARROW;
+	shell->prompt = ft_calloc(sizeof(char *), ft_strlen(MINISHELL) + 1);
+	collect_garbage(shell, shell->prompt, 0);
+	shell->prompt= MINISHELL;
 	shell->executor = 0;
 	collect_garbage(shell, 0, shell->envp);
 	return (1);

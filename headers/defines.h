@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   defines.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ciusca <ciusca@student.42firenze.it>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 12:08:42 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/22 19:32:01 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/22 23:08:20 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # define HEREDOC "\033[1;33m> \033[0m"
 # define RED_ARROW "\e[1;91m➔\033[0m "
 # define GREEN_ARROW "\e[1;92m➔\033[0m "
-# define MINISHELL "\e[1;96mminishell\033[0m$ "
+//# define MINISHELL "\e[1;96mminishell\033[0m$ "
 # define EOF_ERROR "minishell: warning: here-document\
 delimited by end-of-file (wanted `eof')"
 # define HERE_EOF 3
@@ -48,5 +48,24 @@ delimited by end-of-file (wanted `eof')"
 # define CD_UNSET 15
 # define OPEN_QUOTE 16
 # define OPEN_PIPE 17
+
+#define MINISHELL CYAN \
+"╭─( " BOLD ITALIC UNDERLINE YELLOW "Minishell" RESET CYAN " )\n" \
+"\001" CYAN "╰─> \002" RESET
+#define RED_MINISHELL RED \
+"╭─( " BOLD ITALIC UNDERLINE MAGENTA "Minishell" RESET RED " )\n" \
+"\001" RED "╰─> \002" RESET
+#define BLACK        "\x1b[30m"
+#define RED          "\x1b[31m"
+#define GREEN        "\e[1;32m"
+#define YELLOW       "\x1b[33m"
+#define BLUE         "\x1b[34m"
+#define MAGENTA      "\x1b[35m"
+#define CYAN         "\x1b[36m"
+#define WHITE        "\x1b[37m"
+#define BOLD         "\x1b[1m"
+#define ITALIC       "\x1b[3m"
+#define UNDERLINE    "\x1b[4m"
+#define RESET          "\x1b[0m"
 
 #endif

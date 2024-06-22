@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ciusca <ciusca@student.42firenze.it>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 12:08:46 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/21 10:22:18 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/22 22:49:12 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ typedef struct s_shell
 	int			sig_recived;
 	int			n_pipes;
 	int			len;
-	char		*arrow;
+	char		*prompt;
 	t_token		*tokens;
 	t_garbage	*collector;
 	t_table		*cmd_table;

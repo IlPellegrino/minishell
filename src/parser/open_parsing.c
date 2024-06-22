@@ -3,30 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   open_parsing.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ciusca <ciusca@student.42firenze.it>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 15:16:59 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/22 20:06:02 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/22 22:57:02 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
+
+int	close_open_pipe(t_shell *shell, int saved_in)
+{
+	if (g_sig_type == SIG_C)
+		{
+			shell->error = 130;
+			dup2(saved_in, 0);
+			return (0);
+		}
+		ft_error(shell, OPEN_PIPE, 0);
+		close_shell(shell);
+		return (1);
+}
 
 int	open_pipe(t_shell *shell)
 {
 	char	*after_pipe;
 	char	*new_input;
 	char	*temp;
+	int		saved_in;
 
+	saved_in = dup(0);
 	while (1)
 	{
-		after_pipe = readline("pipe\e[1;32m->\033[0m ");
+		after_pipe = readline(BOLD"( " UNDERLINE MAGENTA "Pipe" RESET UNDERLINE " ->" RESET " ) ");
 		rl_on_new_line();
 		if (!after_pipe)
-		{
-			ft_error(shell, OPEN_PIPE, 0);
-			close_shell(shell);
-		}
+			return (close_open_pipe(shell, saved_in));
 		if (!*after_pipe)
 			continue ;
 		temp = ft_strjoin(shell->input, after_pipe);
@@ -83,7 +95,7 @@ int	is_open(char *str)
 	return (0);
 }
 
-int	get_open_quote(t_shell *shell, char *prompt, int quote)
+int	get_open_quote(t_shell *shell, int quote)
 {
 	char	*after_quote;
 	char	*final_input;
@@ -91,7 +103,7 @@ int	get_open_quote(t_shell *shell, char *prompt, int quote)
 	while (1)
 	{
 		g_sig_type = 1;
-		after_quote = read_open_quote(shell, prompt);
+		after_quote = read_open_quote(shell);
 		if (!after_quote)
 			return (0);
 		final_input = append_input(shell, after_quote);
@@ -106,7 +118,6 @@ int	get_open_quote(t_shell *shell, char *prompt, int quote)
 int	open_quote(t_shell *shell)
 {
 	int		quote;
-	char	*prompt;
 	int		saved_in;
 
 	if (!shell->input)
@@ -118,8 +129,8 @@ int	open_quote(t_shell *shell)
 		dup2(saved_in, 0);
 		return (0);
 	}
-	prompt = init_open_quote(shell, quote);
-	if (!get_open_quote(shell, prompt, quote))
+	init_open_quote(shell);
+	if (!get_open_quote(shell, quote))
 	{
 		dup2(saved_in, 0);
 		shell->error = 130;
