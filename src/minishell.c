@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:26:12 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/21 18:45:07 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/22 19:19:06 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,7 @@ int	handle_close(t_shell *shell, int saved_in)
 	dup2(saved_in, STDIN_FILENO);
 	close(saved_in);
 	if (g_sig_type != SIG_C)
-	{
-		//ft_putendl_fd("exit", 2);
 		close_shell(shell);
-	}
 	else if (g_sig_type == SIG_C)
 		shell->error = 130;
 	return (1);
@@ -70,6 +67,7 @@ int	main(int argc, char **argv, char **envp)
 		get_signal();
 		//set_arrow(&shell);
 		shell.input = ft_readline(MINISHELL);
+		open_quote(&shell);
 		if (!shell.input)
 			handle_close(&shell, saved_in);
 		collect_garbage(&shell, shell.input, 0);
@@ -79,8 +77,6 @@ int	main(int argc, char **argv, char **envp)
 		{
 			if (lexer(&shell) && parsing(&shell) && executor(&shell))
 				shell.error = 0;
-			if (shell.cmd_table)
-				free_cmd_table(&shell);
 			delete_heredoc();
 		}
 	}

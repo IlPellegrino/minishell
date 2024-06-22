@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 19:59:43 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/20 19:30:57 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/22 19:36:22 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ int	check_exit_status(t_shell *shell, int error_type)
 		shell->error = 1;
 	else if (error_type == BINARY)
 		shell->error = 2;
+	else if (error_type == OPEN_QUOTE || error_type == OPEN_PIPE)
+		shell->error = 2;
 	else if (error_type == FOLDER || error_type == NOT_FOLDER
 		|| error_type == NO_PERMISSION)
 		shell->error = 126;
@@ -87,6 +89,13 @@ int	ft_error2(int error_type, char *str)
 		print_err("minishell: ", str, ": Permission denied");
 	else if (error_type == CD_UNSET)
 		print_err("minishell: cd: ", str, " not set");
+	else if (error_type == OPEN_QUOTE)
+	{
+		print_err("minishell: unexpected EOF while looking for matching `", str, "'");
+		print_err("minishell: syntax error: unexpected end of file\n", 0, 0);
+	}
+	else if (error_type == OPEN_PIPE)
+		print_err("minishell: syntax error: unexpected end of file\n", 0, 0);
 	return (1);
 }
 
