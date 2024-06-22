@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_utils2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 17:45:12 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/21 16:25:30 by nromito          ###   ########.fr       */
+/*   Updated: 2024/06/22 14:26:54 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char	*here_expand(t_shell *shell, char *str, int start)
 	while (str[++i] && (ft_isalnum(str[i]) || str[i] == US))
 	{
 		if (count == 0 && ft_isdigit(str[i]))
-			break;
+			break ;
 		count++;
 	}
 	if (!count)

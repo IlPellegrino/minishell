@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 20:08:18 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/21 13:03:52 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/22 14:27:22 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ int	to_lex(t_shell *shell)
 {
 	int		i;
 	t_token	*token;
-	//char	*final_str;
 
 	token = shell->tokens;
 	i = -1;
@@ -42,7 +41,6 @@ int	to_lex(t_shell *shell)
 	{
 		if (count_words(token->index[i]) > 1 && token->flag[i] == '0')
 		{
-			//free(shell->input);
 			shell->input = make_string(token->index);
 			collect_garbage(shell, shell->input, 0);
 			return (1);

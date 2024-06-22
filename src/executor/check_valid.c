@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 15:40:51 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/21 18:00:29 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/22 14:26:16 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,7 @@ int	is_folder(t_shell *shell, char *str)
 	else if (str[0] != '.' && not_folder(str))
 		return (ft_error(shell, NOT_FOLDER, str), 1);
 	if (access(str, F_OK) == -1)
-	{
-		return (ft_error(shell, NO_FILE, str), 1);	
-	}
+		return (ft_error(shell, NO_FILE, str), 1);
 	return (0);
 }
 

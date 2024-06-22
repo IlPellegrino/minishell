@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 17:14:34 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/21 17:30:48 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/22 14:25:14 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	close_table_redirs(t_shell *shell)
 {
-	t_table *table;
+	t_table	*table;
 	int		i;
 
 	table = shell->cmd_table;
@@ -26,7 +26,7 @@ void	close_table_redirs(t_shell *shell)
 int	check_valid(t_shell *shell, char *str)
 {
 	int		last;
-	
+
 	last = ft_strlen(str) -1;
 	if (!ft_strchr(str, '/'))
 		return (ft_error(shell, COMMAND, str));

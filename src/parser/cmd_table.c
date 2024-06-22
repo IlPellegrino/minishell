@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 15:44:34 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/21 17:22:54 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/22 14:26:43 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	fill_cmd(t_shell *shell, t_token *token, t_table *table, int end)
 
 	table->command = 0;
 	table->quotes = 0;
-	cmd = NULL;	
+	cmd = NULL;
 	if (is_cmd(token, end))
 	{
 		i = -1;

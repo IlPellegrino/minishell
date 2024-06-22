@@ -3,34 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 11:42:12 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/20 15:26:18 by nromito          ###   ########.fr       */
+/*   Updated: 2024/06/22 14:24:48 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-int	change_dir(char *cd_arg, DIR *folder, t_shell *shell)
+void	update_cwd(t_shell *shell, char *to_update)
 {
-	DIR		*dest;	
 	char	**oldpwd;
 	char	*cwd;
 
 	oldpwd = ft_calloc(sizeof(char *), 3);
 	oldpwd[0] = ft_strdup("export");
 	cwd = getcwd(NULL, 0);
-	oldpwd[1] = ft_strjoin("OLDPWD=", cwd);
+	oldpwd[1] = ft_strjoin(to_update, cwd);
 	free(cwd);
 	ft_export(oldpwd, shell);
 	free_matrix(oldpwd);
+}
+
+int	change_dir(char *cd_arg, DIR *folder, t_shell *shell)
+{
+	DIR		*dest;	
+	
+	update_cwd(shell, "OLDPWD=");
 	dest = opendir(cd_arg);
 	if (dest)
 	{
 		closedir(folder);
 		closedir(dest);
 		chdir(cd_arg);
+		update_cwd(shell, "PWD=");
 		return (1);
 	}
 	return (0);
