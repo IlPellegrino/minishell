@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:26:12 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/22 19:19:06 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/24 18:11:43 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,30 @@
 
 int	g_sig_type;
 
-void	set_arrow(t_shell *shell)
+char	*set_prompt(t_shell *shell)
 {
+	char	*dir;
+	char	*prompt;
+	char	*temp;
+
+	temp = getcwd(0, 0);
+	dir = ft_strdup(ft_strrchr(temp, '/'));
+	free(temp);
 	if (!shell->error)
-		shell->arrow = GREEN_ARROW;
-	else
-		shell->arrow = RED_ARROW;
-	printf("%s", shell->arrow);
+	{
+		temp = ft_strjoin(dir, RESET SECOND_PART);
+		free(dir);
+		prompt = ft_strjoin(MINISHELL, temp);
+		free(temp);
+		collect_garbage(shell, prompt, 0);
+		return (prompt);
+	}
+	temp = ft_strjoin(dir, RESET SECOND_RED);
+	free(dir);
+	prompt = ft_strjoin(RED_MINISHELL, temp);
+	free(temp);
+	collect_garbage(shell, prompt, 0);
+	return (prompt);
 }
 
 char	*ft_readline(char *str)
@@ -38,19 +55,24 @@ char	*ft_readline(char *str)
 	}
 	if (!input)
 		return (0);
-	add_history(input);
 	rl_on_new_line();
 	return (input);
 }
 
 int	handle_close(t_shell *shell, int saved_in)
 {
-	dup2(saved_in, STDIN_FILENO);
-	close(saved_in);
-	if (g_sig_type != SIG_C)
+	if (!shell->input)
+	{
+		close(saved_in);
 		close_shell(shell);
-	else if (g_sig_type == SIG_C)
+	}
+	else if (g_sig_type == 19)
+	{
 		shell->error = 130;
+		g_sig_type = 0;
+		dup2(saved_in, STDIN_FILENO);
+		close(saved_in);
+	}
 	return (1);
 }
 
@@ -60,24 +82,25 @@ int	main(int argc, char **argv, char **envp)
 	int			saved_in;
 
 	init_structs(&shell, argc, argv, envp);
+	g_sig_type = 0;
 	while (JESUS)
 	{
-		saved_in = dup(STDIN_FILENO);
-		g_sig_type = 0;
 		get_signal();
-		//set_arrow(&shell);
-		shell.input = ft_readline(MINISHELL);
-		open_quote(&shell);
-		if (!shell.input)
-			handle_close(&shell, saved_in);
+		saved_in = dup(STDIN_FILENO);
+		shell.input = ft_readline(set_prompt(&shell));
+		handle_close(&shell, saved_in);
 		collect_garbage(&shell, shell.input, 0);
+		if (!parse_open(&shell))
+			continue ;
 		close(saved_in);
-		get_path(&shell);
 		if (shell.input)
 		{
-			if (lexer(&shell) && parsing(&shell) && executor(&shell))
+			if (lexer(&shell) && parsing(&shell, saved_in) && executor(&shell))
 				shell.error = 0;
+			if (shell.cmd_table)
+				free_cmd_table(&shell);
 			delete_heredoc();
 		}
+		update_history(&shell);
 	}
 }

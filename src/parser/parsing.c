@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:54:36 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/22 19:33:13 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/24 18:04:11 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	parse_pipe(t_shell *shell)
 			if (i == 0)
 				return (ft_error(shell, SYNTAX, token->index[i]));
 			else if (!token->tokens[i + 1])
-				return (open_pipe(shell));
+				return (ft_error(shell, SYNTAX, "\\n"));
 		}
 	}
 	return (1);
@@ -101,13 +101,14 @@ int	parse_input(t_shell *shell)
 	return (1);
 }
 
-int	parsing(t_shell *shell)
+int	parsing(t_shell *shell, int saved_in)
 {
 	shell->len = 0;
 	if (to_lex(shell))
+	{
+		close(saved_in);
 		lexer(shell);
-	/*for (int i = 0; shell->tokens->index[i]; i++)
-		printf("index = %s\n", shell->tokens->index[i]);*/
+	}
 	if (!tokenizer(shell))
 		return (0);
 	if (!parse_input(shell))

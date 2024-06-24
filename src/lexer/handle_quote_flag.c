@@ -1,40 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_token.c                                      :+:      :+:    :+:   */
+/*   handle_quote_flag.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/20 13:50:01 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/24 18:09:57 by ciusca           ###   ########.fr       */
+/*   Created: 2024/06/24 12:40:50 by ciusca            #+#    #+#             */
+/*   Updated: 2024/06/24 13:03:30 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-char	*make_quotes(char *str)
+int	is_command(char *str)
 {
-	char	*temp;
-	char	*final_str;
+	int		i;
+	char	*copy;
+	int		count;
+	int		j;
 
-	temp = ft_strjoin("\"", str);
-	free(str);
-	final_str = ft_strjoin(temp, "\"");
-	free(temp);
-	return (final_str);
-}
-
-int	is_token(char *str)
-{
-	if (!ft_strncmp(str, "<<", 3))
-		return (1);
-	else if (!ft_strncmp(str, ">>", 3))
-		return (1);
-	else if (!ft_strncmp(str, "<", 2))
-		return (1);
-	else if (!ft_strncmp(str, ">", 2))
-		return (1);
-	else if (!ft_strncmp(str, "|", 2))
-		return (1);
+	count = 0;
+	i = -1;
+	while (ft_isspace(str[i]))
+		i++;
+	j = i;
+	while (!ft_isspace(str[i]))
+	{
+		count++;
+		i++;
+	}
+	copy = ft_calloc(sizeof(char *), count + 1);
+	if (!copy)
+		return (0);
+	i = -1;
+	while (j++ < count)
+		copy[++i] = str[j];
+	if (is_builtin(copy))
+		return (free(copy), 1);
 	return (0);
 }

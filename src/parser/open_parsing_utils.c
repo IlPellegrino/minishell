@@ -5,63 +5,76 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/22 18:48:21 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/22 19:16:24 by ciusca           ###   ########.fr       */
+/*   Created: 2024/06/24 00:40:45 by ciusca            #+#    #+#             */
+/*   Updated: 2024/06/24 18:00:08 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-char	*quote_string(int quote)
+int	handle_exit_err(t_shell *shell, int saved_in, int quote)
 {
-	if (quote == DQ)
-		return ("\"");
-	return ("'");
+	dup2(saved_in, 0);
+	close(saved_in);
+	if (g_sig_type == SIG_C)
+	{
+		shell->error = 130;
+		g_sig_type = 42;
+	}
+	else
+	{
+		ft_error(shell, QUOTE_ERR, (char *) &quote);
+		close_shell(shell);
+	}
+	return (0);
 }
 
-char	*append_input(t_shell *shell, char *after_quote)
+char	*append_newline(char *str)
 {
-	char	*final_input;
-	
-	final_input = ft_strjoin(shell->input, after_quote);
-	free(shell->input);
-	shell->input = ft_strdup(final_input);
-	collect_garbage(shell, final_input, 0);
-	return (final_input);
+	char	*new_str;
+
+	new_str = ft_strjoin(str, "\n");
+	return (new_str);
 }
 
-void	append_newline(t_shell *shell, char *final_input)
+int	check_close_quotes(char *str, int c)
 {
-	char	*temp;
+	int	i;
+	int	count;
 
-	temp = ft_strdup(final_input);
-	free(shell->input);
-	shell->input = ft_strjoin(temp, "\n");
-	free(temp);
+	i = -1;
+	count = 0;
+	while (str[++i])
+	{
+		if (str[i] == c)
+			count++;
+	}
+	return (count % 2);
 }
 
-char	*read_open_quote(t_shell *shell, char *prompt)
+int	quote_is_open(char *str)
 {
-	char	*after_quote;
+	int	i;
+	int	sq;
+	int	dq;
 
-	after_quote = readline(prompt);
-	if (!after_quote)
-		return (0);
-	rl_on_new_line();
-	collect_garbage(shell, after_quote, 0);
-	return (after_quote);
-}
-
-char	*init_open_quote(t_shell *shell, int quote)
-{
-	char	*temp;
-	char	*prompt;
-
-	temp = ft_strdup(shell->input);
-	free(shell->input);
-	shell->input = ft_strjoin(temp, "\n");
-	free(temp);
-	prompt = get_prompt(quote);
-	collect_garbage(shell, prompt, 0);
-	return (prompt);
+	dq = 0;
+	sq = 0;
+	i = -1;
+	while (str[++i])
+	{
+		if (str[i] == DQ && dq)
+			dq = 0;
+		else if (str[i] == DQ && !sq)
+			dq = 1;
+		else if (str[i] == SQ && sq)
+			sq = 0;
+		else if (str[i] == SQ && !dq)
+			sq = 1;
+	}
+	if (sq)
+		return (SQ);
+	else if (dq)
+		return (DQ);
+	return (0);
 }

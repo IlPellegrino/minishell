@@ -5,128 +5,68 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/22 15:16:59 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/22 20:06:02 by ciusca           ###   ########.fr       */
+/*   Created: 2024/06/24 00:35:18 by ciusca            #+#    #+#             */
+/*   Updated: 2024/06/24 18:03:40 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-int	open_pipe(t_shell *shell)
+int	read_open_quote(t_shell *shell, char **input, int quote)
 {
-	char	*after_pipe;
-	char	*new_input;
+	char	*after_quote;
 	char	*temp;
 
 	while (1)
 	{
-		after_pipe = readline("pipe\e[1;32m->\033[0m ");
-		rl_on_new_line();
-		if (!after_pipe)
-		{
-			ft_error(shell, OPEN_PIPE, 0);
-			close_shell(shell);
-		}
-		if (!*after_pipe)
-			continue ;
-		temp = ft_strjoin(shell->input, after_pipe);
-		new_input = ft_strtrim(temp, "\n");
-		free(temp);
-		shell->input = new_input;
-		collect_garbage(shell, shell->input, 0);
-		break ;
-	}
-	lexer(shell);
-	tokenizer(shell);
-	return  (1);
-}
-
-int	check_closed(char *str, int c)
-{
-	int	i;
-	int	count;
-
-	i = -1;
-	count = 0;
-	while (str[++i])
-	{
-		if (str[i] == c)
-			count++;
-	}
-	return (count % 2);
-}
-
-int	is_open(char *str)
-{
-	int	i;
-	int	sq;
-	int	dq;
-
-	dq = 0;
-	sq = 0;
-	i = -1;
-	while (str[++i])
-	{
-		if (str[i] == DQ && dq)
-			dq = 0;
-		else if (str[i] == DQ && !sq)
-			dq = 1;
-		else if (str[i] == SQ && sq)
-			sq = 0;
-		else if (str[i] == SQ && !dq)
-			sq = 1;
-	}
-	if (sq)
-		return (SQ);
-	else if (dq)
-		return (DQ);
-	return (0);
-}
-
-int	get_open_quote(t_shell *shell, char *prompt, int quote)
-{
-	char	*after_quote;
-	char	*final_input;
-
-	while (1)
-	{
 		g_sig_type = 1;
-		after_quote = read_open_quote(shell, prompt);
+		after_quote = readline(OPEN_QUOTE);
 		if (!after_quote)
 			return (0);
-		final_input = append_input(shell, after_quote);
-		if (check_closed(after_quote, quote))
-			return  (1);
-		append_newline(shell, final_input);
+		temp = ft_strdup(*input);
+		*input = ft_strjoin(temp, after_quote);
+		free(temp);
+		collect_garbage(shell, *input, 0);
+		collect_garbage(shell, after_quote, 0);
+		if (check_close_quotes(after_quote, quote))
+			break ;
+		*input = append_newline(*input);
+		collect_garbage(shell, *input, 0);
 	}
-	return (0);
+	return (1);
 }
 
-
-int	open_quote(t_shell *shell)
+int	open_quote(t_shell *shell, int quote)
 {
-	int		quote;
-	char	*prompt;
+	char	*temp;
+	char	*input;
 	int		saved_in;
 
-	if (!shell->input)
-		return (0);
 	saved_in = dup(0);
-	quote = is_open(shell->input);
-	if (!quote)
+	input = ft_strdup(shell->input);
+	temp = ft_strdup(input);
+	free(input);
+	input = ft_strjoin(temp, "\n");
+	collect_garbage(shell, input, 0);
+	free(temp);
+	if (!read_open_quote(shell, &input, quote))
 	{
-		dup2(saved_in, 0);
-		return (0);
+		return (handle_exit_err(shell, saved_in, quote));
 	}
-	prompt = init_open_quote(shell, quote);
-	if (!get_open_quote(shell, prompt, quote))
-	{
-		dup2(saved_in, 0);
-		shell->error = 130;
-		if (g_sig_type == SIG_C)
-			return (0);
-		return (ft_error(shell, OPEN_QUOTE, quote_string(quote)));
-	}
-	lexer(shell);
+	close(saved_in);
+	shell->input = ft_strdup(input);
+	collect_garbage(shell, shell->input, 0);
+	return (1);
+}
+
+int	parse_open(t_shell *shell)
+{
+	int	quote;
+
+	quote = quote_is_open(shell->input);
+	if (quote)
+		return (open_quote(shell, quote));
+	else if (pipe_is_open(shell->input))
+		return (open_pipe(shell));
 	return (1);
 }

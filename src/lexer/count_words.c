@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 13:40:12 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/22 17:46:37 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/11 17:15:28 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	check_quotes(t_shell *shell, int *i, int *words)
 		while (shell->input[++*i] != DQ && shell->input[*i])
 			;
 		if (shell->input[*i] == '\0')
-			return (0);
+			return (ft_putstr_fd("minishell: missing double quote\n", 1), 0);
 		if (shell->input[++*i] == '\0' || shell->input[*i] == PIPE
 			|| shell->input[*i] == '>' || shell->input[*i] == '<')
 			(*words)++;
@@ -29,7 +29,7 @@ int	check_quotes(t_shell *shell, int *i, int *words)
 		while (shell->input[++*i] != SQ && shell->input[*i])
 			;
 		if (shell->input[*i] == '\0')
-			return (0);
+			return (ft_putstr_fd("minishell: missing single quote\n", 1), 0);
 		if (shell->input[++*i] == '\0' || shell->input[*i] == PIPE
 			|| shell->input[*i] == '>' || shell->input[*i] == '<')
 			(*words)++;

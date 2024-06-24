@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 18:59:18 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/19 10:56:53 by nromito          ###   ########.fr       */
+/*   Updated: 2024/06/24 16:12:08 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,8 @@ int	is_builtin(char *str)
 	else if (!(ft_strncmp(str, "env", cmd_len + 1)))
 		return (1);
 	else if (!(ft_strncmp(str, "exit", cmd_len + 1)))
+		return (1);
+	else if (!(ft_strncmp(str, "history", cmd_len + 1)))
 		return (1);
 	return (0);
 }

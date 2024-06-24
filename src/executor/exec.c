@@ -6,20 +6,18 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:52:14 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/20 12:07:27 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/24 18:06:32 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-int	normal_exec(t_table table, t_shell *shell, pid_t pid)
+int	normal_exec(char *str, t_table table, t_shell *shell, pid_t pid)
 {
 	int		cmd_len;
-	char	*str;
 	int		fail;
 
 	fail = 0;
-	str = table.command;
 	if (!str)
 		return (0);
 	cmd_len = ft_strlen(str);
@@ -37,6 +35,8 @@ int	normal_exec(t_table table, t_shell *shell, pid_t pid)
 		fail = ft_env(table.cmd->cmd_arg, shell);
 	else if (!(ft_strncmp(str, "exit", cmd_len + 1)))
 		fail = ft_exit(table.cmd->cmd_arg, shell, pid);
+	else if (!(ft_strncmp(str, "history", cmd_len + 1)))
+		fail = ft_history();
 	return (fail);
 }
 
@@ -49,7 +49,7 @@ int	fork_exec(t_shell *shell, int i)
 	cmd = table[i].cmd;
 	if (is_builtin(table[i].command))
 	{
-		if (!normal_exec(table[i], shell, 1))
+		if (!normal_exec(table[i].command, table[i], shell, 1))
 			return (0);
 	}
 	else if (table[i].command)
@@ -76,9 +76,9 @@ int	manage_fork(pid_t pid, t_shell *shell, int i)
 	if (!pid)
 	{
 		pipe_handler(shell, i, pid);
-		if (!parse_redirs(shell, shell->cmd_table[i]) || !validate_cmd(shell, shell->cmd_table[i]))
+		if (!parse_redirs(shell, shell->cmd_table[i])
+			|| !validate_cmd(shell, shell->cmd_table[i]))
 		{
-			//close(exec->fds[0]);
 			reset_io(exec);
 			close_shell(shell);
 		}
@@ -138,23 +138,27 @@ int	executor(t_shell *shell)
 	collect_garbage(shell, (char *) shell->executor, 0);
 	shell->error = 0;
 	exec = shell->executor;
-	exec->saved_out = dup(1);
-	exec->saved_in = dup(0);
 	g_sig_type = 2;
 	if (shell->len == 1 && (is_builtin(table[0].command) || !table[0].command))
 	{
-		
+		exec->saved_out = dup(1);
+		exec->saved_in = dup(0);
 		if (!parse_redirs(shell, table[0]) || !validate_cmd(shell, table[0]))
 		{
 			reset_io(exec);
 			return (0);
 		}
 		perform_redir(shell, 0);
-		normal_exec(table[0], shell, 0);
+		normal_exec(table[0].command, table[0], shell, 0);
 	}
 	else
+	{
+		exec->saved_out = dup(1);
+		exec->saved_in = dup(0);
 		to_fork(shell);
+	}
 	reset_io(exec);
 	sig_handle(shell);
+	g_sig_type = 0;
 	return (shell->error == 0);
 }

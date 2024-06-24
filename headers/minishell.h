@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:59:59 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/22 19:16:43 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/24 16:02:58 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int			is_token(char *str);
 int			to_lex(t_shell *shell);
 int			tokenizer(t_shell *shell);
 int			get_path(t_shell *shell);
-int			parsing(t_shell *shell);
+int			parsing(t_shell *shell, int saved_in);
 char		*remove_redir(t_token *token);
 int			find_builtins(char *cmd);
 int			find_redirs(t_shell *shell);
@@ -112,7 +112,6 @@ int			find_infile(t_table *table, t_token *token, int end, int *fd_pos);
 int			is_cmd(t_token *token, int end);
 int			count_pipes(char *str);
 int			count_redirects(t_token *token, int end);
-int			open_quote(t_shell *shell);
 //int			find_infile(int start, t_shell *shell);
 //int			find_outfile(int start, t_shell *shell);
 //int			find_cmd(t_shell *shell, int start, t_token *token, int found);
@@ -123,6 +122,15 @@ int			is_redir(int c);
 char		*get_pathname(t_shell *shell, char *str);
 char		*after_exp(char *expand, int len, t_shell *shell);
 char		*here_expand(t_shell *shell, char *str, int start);
+
+/* open parsing */
+int			parse_open(t_shell *shell);
+int			ft_isspace(int c);
+int			pipe_is_open(char *str);
+int			quote_is_open(char *str);
+char		*append_newline(char *str);
+int			check_close_quotes(char *str, int c);
+int			handle_exit_err(t_shell *shell, int saved_in, int quote);
 int			open_pipe(t_shell *shell);
 
 /* protected functions */
@@ -155,11 +163,12 @@ void		print_matrix(char **mat);
 int			init_structs(t_shell *shell, int argc, char **argv, char **envp);
 void		sig_handle(t_shell *shell);
 void		close_redirs(int *red, int len);
-char		*get_prompt(int quote);
-char		*init_open_quote(t_shell *shell, int quote);
-char		*read_open_quote(t_shell *shell, char *prompt);
-char		*append_input(t_shell *shell, char *after_quote);
-void		append_newline(t_shell *shell, char *final_input);
-char		*quote_string(int quote);
+
+/* history */
+int			open_history(t_shell *shell);
+void		update_history(t_shell *shell);
+int			ft_history(void);
+
+int			is_command(char *str);
 
 #endif

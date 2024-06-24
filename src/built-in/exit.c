@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 11:42:41 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/21 14:35:43 by nromito          ###   ########.fr       */
+/*   Updated: 2024/06/24 18:09:42 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	first_case(t_shell *shell, char **exit_mat, pid_t pid)
 		close_shell(shell);
 	}
 	if (!pid)
-		//ft_putstr_fd("exit\n", STDERR_FILENO);
+		;//ft_putstr_fd("exit\n", STDERR_FILENO);
 	if ((ft_atoi_mod(1, exit_mat[1]) == 0 && exit_mat[1][0] != '0'
 		&& ft_strlen(exit_mat[1]) != 1))
 		ft_error(shell, EXIT, exit_mat[1]);

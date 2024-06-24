@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:52:55 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/17 15:54:13 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/24 18:11:50 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,15 @@ int	lexer(t_shell *shell)
 	int		words;
 	t_token	*token;
 
+	get_path(shell);
 	token = shell->tokens;
 	words = count_wrds(shell);
 	if (words == 0)
+	{
+		if (g_sig_type == 3)
+			shell->error = 130;
 		return (0);
+	}
 	token->flag = 0;
 	token->wrd = 0;
 	token->index = ft_calloc(sizeof (char *), words + 1);

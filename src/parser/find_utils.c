@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 10:10:12 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/21 17:24:52 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/24 18:01:40 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,7 @@ int	is_cmd(t_token *token, int end)
 	i = -1;
 	while (++i < end)
 		if (token->tokens[i] == 'C' || token->tokens[i] == 'S')
-		{
 			return (1);
-		}
 	return (0);
 }
 

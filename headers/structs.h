@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 12:08:46 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/21 10:22:18 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/24 16:00:10 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,12 +85,14 @@ typedef struct s_shell
 	char		**envp;
 	char		**path_env;
 	char		*new_input;
+	int			saved_in;
 	char		*input;
 	int			error;
 	int			index;
 	char		*cmd_name;
 	int			sig_recived;
 	int			n_pipes;
+	int			fd_h;
 	int			len;
 	char		*arrow;
 	t_token		*tokens;

@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 13:46:29 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/21 17:07:04 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/24 18:07:39 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ int	find_quote(t_shell *shell, int i, int quote)
 
 int	check_word(t_shell *shell, t_token *token, int quote, int *r)
 {
-	if (shell->input[token->start + 1] == quote && !shell->input[token->start + 2] )
+	if (shell->input[token->start + 1] == quote
+		&& !shell->input[token->start + 2])
 	{
 		token->index[token->wrd][(*r)++] = shell->input[token->start];
 		token->index[token->wrd][(*r)++] = shell->input[token->start + 1];

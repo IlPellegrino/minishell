@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:52:38 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/21 18:39:32 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/24 18:10:03 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ void	quotes_handler(char line_pos, t_exp *exp)
 
 int	init_exp(t_token *token, t_exp *exp)
 {
-	//printf("exp->line %s\n", exp->line);
 	exp->sq = 0;
 	exp->dq = 0;
 	exp->line = token->index[token->wrd];
@@ -85,6 +84,5 @@ void	expand_values(t_shell *shell, t_token *token)
 	if (!exp.final_str)
 		exp.final_str = ft_strdup(exp.line);
 	free(exp.line);
-	//printf("expanded = %s\n", exp.final_str);
 	token->index[token->wrd] = exp.final_str;
 }

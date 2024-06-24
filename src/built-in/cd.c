@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 11:42:12 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/22 14:24:48 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/24 18:09:09 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	update_cwd(t_shell *shell, char *to_update)
 int	change_dir(char *cd_arg, DIR *folder, t_shell *shell)
 {
 	DIR		*dest;	
-	
+
 	update_cwd(shell, "OLDPWD=");
 	dest = opendir(cd_arg);
 	if (dest)

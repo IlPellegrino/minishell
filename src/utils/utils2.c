@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 15:42:43 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/22 18:46:01 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/24 17:52:14 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,9 @@ void	sig_handle(t_shell *shell)
 		shell->error = 131;
 }
 
-char	*get_prompt(int quote)
+int	ft_isspace(int c)
 {
-	char	*str;
-	
-	str = ft_strdup("-> ' <- ");
-	str[3] = quote;
-	return (str);
+	if (c == 32 || c == '\t')
+		return (1);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 19:59:43 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/22 19:36:22 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/24 17:53:04 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	init_structs(t_shell *shell, int argc, char **argv, char **envp)
 	shell->arrow = GREEN_ARROW;
 	shell->executor = 0;
 	collect_garbage(shell, 0, shell->envp);
-	return (1);
+	return (open_history(shell));
 }
 
 int	check_exit_status(t_shell *shell, int error_type)
@@ -62,11 +62,11 @@ int	check_exit_status(t_shell *shell, int error_type)
 		shell->error = 1;
 	else if (error_type == BINARY)
 		shell->error = 2;
-	else if (error_type == OPEN_QUOTE || error_type == OPEN_PIPE)
-		shell->error = 2;
 	else if (error_type == FOLDER || error_type == NOT_FOLDER
 		|| error_type == NO_PERMISSION)
 		shell->error = 126;
+	else if (error_type == QUOTE_ERR || error_type == PIPE_ERR)
+		shell->error = 2;
 	return (0);
 }
 
@@ -80,21 +80,19 @@ void	print_err(char *str, char *var, char *str2)
 int	ft_error2(int error_type, char *str)
 {
 	if (error_type == FOLDER)
-		print_err("minishell: ", str, ": Is a directory");
+		print_err ("minishell: ", str, ": Is a directory");
 	else if (error_type == NOT_FOLDER)
-		print_err("minishell: ", str, ": Not a directory");
+		print_err ("minishell: ", str, ": Not a directory");
 	else if (error_type == NO_FILE)
-		print_err("minishell: ", str, ": No such file or directory");
+		print_err ("minishell: ", str, ": No such file or directory");
 	else if (error_type == NO_PERMISSION)
-		print_err("minishell: ", str, ": Permission denied");
+		print_err ("minishell: ", str, ": Permission denied");
 	else if (error_type == CD_UNSET)
-		print_err("minishell: cd: ", str, " not set");
-	else if (error_type == OPEN_QUOTE)
-	{
-		print_err("minishell: unexpected EOF while looking for matching `", str, "'");
-		print_err("minishell: syntax error: unexpected end of file\n", 0, 0);
-	}
-	else if (error_type == OPEN_PIPE)
+		print_err ("minishell: cd: ", str, " not set");
+	else if (error_type == QUOTE_ERR)
+		print_err ("minishell: unexpected EOF while looking for matching `", \
+		str, "'");
+	else if (error_type == PIPE_ERR)
 		print_err("minishell: syntax error: unexpected end of file\n", 0, 0);
 	return (1);
 }
