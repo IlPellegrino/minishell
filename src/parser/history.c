@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42firenze.it>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 01:50:29 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/24 02:04:53 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/24 03:03:31 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int	ft_history(void)
 
 void	update_history(t_shell *shell)
 {
+	return ;
 	write(shell->fd_h, shell->input, ft_strlen(shell->input));
 	write (shell->fd_h, "\n", 1);
 	add_history(shell->input);

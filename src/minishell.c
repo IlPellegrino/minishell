@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42firenze.it>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:26:12 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/24 02:23:38 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/24 02:57:56 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	g_sig_type;
 
-/*char	*set_prompt(t_shell *shell)
+char	*set_prompt(t_shell *shell)
 {
 	char	*dir;
 	char	*prompt;
@@ -38,7 +38,7 @@ int	g_sig_type;
 	free(temp);
 	collect_garbage(shell, prompt, 0);
 	return (prompt);
-}*/
+}
 
 char	*ft_readline(char *str)
 {
@@ -87,7 +87,7 @@ int	main(int argc, char **argv, char **envp)
 	{
 		saved_in = dup(STDIN_FILENO);
 		get_signal();
-		shell.input = ft_readline(MINISHELL);
+		shell.input = ft_readline(set_prompt(&shell));
 		handle_close(&shell, saved_in);
 		collect_garbage(&shell, shell.input, 0);
 		if (!parse_open(&shell))

@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42firenze.it>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 12:08:42 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/24 02:55:53 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/24 03:00:09 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,10 @@
 
 //#define MINISHELL "\001minishell$ \002"
 
-#define MINISHELL CYAN \
-"┌───( "	YELLOW ITALIC BOLD UNDERLINE "Minishell" RESET CYAN " ) "  "{" YELLOW 
+#define MINISHELL CYAN "┌───( "	YELLOW ITALIC BOLD UNDERLINE "Minishell" RESET CYAN " ) "  "{" YELLOW 
 
 # define SECON_PART CYAN"}" "\n" \
 "\001└─$ \002" RESET
-
 #define RED_MINISHELL CYAN \
 "┌───( "	RED ITALIC BOLD UNDERLINE "Minishell" RESET CYAN " ) "  "{" RED
 
