@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+         #
+#    By: ciusca <ciusca@student.42firenze.it>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/07 17:01:15 by ciusca            #+#    #+#              #
-#    Updated: 2024/06/22 18:53:32 by ciusca           ###   ########.fr        #
+#    Updated: 2024/06/24 01:59:48 by ciusca           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ CLOSING_SRC = close_shell.c
 BUILT_IN_SRC = echo.c cd.c pwd.c export.c export_2.c export_3.c env.c exit.c unset.c
 EXECUTOR_SRC = redirs_error.c validate_cmd.c check_valid.c exec.c exec_utils.c
 EXPANDER_SRC = check_token.c env_and_pid.c exp.c quotes_and_flag.c
-PARSER_SRC = open_parsing_utils.c open_parsing.c to_lex.c fill_fds.c find_utils.c heredoc_utils.c heredoc_utils2.c parse_redirs.c ft_heredoc.c parsing_utils.c parsing.c tokenizer.c cmd_table.c
+PARSER_SRC = history.c open_pipe.c open_parsing_utils.c open_parsing.c to_lex.c fill_fds.c find_utils.c heredoc_utils.c heredoc_utils2.c parse_redirs.c ft_heredoc.c parsing_utils.c parsing.c tokenizer.c cmd_table.c
 LEXER_SRC = readline.c lexer_checker.c word_creation.c count_words.c
 UTILS_SRC = utils.c utils2.c
 SIGNAL_SRC = signals.c

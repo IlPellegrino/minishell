@@ -67,6 +67,7 @@
     "includes.h": "c",
     "stdbool.h": "c",
     "unistd.h": "c",
-    "stat.h": "c"
+    "stat.h": "c",
+    "stdlib.h": "c"
   }
 }

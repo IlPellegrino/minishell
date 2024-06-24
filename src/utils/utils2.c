@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42firenze.it>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 15:42:43 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/22 22:35:05 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/24 00:40:11 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,11 @@ void	sig_handle(t_shell *shell)
 		shell->error = 130;
 	else if (g_sig_type == CORE_DUMPED)
 		shell->error = 131;
+}
+
+int	ft_isspace(int c)
+{
+	if (c == 32 || c == '\t')
+		return (1);
+	return (0);
 }

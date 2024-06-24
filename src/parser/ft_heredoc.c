@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_heredoc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ciusca <ciusca@student.42firenze.it>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 18:04:21 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/21 17:49:51 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/23 22:33:56 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,10 @@ int	ft_heredoc(t_shell *shell, t_token *token, int i)
 	{
 		shell->error = 0;
 		if (g_sig_type == SIG_C)
+		{
 			shell->error = 130;
+			g_sig_type = 42;
+		}
 		else
 			ft_error(shell, HERE_EOF, 0);
 		reset_stdin(temp_stdin, fd);

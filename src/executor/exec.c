@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ciusca <ciusca@student.42firenze.it>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:52:14 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/20 12:07:27 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/24 02:04:25 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ int	normal_exec(t_table table, t_shell *shell, pid_t pid)
 		fail = ft_env(table.cmd->cmd_arg, shell);
 	else if (!(ft_strncmp(str, "exit", cmd_len + 1)))
 		fail = ft_exit(table.cmd->cmd_arg, shell, pid);
+	else if (!(ft_strncmp(str, "history", cmd_len + 1)))
+		fail = ft_history();	
 	return (fail);
 }
 
@@ -156,5 +158,6 @@ int	executor(t_shell *shell)
 		to_fork(shell);
 	reset_io(exec);
 	sig_handle(shell);
+	g_sig_type = 0;
 	return (shell->error == 0);
 }

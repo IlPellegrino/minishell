@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42firenze.it>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 12:08:46 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/22 22:49:12 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/24 01:56:23 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,9 @@ typedef struct s_shell
 	char		*cmd_name;
 	int			sig_recived;
 	int			n_pipes;
+	int			fd_h;
 	int			len;
-	char		*prompt;
+	char		*arrow;
 	t_token		*tokens;
 	t_garbage	*collector;
 	t_table		*cmd_table;

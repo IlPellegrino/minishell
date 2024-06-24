@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ciusca <ciusca@student.42firenze.it>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 12:09:40 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/22 19:06:41 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/23 22:40:18 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,31 @@
 void	ctrl_c(int sig)
 {
 	(void)sig;
-	write(2, "\n", 1);
-	close(STDIN_FILENO);
+	if (g_sig_type == 0 || g_sig_type == SIG_C)
+	{
+		write(1, "\n", 1);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
+	else if (g_sig_type == 42)
+	{
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+		return ;
+	}
+	else if (g_sig_type == 1)
+	{
+		write(1, "\n", 1);
+		//g_sig_type = 19;
+		//rl_on_new_line();
+		//rl_replace_line("", 0);
+		close(0);
+		//return ;
+	}
+	else
+		write (1, "\n", 1);
 	g_sig_type = SIG_C;
 }
 

@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42firenze.it>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 19:59:43 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/22 22:48:57 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/24 02:52:56 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,12 @@ int	init_structs(t_shell *shell, int argc, char **argv, char **envp)
 	shell->len = 0;
 	shell->collector = garbage;
 	shell->cmd_table = 0;
-	shell->prompt = ft_calloc(sizeof(char *), ft_strlen(MINISHELL) + 1);
-	collect_garbage(shell, shell->prompt, 0);
-	shell->prompt= MINISHELL;
+	shell->arrow = ft_calloc(sizeof(char *), ft_strlen(GREEN_ARROW) + 1);
+	collect_garbage(shell, shell->arrow, 0);
+	shell->arrow = GREEN_ARROW;
 	shell->executor = 0;
 	collect_garbage(shell, 0, shell->envp);
-	return (1);
+	return (0);//return (open_history(shell));
 }
 
 int	check_exit_status(t_shell *shell, int error_type)
@@ -62,11 +62,11 @@ int	check_exit_status(t_shell *shell, int error_type)
 		shell->error = 1;
 	else if (error_type == BINARY)
 		shell->error = 2;
-	else if (error_type == OPEN_QUOTE || error_type == OPEN_PIPE)
-		shell->error = 2;
 	else if (error_type == FOLDER || error_type == NOT_FOLDER
 		|| error_type == NO_PERMISSION)
 		shell->error = 126;
+	else if (error_type == QUOTE_ERR || error_type == PIPE_ERR)
+		shell->error = 2;
 	return (0);
 }
 
@@ -89,12 +89,9 @@ int	ft_error2(int error_type, char *str)
 		print_err("minishell: ", str, ": Permission denied");
 	else if (error_type == CD_UNSET)
 		print_err("minishell: cd: ", str, " not set");
-	else if (error_type == OPEN_QUOTE)
-	{
+	else if (error_type == QUOTE_ERR)
 		print_err("minishell: unexpected EOF while looking for matching `", str, "'");
-		print_err("minishell: syntax error: unexpected end of file\n", 0, 0);
-	}
-	else if (error_type == OPEN_PIPE)
+	else if (error_type == PIPE_ERR)
 		print_err("minishell: syntax error: unexpected end of file\n", 0, 0);
 	return (1);
 }
