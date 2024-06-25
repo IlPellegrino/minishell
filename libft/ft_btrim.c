@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 15:16:18 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/24 17:51:59 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/25 12:05:54 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ char	*ft_btrim(const char *str, const char *to_remove)
 
 	i = -1;
 	j = -1;
+	if (!str || !to_remove || !*str)
+		return (0);
 	final_str = ft_calloc(sizeof(char *), ft_strlen(str));
 	if (!final_str)
 		return (0);

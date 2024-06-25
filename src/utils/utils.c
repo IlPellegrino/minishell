@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 19:59:43 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/24 17:53:04 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/25 15:32:46 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	init_structs(t_shell *shell, int argc, char **argv, char **envp)
 	shell->arrow = GREEN_ARROW;
 	shell->executor = 0;
 	collect_garbage(shell, 0, shell->envp);
-	return (open_history(shell));
+	return (1);
 }
 
 int	check_exit_status(t_shell *shell, int error_type)

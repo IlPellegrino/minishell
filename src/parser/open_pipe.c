@@ -3,14 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   open_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ciusca <ciusca@student.42firenze.it>       +#+  +:+       +#+        */
+/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 01:31:09 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/24 01:49:23 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/25 16:59:40 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
+
+int	pipe_error(int saved_in, t_shell *shell)
+{
+	dup2(saved_in, 0);
+	close(saved_in);
+	if (g_sig_type == SIG_C)
+	{
+		shell->error = 130;
+		g_sig_type = 42;
+	}
+	else
+	{
+		ft_error(shell, PIPE_ERR, 0);
+		close_shell(shell);
+	}
+	return (0);
+}
 
 int	pipe_is_open(char *str)
 {
@@ -63,24 +80,17 @@ int	read_pipe(t_shell *shell)
 int	open_pipe(t_shell *shell)
 {
 	int		saved_in;
+	int		i;
 
+	i = 0;
+	while (ft_isspace(shell->input[i]))
+		i++;
+	if (shell->input[i] == '|')
+		return (ft_error(shell, SYNTAX, "|"));
 	saved_in = dup(0);
 	if (!read_pipe(shell))
 	{
-		dup2(saved_in, 0);
-		close(saved_in);
-		if (g_sig_type == SIG_C)
-		{
-			shell->error = 130;
-			g_sig_type = 42;
-		}
-		else
-		{
-			ft_error(shell, PIPE_ERR, 0);
-			close_shell(shell);
-		}
-		return (0);
+		return (pipe_error(saved_in, shell));
 	}
-	close(saved_in);
-	return (1);
+	return (close(saved_in), 1);
 }

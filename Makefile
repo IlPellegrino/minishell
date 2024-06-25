@@ -6,7 +6,7 @@
 #    By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/07 17:01:15 by ciusca            #+#    #+#              #
-#    Updated: 2024/06/24 12:55:51 by ciusca           ###   ########.fr        #
+#    Updated: 2024/06/25 16:18:37 by ciusca           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ HEADERS = headers/minishell.h
 PROTECTED_FUNC_SRC = protected_functions.c protected_functions2.c
 CLOSING_SRC = close_shell.c
 BUILT_IN_SRC = echo.c cd.c pwd.c export.c export_2.c export_3.c env.c exit.c unset.c
-EXECUTOR_SRC = redirs_error.c validate_cmd.c check_valid.c exec.c exec_utils.c
+EXECUTOR_SRC = normal_execution.c redirs_error.c validate_cmd.c check_valid.c exec.c exec_utils.c
 EXPANDER_SRC = check_token.c env_and_pid.c exp.c quotes_and_flag.c
 PARSER_SRC = history.c open_pipe.c open_parsing_utils.c open_parsing.c to_lex.c fill_fds.c find_utils.c heredoc_utils.c heredoc_utils2.c parse_redirs.c ft_heredoc.c parsing_utils.c parsing.c tokenizer.c cmd_table.c
 LEXER_SRC = handle_quote_flag.c readline.c lexer_checker.c word_creation.c count_words.c
@@ -42,7 +42,8 @@ SRCS = $(addprefix src/, $(MAIN) $(CLOSING) $(SIGNAL) ${BUILT_IN} $(PROTECTED_FU
 
 OBJS = ${SRCS:.c=.o}
 
-SUPRRESSION = @valgrind --track-fds=yes --leak-check=full --show-leak-kinds=all --suppressions=ignore_readline.supp -s ./minishell
+SUPP_FILE = ignore_readline.supp
+SUPRRESSION = @valgrind --suppressions=ignore_readline.supp -s ./minishell
 
 COMPILE = cc -Wall -Wextra -Werror -g -fno-omit-frame-pointer
 
@@ -70,16 +71,22 @@ ${NAME}: ${OBJS} ${HEADERS}
 		@echo $(BLUE)   " |_|  |_|_____|_| \_|_____|_____/|_|  |_|______|______|______| " $(NONE)
 		@echo $(WHITE)  "                                                               " $(NONE)
 
-sup: all
+sup: $(SUPP_FILE) all
+	echo "{\n    readline_leak\n    \
+	Memcheck:Leak\n    \
+	match-leak-kinds: reachable\n    ...\n    \
+	fun:readline\n    ...\n}"\
+	 > ignore_readline.supp
+	echo "{\n   readlin_leak\n   \
+	Memcheck:Leak\n   \
+	match-leak-kinds: reachable\n   ...\n   \
+	fun:add_history\n   ...\n}" >> ignore_readline.supp
 	$(SUPRRESSION)
+
 clean:
-	@if [ ! -z "$(OBJS)" ] && [ -f $(firstword $(OBJS)) ]; then \
-		rm -rf $(OBJS); \
-		make -C $(LIBFT_PATH) clean; \
-		echo $(GREEN)"Successfully cleaned!" $(NONE); \
-	else \
-		echo "No object files to clean."; \
-	fi
+		rm -rf $(OBJS)
+		make -C $(LIBFT_PATH) clean
+		echo $(GREEN)"Successfully cleaned!" $(NONE)
 
 fclean: clean
 		@rm -rf $(NAME)

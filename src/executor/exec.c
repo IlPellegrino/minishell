@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:52:14 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/25 11:51:53 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/25 16:49:55 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,6 @@ int	normal_exec(char *str, t_table table, t_shell *shell, pid_t pid)
 		fail = ft_env(table.cmd->cmd_arg, shell);
 	else if (!(ft_strncmp(str, "exit", cmd_len + 1)))
 		fail = ft_exit(table.cmd->cmd_arg, shell, pid);
-	else if (!(ft_strncmp(str, "history", cmd_len + 1)))
-		fail = ft_history();
 	return (fail);
 }
 
@@ -69,10 +67,7 @@ int	manage_fork(pid_t pid, t_shell *shell, int i)
 
 	exec = shell->executor;
 	if (pid < 0)
-	{
-		perror("fork");
 		close_shell(shell);
-	}
 	if (!pid)
 	{
 		pipe_handler(shell, i, pid);
@@ -89,12 +84,9 @@ int	manage_fork(pid_t pid, t_shell *shell, int i)
 		reset_io(exec);
 		close_shell(shell);
 	}
-	else
-	{
-		pipe_handler(shell, i, pid);
-		if (i > 0)
-			close(exec->fds[0]);
-	}
+	pipe_handler(shell, i, pid);
+	if (i > 0)
+		close(exec->fds[0]);
 	return (1);
 }
 
@@ -107,22 +99,22 @@ int	to_fork(t_shell *shell)
 
 	exec = shell->executor;
 	i = -1;
+	init_saved_std(exec);
 	while (++i < shell->len)
 	{
 		if (shell->len > 1)
 			pipe(exec->fds);
 		pid = fork();
+		if (pid < 0)
+			perror("minishell");
 		if (i + 1 == shell->len)
 			exec->last_pid = pid;
 		manage_fork(pid, shell, i);
 	}
 	i = -1;
 	while (++i < shell->len)
-	{
-		pid = wait(&status);
-		if (pid == exec->last_pid)
+		if (wait(&status) == exec->last_pid)
 			shell->error = WEXITSTATUS(status);
-	}
 	return (1);
 }
 
@@ -139,27 +131,17 @@ int	executor(t_shell *shell)
 	shell->error = 0;
 	exec = shell->executor;
 	g_sig_type = 2;
-	if (shell->len == 1 && (is_builtin(table[0].command) || !table[0].command))
+	if (shell->len == 1 && (is_builtin(table[0].command)
+			|| !table[0].command || !forkable_command(table[0])))
 	{
-		exec->saved_out = dup(1);
-		exec->saved_in = dup(0);
-		if (!parse_redirs(shell, table[0]) || !validate_cmd(shell, table[0]))
-		{
-			reset_io(exec);
-			printf("ciao\n");
+		if (!no_pipe(shell))
 			return (0);
-		}
-		perform_redir(shell, 0);
-		normal_exec(table[0].command, table[0], shell, 0);
 	}
 	else
-	{
-		exec->saved_out = dup(1);
-		exec->saved_in = dup(0);
 		to_fork(shell);
-	}
 	reset_io(exec);
 	sig_handle(shell);
+	close_remaining_redirs(shell);
 	g_sig_type = 0;
 	return (shell->error == 0);
 }

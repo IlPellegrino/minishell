@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:59:59 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/24 16:02:58 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/25 16:30:07 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int			ft_cd(char **cd_mat, t_shell *shell);
 int			ft_pwd(void);
 int			it_exist(char *new_var, t_shell *shell);
 int			ft_exit(char **exit_mat, t_shell *shell, pid_t pid);
+int			check_sign(const char *str, int *i, int *is_neg);
 int			ft_unset(char **unset_mat, t_shell *shell);
 
 /*export only*/
@@ -155,6 +156,12 @@ int			is_folder(t_shell *shell, char *str);
 int			no_permission(char *str);
 int			validate_cmd(t_shell *shell, t_table table);
 int			parse_redirs(t_shell *shell, t_table table);
+int			no_pipe(t_shell *shell);
+void		close_remaining_redirs(t_shell *shell);
+void		init_saved_std(t_exec *exec);
+int			forkable_command(t_table table);
+
+int			normal_exec(char *str, t_table table, t_shell *shell, pid_t pid);
 /* utils */
 int			find_space(char *index);
 int			allocate_envp(t_shell *shell);
@@ -165,9 +172,7 @@ void		sig_handle(t_shell *shell);
 void		close_redirs(int *red, int len);
 
 /* history */
-int			open_history(t_shell *shell);
-void		update_history(t_shell *shell);
-int			ft_history(void);
+void		update_history(char *str);
 
 int			is_command(char *str);
 

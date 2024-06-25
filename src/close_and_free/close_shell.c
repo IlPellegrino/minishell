@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 10:32:57 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/24 16:09:31 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/25 15:43:56 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ void	close_shell(t_shell *shell)
 	t_garbage	*garbage;
 	t_garbage	*temp;
 
-	close(shell->fd_h);
 	garbage = shell->collector;
 	temp = garbage->next;
 	free(shell->tokens);

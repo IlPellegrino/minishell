@@ -6,11 +6,17 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 17:45:12 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/24 18:25:05 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/25 13:39:06 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
+
+void	free_two(char *alloc1, char *alloc2)
+{
+	free(alloc1);
+	free(alloc2);
+}
 
 char	*after_exp(char *expand, int len, t_shell *shell)
 {
@@ -52,11 +58,8 @@ char	*here_expand(t_shell *shell, char *str, int start)
 	temp = ft_strdup(before);
 	free(before);
 	before = ft_strjoin(temp, after);
-	free(after);
-	free(temp);
+	free_two(after, temp);
 	after = get_after(str, before, start);
 	temp = ft_strjoin(before, after);
-	free(after);
-	free(before);
-	return (temp);
+	return (free_two(after, before), temp);
 }

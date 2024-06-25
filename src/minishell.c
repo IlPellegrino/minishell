@@ -6,13 +6,29 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:26:12 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/25 11:45:36 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/25 16:59:16 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/minishell.h"
 
 int	g_sig_type;
+
+int	check_sign(const char *str, int *i, int *is_neg)
+{
+	int	neg;
+
+	neg = 1;
+	if (str[*i] == '-' || str[*i] == '+')
+	{
+		if (str[(*i)++] == '-')
+		{
+			*is_neg = 1;
+			neg *= -1;
+		}
+	}
+	return (neg);
+}
 
 char	*set_prompt(t_shell *shell)
 {
@@ -44,15 +60,7 @@ char	*ft_readline(char *str)
 {
 	char	*input;
 
-	if (isatty(fileno(stdin)))
-		input = readline(str);
-	else
-	{
-		char *line;
-		line = get_next_line(fileno(stdin));
-		input = ft_strtrim(line, "\n");
-		free(line);
-	}
+	input = readline(str);
 	if (!input)
 		return (0);
 	rl_on_new_line();
@@ -101,6 +109,6 @@ int	main(int argc, char **argv, char **envp)
 				free_cmd_table(&shell);
 		}
 		delete_heredoc();
-		update_history(&shell);
+		update_history(shell.input);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 11:42:12 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/24 18:09:09 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/25 13:17:10 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ char	*to_move(char **cd_mat, t_shell *shell)
 	}
 	else if (!ft_strncmp(cd_mat[1], "-", 2))
 	{
+		ft_pwd();
 		move = ft_getenv("OLDPWD", shell);
 		if (!move)
 			return (ft_error(shell, CD_UNSET, "OLDPWD"), NULL);

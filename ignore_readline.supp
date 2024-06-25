@@ -6,7 +6,6 @@
     fun:readline
     ...
 }
-
 {
    readlin_leak
    Memcheck:Leak

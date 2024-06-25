@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 18:04:21 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/25 11:43:10 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/25 16:59:47 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,15 +60,7 @@ int	read_heredoc(t_shell *shell, char *eof, int fd, int flag)
 	while (1)
 	{
 		g_sig_type = IN_HEREDOC;
-		if (isatty(fileno(stdin)))
-			input = readline(HEREDOC);
-		else
-		{
-		char *line;
-			line = get_next_line(fileno(stdin));
-			input = ft_strtrim(line, "\n");
-			free(line);
-		}
+		input = readline(HEREDOC);
 		if (!input)
 			return (0);
 		rl_on_new_line();
@@ -87,7 +79,6 @@ int	read_heredoc(t_shell *shell, char *eof, int fd, int flag)
 	}
 	return (0);
 }
-
 
 int	ft_heredoc(t_shell *shell, t_token *token, int i)
 {

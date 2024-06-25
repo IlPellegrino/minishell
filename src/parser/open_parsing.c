@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 00:35:18 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/24 18:03:40 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/25 16:59:27 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,23 @@ int	open_quote(t_shell *shell, int quote)
 int	parse_open(t_shell *shell)
 {
 	int	quote;
+	int	ret;
 
-	quote = quote_is_open(shell->input);
-	if (quote)
-		return (open_quote(shell, quote));
-	else if (pipe_is_open(shell->input))
-		return (open_pipe(shell));
+	ret = 1;
+	quote = 0;
+	while (1)
+	{
+		quote = quote_is_open(shell->input);
+		if (quote)
+			ret = open_quote(shell, quote);
+		else if (pipe_is_open(shell->input))
+			ret = open_pipe(shell);
+		if (!quote_is_open(shell->input) && !(pipe_is_open(shell->input)))
+			break ;
+		if (!ret)
+		{
+			return (0);
+		}
+	}
 	return (1);
 }

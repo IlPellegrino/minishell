@@ -6,11 +6,22 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 18:27:50 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/24 18:04:01 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/25 16:49:42 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
+
+char	*get_executable(char *str)
+{
+	char	*temp;
+	char	*pathname;
+
+	temp = getcwd(NULL, 0);
+	pathname = ft_strjoin(temp, str);
+	free(temp);
+	return (pathname);
+}
 
 char	*get_pathname(t_shell *shell, char *str)
 {
@@ -18,11 +29,14 @@ char	*get_pathname(t_shell *shell, char *str)
 	char	*pathname;
 
 	i = -1;
-	if ((str && !str[0]) || str[0] == '.' || (str[0] == '.' && str[1] == '.'))
+	if ((str && !str[0]) || (str[0] == '.' && !str[1])
+		|| (str[0] == '.' && str[1] == '.'))
 		return (0);
 	while (shell->path_env[++i])
 	{
-		if (ft_strchr(str, '/'))
+		if (str[0] == '.' && str[1] == '/')
+			pathname = get_executable(str);
+		else if (ft_strchr(str, '/'))
 			pathname = ft_strdup(str);
 		else
 			pathname = ft_strjoin(shell->path_env[i], str);

@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 11:42:41 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/24 18:09:42 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/25 16:57:59 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,26 +17,25 @@ long long	ft_atoi_mod(int flag, const char *str)
 	int			i;
 	long long	number;
 	long long	neg;
+	int			is_neg;
 
 	neg = 1;
 	number = 0;
 	i = 0;
-	while (str[i] == ' ' || str[i] == '\n'
-		|| str[i] == '\t' || str[i] == '\v'
-		|| str[i] == '\f' || str[i] == '\r')
+	is_neg = 0;
+	while (ft_isspace(str[i]))
 		i++;
-	if (str[i] == '-' || str[i] == '+')
-		if (str[i++] == '-')
-			neg *= -1;
+	neg = check_sign(str, &i, &is_neg);
 	if (str[i] == '-' || str[i] == '+')
 		return (-1);
 	while (str[i] <= '9' && str[i] >= '0')
 	{
 		number = number * 10 + (str[i++] - 48);
+		if (flag && ((number < 0 && neg == 1)
+				|| ((number > 0 && neg == -1) && is_neg == 0)))
+			return (0);
 	}
 	number *= neg;
-	if (flag && ((number < 0 && neg == 1) || (number > 0 && neg == -1)))
-		return (0);
 	return (number);
 }
 
@@ -54,7 +53,7 @@ void	first_case(t_shell *shell, char **exit_mat, pid_t pid)
 		close_shell(shell);
 	}
 	if (!pid)
-		;//ft_putstr_fd("exit\n", STDERR_FILENO);
+		ft_putstr_fd("exit\n", STDERR_FILENO);
 	if ((ft_atoi_mod(1, exit_mat[1]) == 0 && exit_mat[1][0] != '0'
 		&& ft_strlen(exit_mat[1]) != 1))
 		ft_error(shell, EXIT, exit_mat[1]);

@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 17:14:34 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/25 11:54:47 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/25 13:39:53 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	syntax_redir(t_shell *shell, char *str)
 	i = 0;
 	while (str[i] == '<')
 		i++;
-	if (ft_strlen(str) > 2 && str[0] == '<') 
+	if (ft_strlen(str) > 2 && str[0] == '<')
 	{
 		if (i % 2 != 0)
 			return (ft_error(shell, SYNTAX, "<"));
