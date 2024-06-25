@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 12:09:40 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/24 18:09:00 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/25 11:40:38 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*set_prompt_c(void)
 	free(temp);
 	temp = ft_strjoin(RED_MINISHELL, dir);
 	free(dir);
-	prompt = ft_strjoin(temp, RESET "}");
+	prompt = ft_strjoin(temp, RESET CYAN "]" RESET CYAN);
 	free(temp);
 	return (prompt);
 }

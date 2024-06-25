@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 12:08:42 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/24 17:51:44 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/25 11:39:07 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,13 @@
 # define RED_ARROW "\e[1;91m➔\033[0m "
 # define GREEN_ARROW "\e[1;92m➔\033[0m "
 
-# define MINISHELL "\x1b[36m┌───(\x1b[33m\x1b[3m\x1b[1m\x1b[3m \
-Minishell \x1b[0m\x1b[36m) {\x1b[33m" 
+# define MINISHELL "\x1b[36m┌───(\x1b[0m\x1b[3mminishell\x1b[36m@\x1b[0m\x1b[3mUser\x1b[36m)-[\x1b[1m\x1b[4m\x1b[37m"
 
-# define SECOND_PART "\x1b[36m}\n\001└─$ \002 \x1b[0m"
+# define SECOND_PART "\x1b[36m]\n\001└─$ \002\x1b[0m"
 
-# define RED_MINISHELL "\x1b[36m┌───(\x1b[31m\x1b[3m\x1b[1m\x1b[3m \
-Minishell \x1b[0m\x1b[36m) {\x1b[31m"
+# define RED_MINISHELL "\x1b[36m┌───(\x1b[0m\x1b[3mminishell\x1b[31m@\x1b[0m\x1b[3mUser\x1b[36m)-[\x1b[1m\x1b[4m\x1b[37m"
 
-# define SECOND_RED "\x1b[36m}\n\001└─$ \002\x1b[0m"
+# define SECOND_RED "\x1b[36m]\n\001└─$ \002\x1b[0m"
 
 # define EOF_ERROR "minishell: warning: here-document\
 delimited by end-of-file (wanted `eof')"

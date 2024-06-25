@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:52:14 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/24 18:06:32 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/25 11:51:53 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,6 +146,7 @@ int	executor(t_shell *shell)
 		if (!parse_redirs(shell, table[0]) || !validate_cmd(shell, table[0]))
 		{
 			reset_io(exec);
+			printf("ciao\n");
 			return (0);
 		}
 		perform_redir(shell, 0);

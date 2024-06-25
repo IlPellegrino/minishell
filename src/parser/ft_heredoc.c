@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 18:04:21 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/24 18:07:01 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/25 11:43:10 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,10 @@ int	heredoc_close(t_shell *shell, int temp_stdin, int fd)
 		g_sig_type = 42;
 	}
 	else
+	{
 		ft_error(shell, HERE_EOF, 0);
+		return (1);
+	}
 	return (0);
 }
 
