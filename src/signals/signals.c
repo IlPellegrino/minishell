@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 12:09:40 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/25 12:37:47 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/25 18:44:12 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,13 @@ void	ctrl_c(int sig)
 void	ctrl_quit(int sig)
 {
 	(void)sig;
-	if (g_sig_type <= 1)
+	if (g_sig_type == 2)
+		write(2, "Quit (core dumped)\n", 20);
+	else
 	{
 		write(2, "\b\b  \b\b", 6);
 		return ;
 	}
-	write(2, "Quit (core dumped)\n", 20);
 	g_sig_type = 4;
 }
 

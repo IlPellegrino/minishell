@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 00:35:18 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/25 16:59:27 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/25 19:13:05 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ int	parse_open(t_shell *shell)
 	int	quote;
 	int	ret;
 
+	/* implement redirs split for syntax error */
+	split_redirs(shell);
 	ret = 1;
 	quote = 0;
 	while (1)

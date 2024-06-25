@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:59:59 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/25 16:30:07 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/25 19:16:46 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # include "includes.h"
 
 extern int	g_sig_type;
+
+void	split_redirs(t_shell *shell);
 
 /* close shell */
 void		close_shell(t_shell *shell);
