@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:26:12 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/25 18:31:17 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/28 14:33:09 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,9 +97,10 @@ int	main(int argc, char **argv, char **envp)
 		saved_in = dup(STDIN_FILENO);
 		shell.input = ft_readline(set_prompt(&shell));
 		handle_close(&shell, saved_in);
-		collect_garbage(&shell, shell.input, 0);
 		if (!parse_open(&shell))
 			continue ;
+		update_history(shell.input);
+		collect_garbage(&shell, shell.input, 0);
 		close(saved_in);
 		if (shell.input)
 		{
@@ -109,6 +110,5 @@ int	main(int argc, char **argv, char **envp)
 				free_cmd_table(&shell);
 		}
 		delete_heredoc();
-		update_history(shell.input);
 	}
 }

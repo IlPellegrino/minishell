@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:59:59 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/25 19:16:46 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/28 14:11:49 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,8 @@
 
 extern int	g_sig_type;
 
-void	split_redirs(t_shell *shell);
-
 /* close shell */
+void		split_redirs(t_shell *shell);
 void		close_shell(t_shell *shell);
 int			collect_garbage(t_shell *shell, char *arg, char **mat);
 t_garbage	*new_node(char *arg, char **mat);

@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 13:59:01 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/24 18:03:29 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/26 12:04:10 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@ int	set_token(t_shell *shell, t_token *token, int *i, int *command)
 		*command = 1;
 		token->tokens[*i] = 'C';
 	}
-	else if (!(ft_strncmp(token->index[*i], "<<", 3)) && token->flag[*i] == '0')
+	else if (!(ft_strncmp(token->index[*i], "<<", 2)) && token->flag[*i] == '0')
 		token->tokens[*i] = 'H';
-	else if (!(ft_strncmp(token->index[*i], ">>", 3)) && token->flag[*i] == '0')
+	else if (!(ft_strncmp(token->index[*i], ">>", 2)) && token->flag[*i] == '0')
 		token->tokens[*i] = 'A';
-	else if (!(ft_strncmp(token->index[*i], ">", 2)) && token->flag[*i] == '0')
+	else if (!(ft_strncmp(token->index[*i], ">", 1)) && token->flag[*i] == '0')
 		token->tokens[*i] = 'O';
-	else if (!(ft_strncmp(token->index[*i], "<", 2)) && token->flag[*i] == '0')
+	else if (!(ft_strncmp(token->index[*i], "<", 1)) && token->flag[*i] == '0')
 		token->tokens[*i] = 'I';
 	else if ((ft_strncmp(token->index[*i], "||", 2) == 0
 			&& token->flag[*i] == '0'))

@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 13:40:12 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/25 18:46:42 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/06/28 14:12:15 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	check_space(t_shell *shell, int words, int (*i))
 		;
 	return (words);
 }
-/* to do: increment for each redirect */
+
 int	check_redirs(t_shell *shell, int words, int (*i))
 {
 	if (shell->input[(*i)] == PIPE)
