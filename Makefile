@@ -6,7 +6,7 @@
 #    By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/07 17:01:15 by ciusca            #+#    #+#              #
-#    Updated: 2024/07/03 17:57:02 by ciusca           ###   ########.fr        #
+#    Updated: 2024/07/03 19:06:49 by ciusca           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,7 +43,7 @@ SRCS = $(addprefix src/, $(MAIN) $(CLOSING) $(SIGNAL) ${BUILT_IN} $(PROTECTED_FU
 OBJS = ${SRCS:.c=.o}
 
 SUPP_FILE = ignore_readline.supp
-SUPRRESSION = @valgrind --leak-check=full --show-leak-kinds=all --suppressions=ignore_readline.supp -s ./minishell
+SUPRRESSION = @valgrind --suppressions=ignore_readline.supp -s ./minishell
 
 COMPILE = cc -Wall -Wextra -Werror -g -fno-omit-frame-pointer
 
@@ -71,7 +71,7 @@ ${NAME}: ${OBJS} ${HEADERS}
 		@echo $(BLUE)   " |_|  |_|_____|_| \_|_____|_____/|_|  |_|______|______|______| " $(NONE)
 		@echo $(WHITE)  "                                                               " $(NONE)
 
-sup: $(SUPP_FILE) all
+sup: all
 	echo "{\n    readline_leak\n    \
 	Memcheck:Leak\n    \
 	match-leak-kinds: reachable\n    ...\n    \
