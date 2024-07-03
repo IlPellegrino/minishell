@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 00:35:18 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/28 14:30:29 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/07/03 18:06:50 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ int	open_quote(t_shell *shell, int quote)
 		return (handle_exit_err(shell, saved_in, quote));
 	}
 	close(saved_in);
-	shell->input = ft_strdup(input);
 	collect_garbage(shell, shell->input, 0);
+	shell->input = ft_strdup(input);
 	return (1);
 }
 

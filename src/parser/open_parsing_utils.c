@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 00:40:45 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/24 18:00:08 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/07/03 18:06:58 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@ int	handle_exit_err(t_shell *shell, int saved_in, int quote)
 	if (g_sig_type == SIG_C)
 	{
 		shell->error = 130;
-		g_sig_type = 42;
 	}
 	else
 	{
 		ft_error(shell, QUOTE_ERR, (char *) &quote);
-		close_shell(shell);
 	}
+	g_sig_type = 0;
+	collect_garbage(shell, shell->input, 0);
 	return (0);
 }
 

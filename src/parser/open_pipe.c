@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 01:31:09 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/28 14:30:38 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/07/03 18:21:05 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,10 @@ int	read_pipe(t_shell *shell)
 	char	*new_input;
 	int		i;
 
+	collect_garbage(shell, shell->input, 0);
 	while (1)
 	{
 		i = 0;
-		g_sig_type = 1;
 		after_pipe = readline(OPEN_PIPE);
 		if (!after_pipe)
 			return (0);
@@ -70,8 +70,8 @@ int	read_pipe(t_shell *shell)
 		temp = ft_strjoin(shell->input, after_pipe);
 		new_input = ft_strtrim(temp, "\n");
 		free(temp);
-		shell->input = new_input;
-		collect_garbage(shell, shell->input, 0);
+		collect_garbage(shell, new_input, 0);
+		shell->input = ft_strdup(new_input);
 		return (1);
 	}
 	return (1);
@@ -88,6 +88,7 @@ int	open_pipe(t_shell *shell)
 	if (shell->input[i] == '|')
 		return (ft_error(shell, SYNTAX, "|"));
 	saved_in = dup(0);
+	g_sig_type = 1;
 	if (!read_pipe(shell))
 	{
 		return (pipe_error(saved_in, shell));
