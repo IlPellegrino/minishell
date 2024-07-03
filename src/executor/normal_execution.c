@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 13:23:05 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/25 16:31:10 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/07/03 12:15:56 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int	no_pipe(t_shell *shell)
 	{
 		reset_io(exec);
 		close_redirs(table[0].fd, matrix_len(table[0].redirs));
+		g_sig_type = 0;
 		return (0);
 	}
 	perform_redir(shell, 0);

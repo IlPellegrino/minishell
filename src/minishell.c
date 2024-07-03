@@ -6,7 +6,7 @@
 /*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 16:26:12 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/28 14:33:09 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/07/03 12:23:19 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,12 +74,13 @@ int	handle_close(t_shell *shell, int saved_in)
 		close(saved_in);
 		close_shell(shell);
 	}
-	else if (g_sig_type == 19)
+	else if (g_sig_type == 3)
 	{
 		shell->error = 130;
 		g_sig_type = 0;
 		dup2(saved_in, STDIN_FILENO);
 		close(saved_in);
+		return (0);
 	}
 	return (1);
 }
