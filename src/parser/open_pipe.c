@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   open_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ciusca <ciusca@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ciusca <ciusca@student.42firenze.it>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 01:31:09 by ciusca            #+#    #+#             */
-/*   Updated: 2024/07/03 18:21:05 by ciusca           ###   ########.fr       */
+/*   Updated: 2024/07/10 12:11:37 by ciusca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ int	pipe_is_open(char *str)
 				i++;
 			if (!str[i])
 				return (1);
+			else
+				return (0);
 		}
 	}
 	return (0);
